@@ -14,7 +14,7 @@ The overall steps are as follows:
 
 #### Create the web app
 
-You will start by creating the web app in App Services. In order to do so, you will need an Azure account. You will be using the free level for the lab, however you choose the appropriate sized VM for real deployments.
+You will start by creating the web app in App Services. In order to do so, you will need an Azure account. You will be using the free level for the lab, however, you should choose the appropriate sized VM for real deployments.
 
 1. Open [Azure Portal](https://portal.azure.com)
 1. Click **App Services** on the left side, then **Add** at the top.
@@ -40,8 +40,8 @@ When Azure Portal notifies you the web app has been created you're ready to crea
 After creating the web app the next step is to create the Hybrid Connection. This will allow your application to access your on-premises SQL Server instance.
 
 1. Open [Azure Portal](https://portal.azure.com) if not already done
-1. Click **App Services** on the left side, and then choose the web app you created previously, named **migrate-&ltyour name&gt;**
-1. In the **settings** column on the left, scroll down and choose **Networking** under **ROUTING**
+1. Click **App Services** on the left side, and then choose the web app you created previously, named **migrate-&lt;your name&gt;**
+1. In the **settings** column on the left, scroll down and choose **Networking** under **Settings**
 1. Click **Configure your hybrid connection endpoints**
 1. Click **Add** in the **Hybrid connections** blade
 1. Configure your hybrid connection with the following information:
@@ -63,9 +63,9 @@ Once Azure is configured to connect to your system, your system must be setup to
 If you don't have the Hybrid connections blade open, follow these steps to open the correct blade:
 
 1. Open [Azure Portal](https://portal.azure.com) if not already done
-1. Click **App Services** on the left side, and then choose the web app you created previously, named **migrate-&ltyour name&gt;**
-1. In the **settings** column on the left, scroll down and choose **Networking** under **ROUTING**
-1. Click **Configure your hybrid connection endpoints
+1. Click **App Services** on the left side, and then choose the web app you created previously, named **migrate-&lt;your name&gt;**
+1. In the **settings** column on the left, scroll down and choose **Networking** under **Settings**
+1. Click **Configure your hybrid connection endpoints**
 
 Once the **Hybrid connections** blade is open, you can install and configure the listener as follows:
 
@@ -102,7 +102,7 @@ In this section, you will test the application to confirm it runs locally. It ha
 In this section, you will deploy the application to Azure. You will do this by first downloading the profile, and then using Visual Studio to publish the application. You will confirm everything works by opening the site in Azure.
 
 1. Open [Azure Portal](https://portal.azure.com) if not already done
-1. Click **App Services** on the left side, and then choose the web app you created previously, named **migrate-&ltyour name&gt;**
+1. Click **App Services** on the left side, and then choose the web app you created previously, named **migrate-&lt;your name&gt;**
 1. Click **...More**, then **Get publish profile**
 1. Click **Save** to save the profile to **Downloads**
 1. Return to Visual Studio
