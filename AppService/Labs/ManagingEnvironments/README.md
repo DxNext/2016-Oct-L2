@@ -215,7 +215,7 @@ In this exercise, you'll deploy an application to the staging environment of you
 
 1. After a few seconds you'll see a new slot with the name of your Web App followed by _**-staging**_. Select it to navigate to the *staging Web App* settings.
 
-1. Select **Application Settings** in the **Settings** blade and add an **App Setting** named `Hosting:Environment` with a value of `Staging`
+1. Select **Application Settings** in the **Settings** blade and add an **App Setting** named `Hosting:Environment` with a value of `Staging`. Check the **Slot Setting** checkbox for this setting and click **Save** after adding the setting to save your changes.
 
     ![Setting Staging Environment Variable](Images/14-SettingStagingEnvironment.png "Setting Staging Environment Variable")
 
