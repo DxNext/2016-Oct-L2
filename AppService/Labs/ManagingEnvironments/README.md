@@ -35,16 +35,6 @@ The following is required to complete this module:
 
 > **Note:** You can take advantage of the [Visual Studio Dev Essentials]( https://www.visualstudio.com/en-us/products/visual-studio-dev-essentials-vs.aspx) subscription in order to get everything you need to build and deploy your app on any platform.
 
-<a name="Setup" ></a>
-### Setup ###
-In order to run the exercises in this module, you'll need to set up your environment first.
-
-1. Open Windows Explorer and browse to the module's **Source** folder.
-1. Right-click **Setup.cmd** and select **Run as administrator** to launch the setup process that will configure your environment and install the Visual Studio code snippets for this module.
-1. If the User Account Control dialog box is shown, confirm the action to proceed.
-
-> **Note:** Make sure you've checked all the dependencies for this module before running the setup.
-
 <a name="Exercises" ></a>
 ## Exercises ##
 This module includes the following exercises:
@@ -70,7 +60,7 @@ In this exercise you'll create a new Web site in Visual Studio based on the **AS
 
 1. Open **Visual Studio Community 2015** and select **File | New | Project...** to create a new solution.
 
-1. In the **New Project** dialog box, select **ASP.NET Web Application** under the **Visual C# | Web** tab, and make sure **.NET Framework 4.6** is selected. Name the project _MyWebApp_, choose a **Location** and click **OK**.
+1. In the **New Project** dialog box, select **ASP.NET Core Web Application (.NET Core)** under the **Visual C# | Web** tab, and make sure **.NET Framework 4.6.1** is selected. Name the project _MyWebApp_, choose a **Location** and click **OK**.
 
     ![New ASP.NET Web Application project](Images/new-aspnet-web-application-project.png "New ASP.NET Web Application project")
 
@@ -108,7 +98,7 @@ In this exercise you'll create a new Web site in Visual Studio based on the **AS
 
 1. Click the **Create** button in the Create App Service Plan and wait while Azure provisions your resources.
 
-1. Back in the **Publish Web** dialog, all the connection fields should be populated. Click **Next >**. In the settings tab, expand the **Target DNX Version** box to see the different possibilities and click **Publish** to publish the site.
+1. Back in the **Publish Web** dialog, all the connection fields should be populated. Click **Next >** to view the **Settings** tab, which shows the Configuration and Target Framework. Click **Publish** to publish the site.
 
     ![Publishing the site to the new Microsoft Azure Web App](Images/publishing-the-site-to-azure.png "Publishing the site to the new Microsoft Azure Web App")
 
@@ -150,7 +140,7 @@ ASP.NET Core uses a particular environment variable, ASPNET_ENV (or Hosting:Envi
 1. At the top of the layout file, add the following line to inject the Hosting Environment service into your view.
 
     ```
-    @inject Microsoft.AspNet.Hosting.IHostingEnvironment HostingEnvironment
+    @inject Microsoft.AspNetCore.Hosting.IHostingEnvironment HostingEnvironment
     ```
 
 1. Find the footer element in layout page and modify it to display the active environment.
@@ -173,9 +163,9 @@ ASP.NET Core uses a particular environment variable, ASPNET_ENV (or Hosting:Envi
 
     _Create a new launch profile_
 
-1. Name the new launch profile **IIS Express (Staging)**
+1. Name the new launch profile **IIS Express (Staging)** and click **OK**.
 
-1. In the **Launch** dropdown chose **IIS Express**
+1. In the **Launch** dropdown choose **IIS Express**
 
     ![Launch IIS Express](Images/06a-SetLaunchApp.png "Launch IIS Express")
 
@@ -253,7 +243,7 @@ In this exercise, you'll deploy an application to the staging environment of you
 
     _Select Publish Settings_
 
-1. In the **Preview** tab on the **Publish Web** dialog, ensure you have selected the Web Deploy publish profile for your staging slot and then click Publish.
+1. In the **Preview** tab on the **Publish Web** dialog, ensure you have selected the Web Deploy publish profile for your staging slot and then click **Publish**.
 
 <a name="Ex3Task2"></a>
 #### Task 2 - Publish a change to the staging slot ####
@@ -263,7 +253,7 @@ In this exercise, you'll deploy an application to the staging environment of you
 1. Change the content of the **About** link to **About Us** 
 
     ```html
-    <li><a asp-controller="Home" asp-action="About">About</a></li>
+    <li><a asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
     ```
 
 1. Right-click the **MyWebApp** project and select **Publish...**. In the **Publish Web** dialog, select your staging slot and click Publish.
