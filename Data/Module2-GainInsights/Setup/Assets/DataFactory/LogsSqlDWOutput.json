@@ -1,0 +1,40 @@
+{
+    "name": "LogsSqlDWOutput",
+    "properties": {
+        "type": "AzureSqlDWTable",
+        "linkedServiceName": "AzureSqlDWLinkedService",
+      "structure": [
+        {
+          "name": "LogDate",
+          "type": "Int32"
+        },
+        {
+          "name": "ProductID",
+          "type": "Int32"
+        },
+        {
+          "name": "Title",
+          "type": "String"
+        },
+        {
+          "name": "Category",
+          "type": "String"
+        },
+        {
+          "name": "ProdType",
+          "type": "String"
+        },
+        {
+          "name": "TotalClicked",
+          "type": "Int32"
+        }
+      ],
+        "typeProperties": {
+            "tableName": "adw.FactProductLog"
+        },
+        "availability": {
+            "frequency": "Day",
+            "interval": 1
+        }
+    }
+}

@@ -1,0 +1,92 @@
+﻿-- Load data into a table using CTAS
+-- Create a partitioned table
+CREATE SCHEMA [adw]
+GO
+
+CREATE TABLE adw.FactWebsiteActivity
+	WITH (
+		CLUSTERED COLUMNSTORE INDEX,
+		DISTRIBUTION = HASH(ProductID)
+		)
+	AS
+	SELECT
+		EventDate,
+		UserId,
+		Type,
+		ProductId, 
+		Quantity, 
+		Price
+	FROM asb.WebsiteActivityExternal
+	GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = 'adw' AND TABLE_NAME = 'DimProductCatalog')
+		DROP TABLE adw.DimProductCatalog
+	GO
+
+	CREATE TABLE adw.DimProductCatalog
+	WITH (
+		CLUSTERED COLUMNSTORE INDEX,
+		DISTRIBUTION = HASH(ProductID)
+		)
+	AS 
+	SELECT
+		skuNumber,
+		id,
+		productId,
+		categoryId,
+		categoryName,
+		title,
+		price,
+		salePrice,
+		costPrice
+	FROM asb.ProductCatalogExternal
+	GO
+	
+	
+	CREATE STATISTICS Stat_adw_FactWebsiteActivity_EventDate on adw.FactWebsiteActivity(EventDate);
+	CREATE STATISTICS Stat_adw_FactWebsiteActivity_Type on adw.FactWebsiteActivity([Type]);
+	CREATE STATISTICS Stat_adw_FactWebsiteActivity_ProductID on adw.FactWebsiteActivity(ProductID);
+	CREATE STATISTICS Stat_adw_FactWebsiteActivity_Quantity on adw.FactWebsiteActivity(Quantity);
+	CREATE STATISTICS Stat_adw_FactWebsiteActivity_Price on adw.FactWebsiteActivity(Price);
+
+/*
+-- View the distribution of rows across the partitions
+DBCC SHOW_STATISTICS ([adw.FactProductLog], Stat_adw_FactProductLog_LogDate) WITH histogram--, density_vector
+
+--View the statistics through the DMVs
+WITH base
+AS
+(
+SELECT  sm.name                             AS schema_name
+,       tb.name                             AS table_name
+,       tm.object_id                        AS logical_object_id
+,       tm.physical_name                    AS physical_name
+,       nt.object_id                        AS physical_object_id
+,       ps.row_count                        AS ptn_row_count
+,       ps.partition_number                 AS ptn_nmbr
+FROM    sys.schemas                         AS sm
+JOIN    sys.tables                          AS tb   ON  sm.schema_id        = tb.schema_id
+JOIN    sys.pdw_table_mappings              AS tm   ON  tb.object_id        = tm.object_id
+JOIN    sys.pdw_nodes_tables                AS nt   ON  tm.physical_name    = nt.[name]
+JOIN    sys.dm_pdw_nodes_db_partition_stats AS ps   ON  nt.object_id        = ps.object_id
+                                                    AND nt.distribution_id  = ps.distribution_id
+)
+SELECT  table_name
+,       ptn_nmbr
+,       SUM(ptn_row_count)
+FROM    base
+WHERE   1=1
+AND     schema_name = 'adw'
+AND     table_name = 'FactProductLog'
+GROUP BY
+        table_name
+,       ptn_nmbr
+;
+GO
+ 
+-- Total rows by partition
+SELECT COUNT(*), LogDate
+FROM adw.FactProductLog
+GROUP BY LogDate
+
+*/

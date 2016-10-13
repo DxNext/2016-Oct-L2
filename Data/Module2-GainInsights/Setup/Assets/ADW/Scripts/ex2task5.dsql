@@ -1,0 +1,36 @@
+﻿-- Create a stored procedure to generate a new summary table using the same SELECT statement executed on the external table in the previous steps
+IF EXISTS(SELECT * FROM sys.procedures WHERE name = 'asp_populate_productlogsummary')
+	DROP PROCEDURE adw.asp_populate_productlogsummary
+GO
+
+CREATE PROCEDURE adw.asp_populate_ProfitableProducts AS
+		IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = 'adw' AND TABLE_NAME = 'ProfitableProducts')
+			DROP TABLE adw.ProfitableProducts
+
+		CREATE TABLE adw.ProfitableProducts
+		WITH
+		(   
+			CLUSTERED COLUMNSTORE INDEX,
+			DISTRIBUTION = ROUND_ROBIN
+		)
+		AS
+		SELECT 
+			a.ProductId, 
+			b.CategoryName,
+			SUM(a.Price - (b.CostPrice*a.Quantity)) as Profit
+		FROM adw.FactWebsiteActivity AS a LEFT OUTER JOIN adw.DimProductCatalog AS b
+			ON a.ProductId = b.ProductId
+		WHERE  DATEDIFF(day, a.eventdate, GetDate()) < 30
+		AND a.[Type]='checkout'
+		GROUP BY a.ProductId, b.CategoryName;
+
+	
+		CREATE STATISTICS Stat_adw_ProfitableProducts_ProductId on adw.ProfitableProducts(ProductId);
+		CREATE STATISTICS Stat_adw_ProfitableProducts_CategoryName on adw.ProfitableProducts(CategoryName);
+		CREATE STATISTICS Stat_adw_ProfitableProducts_Profit on adw.ProfitableProducts(Profit);
+	GO
+
+
+	exec adw.asp_populate_ProfitableProducts; 
+
+	SELECT * FROM adw.ProfitableProducts;

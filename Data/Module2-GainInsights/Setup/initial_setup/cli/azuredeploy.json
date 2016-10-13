@@ -1,0 +1,293 @@
+{
+"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+"contentVersion": "1.0.0.0",
+"parameters": {
+    "hdiClusterNamePrefix":{
+        "type":"string",
+        "defaultValue":"hdiprecon"
+    },
+    "uniqueSuffix":{
+        "type":"string",
+        "metadata":{
+            "description": "The suffix name of the HDInsight cluster to create."
+        }
+    },
+    "clusterLoginUserName": {
+    "type": "string",
+    "defaultValue": "admin",
+    "metadata": {
+        "description": "These credentials can be used to submit jobs to the cluster and to log into cluster dashboards."
+    }
+    },
+    "clusterLoginPassword": {
+    "type": "securestring",
+    "defaultValue":"P@ssword123",
+    "metadata": {
+        "description": "The password must be at least 10 characters in length and must contain at least one digit, one non-alphanumeric character, and one upper or lower case letter."
+        }
+    },
+    "sshUserName": {
+    "type": "string",
+    "defaultValue": "labuser",
+    "metadata": {
+        "description": "These credentials can be used to remotely access the cluster."
+        }
+    },
+    "sshPassword": {
+    "type": "securestring",
+    "defaultValue":"labP@ssword1",
+    "metadata": {
+        "description": "The password must be at least 10 characters in length and must contain at least one digit, one non-alphanumeric character, and one upper or lower case letter."
+        }
+    },
+    "location": {
+    "type": "string",
+    "defaultValue": "East US",
+    "allowedValues": [
+        "East US",
+        "East US 2",
+        "North Central US",
+        "South Central US",
+        "West US",
+        "North Europe",
+        "West Europe",
+        "East Asia",
+        "Southeast Asia",
+        "Japan East",
+        "Japan West",
+        "Australia East",
+        "Australia Southeast"
+        ],
+    "metadata": {
+        "description": "The location where all azure resources will be deployed."
+        }
+    },
+    "clusterType": {
+        "type": "string",
+        "defaultValue": "hadoop",
+        "allowedValues": [
+            "hadoop",
+            "hbase",
+            "storm",
+            "spark"
+        ],
+        "metadata": {
+            "description": "The type of the HDInsight cluster to create."
+        }
+    },
+    "clusterWorkerNodeCount": {
+    "type": "int",
+    "defaultValue": 2,
+    "metadata": {
+        "description": "The number of nodes in the HDInsight cluster."
+        }
+    },
+    "storageAccountSubName":{
+        "type":"string",
+        "defaultValue":"hdistr"
+    },
+    "sqlServerSubName":{
+        "type":"string",
+        "defaultValue":"readinesssqlsvr"
+    },
+    "sqlDbName":{
+        "type":"string",
+        "defaultValue":"hdimetastore"
+    },
+    "SqlDWName":{
+        "type":"string",
+        "defaultValue":"readinessdw"
+    },
+    "SqlDWServiceLevelObjective":{
+        "defaultValue": "DW100",
+        "type": "string",
+        "metadata": {
+            "description": "DWU for the Azure DW."
+      }
+    }
+},
+"variables":{
+    "defaultApiVersion": "2015-05-01-preview",
+    "clusterApiVersion": "2015-03-01-preview",
+    "clusterStorageAccountName": "[concat(parameters('storageAccountSubName'),parameters('uniqueSuffix'))]", 
+    "sqlServerName":"[concat(parameters('sqlServerSubName'),parameters('uniqueSuffix'))]",
+    "hdiClusterName":"[concat(parameters('hdiClusterNamePrefix'),parameters('uniqueSuffix'))]"
+},
+"resources":
+[
+    { 
+    "name": "[variables('clusterStorageAccountName')]",
+    "type": "Microsoft.Storage/storageAccounts",
+    "location": "[parameters('location')]",
+    "apiVersion": "[variables('defaultApiVersion')]",
+    "dependsOn": [ ],
+    "tags": { },
+    "properties": {
+        "accountType": "Standard_LRS"
+        }
+    },
+    {   
+        "apiVersion": "2014-04-01-preview",
+        "name": "[variables('sqlServerName')]",
+        "type": "Microsoft.Sql/servers",
+        "kind": "v12.0",
+        "location": "[parameters('location')]",
+        "tags": {
+            "displayName": "[variables('sqlServerName')]"
+        },
+        "properties": {
+            "administratorLogin": "[parameters('sshUserName')]",
+            "administratorLoginPassword": "[parameters('sshPassword')]",
+            "version": "12.0"
+        },
+        "resources": [
+            {
+                "apiVersion": "2014-04-01-preview",
+                "dependsOn": [
+                   "[concat('Microsoft.Sql/servers/',variables('sqlServerName'))]"
+                ],
+                "location": "[parameters('location')]",
+                "name": "AllowAllWindowsAzureIps",
+                "properties": {
+                    "startIpAddress": "0.0.0.0",
+                    "endIpAddress": "255.255.255.0"
+                },
+                "type": "firewallrules"
+            },
+            {
+                "type": "databases",
+                "name": "[parameters('sqlDbName')]",
+                "apiVersion": "2014-04-01-preview",
+                "location": "[parameters('location')]",
+                "tags": {
+                    "displayName": "[parameters('sqlDbName')]"
+                },
+                "dependsOn": [
+                     "[concat('Microsoft.Sql/servers/',variables('sqlServerName'))]"
+                ],
+                "properties": {
+                    "status": "Online",
+                    "collation": "SQL_Latin1_General_CP1_CI_AS",
+                    "edition": "Standard",
+                    "maxSizeBytes": "1073741824",
+                    "requestedServiceObjectiveName": "S1"
+                }
+            },
+            {
+            "type": "databases",
+            "apiVersion": "2014-04-01-preview",
+            "location": "[parameters('location')]",
+            "name": "[parameters('SqlDWName')]",
+            "properties": {
+                "edition": "DataWarehouse",
+                "requestedServiceObjectiveName": "[parameters('SqlDWServiceLevelObjective')]"
+            },
+            "tags": {
+                "displayName": "SQL Datawarehouse"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Sql/servers/',variables('sqlServerName'))]"
+            ]
+        }
+        ]
+    },
+    {
+    "name": "[variables('hdiClusterName')]",
+    "type": "Microsoft.HDInsight/clusters",
+    "location": "[parameters('location')]",
+    "apiVersion": "[variables('clusterApiVersion')]",
+    "dependsOn": [ 
+        "[concat('Microsoft.Storage/storageAccounts/',variables('clusterStorageAccountName'))]",
+        "[concat('Microsoft.Sql/servers/',variables('sqlServerName'))]",
+        "[resourceId('Microsoft.SQL/servers/databases', variables('sqlServerName'), parameters('sqlDbName'))]" 
+        ],
+    "tags": {
+
+    },
+    "properties": {
+        "clusterVersion": "3.4",
+        "osType": "Linux",
+        "tier": "standard",
+        "clusterDefinition": {
+        "kind": "[parameters('clusterType')]",
+        "configurations": {
+            "gateway": {
+                "restAuthCredential.isEnabled": true,
+                "restAuthCredential.username": "[parameters('clusterLoginUserName')]",
+                "restAuthCredential.password": "[parameters('clusterLoginPassword')]"
+            },
+            "hive-site": {
+                "javax.jdo.option.ConnectionDriverName": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+                "javax.jdo.option.ConnectionURL": "[concat('jdbc:sqlserver://',variables('sqlServerName'),'.database.windows.net;database=',parameters('sqlDbName'),';encrypt=true;trustServerCertificate=true;create=false;loginTimeout=300')]",
+                "javax.jdo.option.ConnectionUserName": "[parameters('sshUserName')]",
+                "javax.jdo.option.ConnectionPassword": "[parameters('sshPassword')]"
+            },
+            "hive-env": {
+                "hive_database": "Existing MSSQL Server database with SQL authentication",
+                "hive_database_name": "[parameters('sqlDbName')]",
+                "hive_database_type": "mssql",
+                "hive_existing_mssql_server_database": "[parameters('sqlDbName')]",
+                "hive_existing_mssql_server_host": "[concat(variables('sqlServerName'),'.database.windows.net')]",
+                "hive_hostname": "[concat(variables('sqlServerName'),'.database.windows.net')]"
+            },
+            "oozie-site": {
+                "oozie.service.JPAService.jdbc.driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+                "oozie.service.JPAService.jdbc.url": "[concat('jdbc:sqlserver://',variables('sqlServerName'),'.database.windows.net;database=',parameters('sqlDbName'),';encrypt=true;trustServerCertificate=true;create=false;loginTimeout=300')]",
+                "oozie.service.JPAService.jdbc.username": "[parameters('sshUserName')]",
+                "oozie.service.JPAService.jdbc.password": "[parameters('sshPassword')]",
+                "oozie.db.schema.name": "oozie"
+            },
+            "oozie-env": {
+                "oozie_database": "Existing MSSQL Server database with SQL authentication",
+                "oozie_database_name": "[parameters('sqlDbName')]",
+                "oozie_database_type": "mssql",
+                "oozie_existing_mssql_server_database": "[parameters('sqlDbName')]",
+                "oozie_existing_mssql_server_host": "[concat(variables('sqlServerName'),'.database.windows.net')]",
+                "oozie_hostname": "[concat(variables('sqlServerName'),'.database.windows.net')]"
+            }            
+        }
+        },
+        "storageProfile": {
+        "storageaccounts": [
+            {
+                "name": "[concat(variables('clusterStorageAccountName'),'.blob.core.windows.net')]",
+                "isDefault": true,
+                "container": "[variables('hdiClusterName')]",
+                "key": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('clusterStorageAccountName')), variables('defaultApiVersion')).key1]"
+                }
+            ]
+        },
+        "computeProfile": {
+        "roles": [
+            {
+            "name": "headnode",
+            "targetInstanceCount": "2",
+            "hardwareProfile": {
+                "vmSize": "Standard_D3"
+            },
+            "osProfile": {
+                "linuxOperatingSystemProfile": {
+                "username": "[parameters('sshUserName')]",
+                "password": "[parameters('sshPassword')]"
+                }
+            }
+            },
+            {
+            "name": "workernode",
+            "targetInstanceCount": "[parameters('clusterWorkerNodeCount')]",
+            "hardwareProfile": {
+                "vmSize": "Standard_A3"
+            },
+            "osProfile": {
+                "linuxOperatingSystemProfile": {
+                "username": "[parameters('sshUserName')]",
+                "password": "[parameters('sshPassword')]"
+                }
+            }
+            }
+        ]
+        }
+    }
+    }
+ ]
+}

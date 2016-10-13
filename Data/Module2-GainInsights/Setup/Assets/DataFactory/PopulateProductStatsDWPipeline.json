@@ -1,0 +1,26 @@
+{
+    "name": "PopulateProductStatsPipeline",
+    "properties": {
+        "description": "Run stored procedure to populate product stats",
+        "activities": [
+			{
+				 "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "storedProcedureName": "adw.asp_populate_productlogsummary"
+        },
+				 "outputs": [
+					  {
+							"name": "StatsSqlDWOutput"
+					  }
+				 ],
+				 "scheduler": {
+					  "frequency": "Day",
+					  "interval": 1
+				 },
+				 "name": "SprocActivitySample"
+			}
+		],
+        "start": "<Start>",
+        "end": "<End>"
+    }
+}

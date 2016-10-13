@@ -1,0 +1,56 @@
+﻿-- Create the external table
+-- Specify column names and data types. This needs to match the data in the sample file.
+-- LOCATION: Specify path to file or directory that contains the data (relative to the blob container).
+-- To point to all files under the blob container, use LOCATION='.'
+CREATE SCHEMA [asb]
+GO
+
+CREATE EXTERNAL TABLE asb.WebsiteActivityExternal
+	(
+		EventDate datetime2,
+		UserId nvarchar(20),
+		Type nvarchar(20),
+		ProductId nvarchar(20), 
+		Quantity int, 
+		Price float
+	)
+	WITH (
+	    LOCATION='/structuredlogs/2016/10/',
+	    DATA_SOURCE=AzureStorage,
+	    FILE_FORMAT=TextFile
+	);
+GO
+
+
+CREATE EXTERNAL TABLE asb.ProductCatalogExternal
+	(
+		SkuNumber nvarchar(50),
+		Id int,
+		ProductId nvarchar(20),
+		CategoryId nvarchar(20),
+		CategoryName nvarchar(100),
+		Title nvarchar(100),
+		Price float,
+		SalePrice float,
+		CostPrice float
+	)
+	WITH (
+	    LOCATION='/product_catalog/',
+	    DATA_SOURCE=AzureStorage,
+	    FILE_FORMAT=TextFile
+	);
+GO
+
+
+-- Run a query on the external table
+SELECT COUNT(*) FROM asb.WebsiteActivityExternal;
+GO
+
+
+	SELECT
+		ProductId,
+		SUM(CASE WHEN Type = 'view' THEN Quantity ELSE 0 END) AS ProdViews,
+		SUM(CASE WHEN Type = 'add' THEN Quantity ELSE 0 END) AS ProdAdds
+	FROM asb.WebsiteActivityExternal
+	GROUP BY ProductId;
+GO

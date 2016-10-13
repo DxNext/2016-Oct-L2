@@ -1,0 +1,24 @@
+{
+    "name": "LogJsonFromBlob",
+    "properties": {
+        "type": "AzureBlob",
+        "linkedServiceName": "AzureStorageLinkedService",
+        "typeProperties": {
+            "folderPath": "partsunlimited/logs/{Year}/{Month}/{Day}",
+            "partitionedBy": 
+            [
+                 { "name": "Year", "value": { "type": "DateTime", "date": "SliceStart", "format": "yyyy" } },
+                 { "name": "Month", "value": { "type": "DateTime", "date": "SliceStart", "format": "MM" } }, 
+                 { "name": "Day", "value": { "type": "DateTime", "date": "SliceStart", "format": "dd" } }
+            ],
+            "format": {
+                "type": "TextFormat"
+            }
+        },
+        "availability": {
+            "frequency": "Day",
+            "interval": 1
+        },
+		"external": true
+    }
+}

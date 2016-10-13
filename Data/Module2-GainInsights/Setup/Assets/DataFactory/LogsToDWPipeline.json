@@ -1,0 +1,36 @@
+{
+    "name": "LogsToDWPipeline",
+    "properties": {
+        "description": "Move blob data to SQL Data Warehouse",
+        "activities": [
+			{
+				"type": "Copy",
+				"name": "LogsToDWActivity",
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource"
+					},
+					"sink": {
+						"type": "SqlDWSink"
+					}
+				},
+				"inputs": [
+					{
+						"name": "LogCsvFromBlob"
+					}
+				],
+				"outputs": [
+					{
+						"name": "LogsSqlDWOutput"
+					}
+				],
+				"scheduler": {
+					"frequency": "Day",
+					"interval": 1
+				}
+			}
+		],
+        "start": "<Start>",
+        "end": "<End>"
+    }
+}

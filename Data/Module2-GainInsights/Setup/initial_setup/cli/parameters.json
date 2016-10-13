@@ -1,0 +1,48 @@
+{
+"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+"contentVersion": "1.0.0.0",
+"parameters": {
+    "hdiClusterNamePrefix":{
+        "value":"hdiprecon"
+    },
+    "uniqueSuffix":{
+        "value":"10"
+    },
+    "clusterLoginUserName": {
+        "value": "admin"
+    },
+    "clusterLoginPassword": {
+        "value":"P@ssword123"
+    },
+    "sshUserName": {
+        "value": "labuser"
+    },
+    "sshPassword": {
+        "value":"labP@ssword1"
+    },
+    "location": {
+        "value": "West US"
+    },
+    "clusterType": {
+        "value": "hadoop"
+    },
+    "clusterWorkerNodeCount": {
+        "value": 2
+    },
+    "storageAccountSubName":{
+        "value":"hdistr"
+    },
+    "sqlServerSubName":{
+        "value":"readinesssqlsvr"
+    },
+    "sqlDbName":{
+        "value":"hdimetastore"
+    },
+    "SqlDWName":{
+        "value":"readinessdw"
+    },
+    "SqlDWServiceLevelObjective":{
+        "value": "DW100"
+    }
+}
+}

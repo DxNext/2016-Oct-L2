@@ -1,0 +1,14 @@
+{
+     "name": "StatsSqlDWOutput",
+     "properties": {
+          "type": "AzureSqlDWTable",
+          "linkedServiceName": "AzureSqlDWLinkedService",
+          "typeProperties": {
+                "tableName": "adw.ProductLogSummary"
+          },
+          "availability": {
+                "frequency": "Day",
+                "interval": 1
+          }
+     }
+}

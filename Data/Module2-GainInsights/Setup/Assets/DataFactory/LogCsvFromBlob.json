@@ -1,0 +1,49 @@
+{
+    "name": "LogCsvFromBlob",
+    "properties": {
+        "type": "AzureBlob",
+        "linkedServiceName": "AzureStorageLinkedService",
+      "structure": [
+        {
+          "name": "LogDate",
+          "type": "Int32"
+        },
+        {
+          "name": "ProductID",
+          "type": "Int32"
+        },
+        {
+          "name": "Title",
+          "type": "String"
+        },
+        {
+          "name": "Category",
+          "type": "String"
+        },
+        {
+          "name": "ProdType",
+          "type": "String"
+        },
+        {
+          "name": "TotalClicked",
+          "type": "Int32"
+        }
+      ],
+        "typeProperties": {
+            "folderPath": "processeddata/logs/{Year}/{Month}/{Day}",
+            "partitionedBy": 
+            [
+                 { "name": "Year", "value": { "type": "DateTime", "date": "SliceStart", "format": "yyyy" } },
+                 { "name": "Month", "value": { "type": "DateTime", "date": "SliceStart", "format": "MM" } }, 
+                 { "name": "Day", "value": { "type": "DateTime", "date": "SliceStart", "format": "dd" } }
+            ],
+            "format": {
+                "type": "TextFormat"
+            }
+        },
+        "availability": {
+            "frequency": "Day",
+            "interval": 1
+        }
+    }
+}
