@@ -31,7 +31,7 @@ Azure SQL Server is a managed service, allowing you to focus on creating your ap
   - Select source: *Blank database*
   - Server:
     - Create new
-    - Name: *expenses-<your-name>*
+    - Name: *expenses-&lt;your-name&gt;*
     - Server admin login: *expenses*
     - Password: *P@ssw0rd*
     - Location: *West US* (or whatever is appropriate for your region)
@@ -48,7 +48,7 @@ By default, only services in Azure can access an Azure SQL Database. If you want
 
 1. Login to the [Azure Portal](https://portal.azure.com) if you haven't done so already
 1. On the main portal page, click on the database you created in the prior set of steps, named **expenses**.
-1. Click on the **Server name** (*expenses-<your-name>.database.windows.net*)
+1. Click on the **Server name** (*expenses-&lt;your-name&gt;.database.windows.net*)
 1. Click **Firewall**
 1. Add a new rule with the following information:
   - Name: *Expense-Server*
@@ -61,7 +61,7 @@ By default, only services in Azure can access an Azure SQL Database. If you want
 1. Open **SQL Server Management Studio** (SSMS)
 1. Click **Connect**, **Database Engine...*
 1. Configure the connection using the following information:
-  - Server name: *expenses-<your-name>.database.windows.net
+  - Server name: *expenses-&lt;your-name&gt;.database.windows.net
   - Authentication: *SQL Server Authentication*
   - Username: *expenses*
   - Password: *P@ssw0rd*
@@ -89,7 +89,7 @@ If you want more information about performing migrations, testing your databsae,
 1. Right click on **Expenses.MVC**, and choose **Deploy Database to Microsoft Azure SQL Database**
 1. Configure the **Deployment Settings** page with the following information::
   - Click **Connect**
-    - Server name: *expenses-<your-name>.database.windows.net
+    - Server name: *expenses-&lt;your-name&gt;.database.windows.net
     - Authentication: *SQL Server Authentication*
     - Username: *expenses*
     - Password: *P@ssw0rd*
@@ -102,7 +102,7 @@ If you want more information about performing migrations, testing your databsae,
 
 1. Click **Connect**, **Database Engine...**
 1. Configure the connection using the following information:
-  - Server name: *expenses-<your-name>.database.windows.net
+  - Server name: *expenses-&lt;your-name&gt;.database.windows.net
   - Authentication: *SQL Server Authentication*
   - Username: *expenses*
   - Password: *P@ssw0rd*
@@ -119,7 +119,7 @@ After migrating the database, you need to update your application to point at th
 1. Double click on **Web.config**, which will open in Visual Studio Code
 1. Find the line that starts with **<add name="DefaultConnection"** inside the **<connectionStrings>** section (this should be line 13)
 1. Set the **connectionString** attribute to the following:
-  - *Data Source=expenses-<your-name>.database.windows.net;Initial Catalog=Expenses.Mvc;User ID=expenses;Password=P@ssw0rd*
+  - *Data Source=expenses-&lt;your-name&gt;.database.windows.net;Initial Catalog=Expenses.Mvc;User ID=expenses;Password=P@ssw0rd*
 1. Click **File**, **Save**
 1. Open **Internet Explorer** and navigate to **localhost**
 1. The application should build, and display the same data we saw previously. You could modify the data via SSMS to confirm the updates.

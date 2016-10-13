@@ -22,7 +22,7 @@ The first step to doing the migration is to create the database in Azure. You'll
 1. Click **DocumentDB - Protocol Support for MongoDB** on the **Everything** blade
 1. Click **Create** on the **DocumentDB - Protocol Support for MongoDB** blade
 1. Configure the server with the following information
-  - ID: *mongo-<your-name>
+  - ID: *mongo-&lt;your-name&gt;*
   - Resource Group:
     - Create New
     - Name: *mongo-resources*
@@ -45,7 +45,7 @@ You will use the DocumentDB Migration Tool to migrate the Invoices MongoDB Datab
 
 
 1. Login to the [Azure Portal](https://portal.azure.com)
-1. Click on **mongo-<your-name>** from the landing page
+1. Click on **mongo-&lt;your-name&gt;** from the landing page
 1. Click **Add Database**
 1. Use *invoices* for the ID
 1. Click **ID**
@@ -53,14 +53,14 @@ You will use the DocumentDB Migration Tool to migrate the Invoices MongoDB Datab
 #### Obtain the server information
 
 1. Login to the [Azure Portal](https://portal.azure.com) (if not already done)
-1. Click on **mongo-<your-name>** from the landing page (if not already done)
+1. Click on **mongo-&lt;your-name&gt;** from the landing page (if not already done)
 1. Under **General**, click **Connection string**
 1. Copy the following information:
   - **Password**
 
 #### Perform the migration
 
-You will now perform the migration. When building the connection string, you will use need to update *<your-name>* and *<PASSWORD>* (which you collected above).
+You will now perform the migration. When building the connection string, you will use need to update *&lt;your-name&gt;* and *&lt;PASSWORD&gt;* (which you collected above).
 
 1. Open the **Migration Tool** folder from the desktop
 1. Double click on **dtui.exe**, and click **Run**
@@ -70,7 +70,7 @@ You will now perform the migration. When building the connection string, you wil
   - Collection: *invoices*
 1. Click **Next**
 1. Configure the **Target Information**
-  - Connection String: *AccountEndpoint=https://mongo-<your-name>.documents.azure.com:443/;Database=invoices;AccountKey=<PASSWORD>*
+  - Connection String: *AccountEndpoint=https://mongo-&lt;your-name&gt;.documents.azure.com:443/;Database=invoices;AccountKey=&lt;PASSWORD&gt;*
   - Collection: *invoices*
 1. Click **Next**, **Next**, **Import** to migrate the database
 1. The migration should complete without errors
@@ -82,7 +82,7 @@ With the database migrated, you are now ready to update your Node.js application
 #### Obtain the connection string
 
 1. Login to the [Azure Portal](https://portal.azure.com) (if not already done)
-1. Click on **mongo-<your-name>** from the landing page (if not already done)
+1. Click on **mongo-&lt;your-name&gt;** from the landing page (if not already done)
 1. Under **General**, click **Connection string**
 1. Copy the connection string
 
