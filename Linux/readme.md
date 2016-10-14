@@ -61,7 +61,7 @@
     3.	When to choose what Linux distro
     4.	When to use which container/orchestration technology
         1.	Open shift
-        2.	Swarm
+        2.	Deis
         3.	DC/OS
-        4.	Marathon
-        5.	Kubernetes
+        4.	Docker Datacenter
+        5.	ACS
