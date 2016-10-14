@@ -547,7 +547,7 @@ Once you have had some experience using PolyBase and querying Azure SQL Data War
 
 1. Confirm you want to switch apps if prompted.
 
-1. In Visual Studio, enter the SQL Server credentials (dwadmin/P@ssword123).
+1. In Visual Studio, enter the SQL Server credentials (labuser/labP@ssword1).
 
 1. In the _SQL Server Object Explorer_, expand the server and right-click the **readinessdw** database.   Select **New Query...**.
 
