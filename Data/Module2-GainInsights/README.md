@@ -48,21 +48,10 @@ In order to run the exercises in this module, you'll need to create an HDI clust
 
 <a name="AutoSetup"> </a>
 #### Auto Setup #####
-Navigate to the Setup Folder under 'Module 2'. You will find a folder called as Initial Setup. If you are using Azure Powershell, go into the folder named 'ps'. If you're using the Azure CLI, navigate to the 'cli' folder. Now, execute the **setup** file.
-
-You will be prompted for the following information:
-
-1. Login credentials for Microsoft Azure
-1. Resource Group Name you'd like to use for the lab 
-
-<a name="ManualSetupUploadFiles"></a>
-#### Manual Setup 1: Manually uploading the sample files ####
-
-In this section you will create a new storage account, and load sample data that will be used later in the module. 
 
 Navigate to the Setup Folder under 'Module 2'. You will find a folder called Setup\CLI. 
 
-1. Update the parameters.json file.  Update parameters with a unique suffix for use across the services. Save the file. Particularly, you will want to update the 'uniqueSuffix' variable. This will help keep your resource names globally unique. We will be executing the azuredeplou.json ARM template, which will help us setup the resources needed for this lab.
+1. Update the parameters.json file.  Update parameters with a unique suffix for use across the services. Save the file. Particularly, you will want to update the 'uniqueSuffix' variable. This will help keep your resource names globally unique. We will be executing the azuredeploy.json ARM template, which will help us setup the resources needed for this lab.
 
 1. Open a command prompt and navigate to the cli directory.  
 
@@ -96,27 +85,14 @@ Navigate to the Setup Folder under 'Module 2'. You will find a folder called Set
 
 	````
 
-**This section will complete in approximately 15-25 minutes**
-
 
 <a name="ManualSetupUploadFiles"></a>
 #### Manual Setup 1: Manually uploading the sample files ####
 
-In this section you will create a new storage account, and load sample data that will be used later in the module. 
+In this section you will create a new storage container, and load sample data that will be used later in the module. 
 
 
-1. When the storage account has been provisioned and the files are uploaded, open the [Microsoft Azure portal](https://portal.azure.com/) to copy the storage account access key.  
-	1. Navigate to All Resources and type the name of your storage account in the Filter items box.  
-	1. Click on the storage account.
-	1. Select Access Keys from the Settings blade to copy the storage account key.  
-	> **Note:** You will use the storage key in several steps during this lab. **Copy this to a text file and save in a readily accessible location (ie Desktop).**
-
-	![Getting account name and key](Images/setup-storage-key.png?raw=true "Getting account name and key")
-
-	_Getting account name and key_
-
-
-1. Open **Azure Storage Explorer** or the tool of your preference to connect to the new storage account using the account name and key from the previous step. 
+1. Open **Azure Storage Explorer** or the tool of your preference to connect to the new storage account that was created by the ARM template. You will need the storage account name and key in order to connect to it. In order to get the Storage account name and key, head over to the Azure portal (https://portal.azure.com) and navigate to the Storage Account and find the 'Keys' section. Copy the name and one of the keys (either primary or secondary) and connect to the Storage account via the storage explorer using the account name and key.
 	1. On the left pane of _Azure Storage Explorer_, right-click on **Storage Accounts** and select **Connect to Azure Storage...** 
 	1. Enter the account name and key in the dialog, then click **OK**.
 
@@ -559,7 +535,7 @@ In this exercise you'll create an **External Table** using PolyBase. You will bu
 Once you have had some experience using PolyBase and querying Azure SQL Data Warehouse, you create the tables and stored procedures that will be used with Azure Data Factory later in the lab.
 
 <a name="Ex2Task1"></a>
-#### Task 1 - Connect to Azure SQL Data Warehouse using Visual Studio 2015 ####
+#### Task 1 - Connect to Azure SQL Data Warehouse####
 
 1. Return to the Azure Portal and navigate to the new SQL Data Warehouse you created.
 
@@ -574,6 +550,9 @@ Once you have had some experience using PolyBase and querying Azure SQL Data War
 1. In Visual Studio, enter the SQL Server credentials (dwadmin/P@ssword123).
 
 1. In the _SQL Server Object Explorer_, expand the server and right-click the **partsunlimited** database.   Select **New Query...**.
+
+>**Note:** For Mac/Linux users, please install the SQL CLI npm package by using the command line tool (_npm install -g sql-cli_). 
+>Now, you can access your database by typing **mssql -s yourServerName.database.windows.net -u yourUsername@yourServerName -p yourPassword -d yourDatabase –e**. Once connected, you can run the SQL commands below. The only thing to keep in mind is that the entire SQL command needs to be submitted together. A carriage return will attempt to execute your query.
 
 You have now connected to your Azure SQL Data Warehouse and are ready to begin building and loading tables.  
 
