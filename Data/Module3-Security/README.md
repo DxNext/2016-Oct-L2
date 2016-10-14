@@ -43,10 +43,10 @@ OR
 
 
 <a name="Setup"></a>
-### Setup ###
+### Setup (To be completed if you did not complete Module 2) ###
 In order to work on this exercise, it is recommended that you complete module 2. However, if you have not completed module 2, please follow this setup in order to successfully complete this exercise.
 
->**Note:** If you've completed Module 2, you may skip the setup and start with Exercise #1.
+>**Note:** If you've completed **Module 2**, you may **skip the setup** and start with Exercise #1.
 
 <a name="SqlDWCreation"> </a>
 #### SQL Data Warehouse Creation #####
@@ -96,7 +96,33 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 [1]: https://blogs.msdn.microsoft.com/joseph_idzioreks_blog/2015/09/13/azure-sql-database-sqlcmd-and-bcp-on-ubuntu-linux/
 
 
-1. Open the command line tool or connect to the SQL Data Warehouse using Visual Studio and enter the following commands to create a new schema for our internally managed tables. 
+1. Connect to the SQL Data Warehouse using the command line tool or using Visual Studio 
+	1. (For Command Line) Ensure that the SQL-CLI node package is installed on your machine.
+		1. From the command line, connect to the SQL DW using the following command:
+		````
+		mssql -s <serverName>.database.windows.net -u <username>@<servername> -p <password> -d <databaseName> -e
+		````
+		1. If you used the default naming & credentials, this is what the mssql command looks like:
+		````
+		mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e
+		````
+
+	1. (For visual studio) Go to the Azure Portal (http://portal.azure.com) and navigate to the new SQL Data Warehouse you created.
+
+		1. In the _SQL Data Warehouse_ blade, click **Open in Visual Studio**. In the new blade, click **Open in Visual Studio**.
+
+			![Open Data Warehouse in Visual Studio](Images/setup-open-vs.png?raw=true "Open Data Warehouse in Visual Studio")
+		
+			_Open Data Warehouse in Visual Studio_
+
+		1. Confirm you want to switch apps if prompted.
+
+		1. In Visual Studio, enter the SQL Server credentials (labuser/labP@ssword1).
+
+		1. In the _SQL Server Object Explorer_, expand the server and right-click the **readinessdw** database.   Select **New Query...**.
+
+
+1. Enter the following commands to create a new schema for our internally managed tables. We will be 
 
 	````SQL
 	CREATE SCHEMA [adw]
@@ -150,5 +176,177 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 	
 	````
 
-1. Now, let's do a bulk insert into our 2 tables.
+1. Now, let's do a bulk insert into our 2 tables. Let's start with our Product Catalog table. We will use 'bcp' via the command line for this. Be sure to exit out of the SQL CLI or the sqlcmd before running bcp. Execute the following command to load the Product Catalog data.
 
+
+	````
+	bcp.exe adw.DimProductCatalog in ...\Module3-Security\Setup\data\product_catalog\000000_0 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	````
+
+	![Import Data into SQL DW using bcp](Images/setup-bcp.png?raw=true "Import Data into SQL DW using bcp")
+		
+			_Import Data into SQL DW using bcp_
+
+
+1. Similarly, let's upload our Fact data. Since our Fact data is made up of multiple files, we'll run the bcp command multiple times.
+
+	````
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_0 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_1 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_0 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_1 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	````
+
+1. You can verify that the data has been successfully loaded by switching back to your favorite SQL tool (VS or commandline) and executing the following SQL query.
+	````SQL
+	SELECT * from adw.DimProductCatalog
+	GO
+
+	SELECT count(*) from adw.FactWebsiteActivity
+	GO
+	````
+
+>**Note:** For the purposes of this lab, we will be using SQL Data warehouse to demonstrate the security best practices. However, the same techniques can be applied to other data technologies such as Azure SQL DB and Hive/Spark-SQL on HDInsight (Apache Ranger). There are a few differences when it comes to Apache Hive/Spark-SQL, however, it is outside of the scope of this lab.
+
+
+<a name="Exercise1"></a>
+### Exercise 1: Set Firewall rules ###
+
+Setting firewall rules are the most basic way of securing your data store. Azure SQL Servers allow you to add firewall rules to your database. This helps you restrict access to the databases only those computers/IPs that have been white-listed in the firewall rules.
+
+When creating the he SQL DW, we whitelisted _almost_ all IP address. So, in this exercise, we will edit these firewall rules and showcase how firewall rules can be used to avoid unauthorized access.
+
+>**Note:** (HDInsight Parity) Azure HDInsight allows you to create Hadoop clusters within secure Virtual Networks. These can be secured by adding ACLs that will deny outside traffic to talk to the cluster. A few Azure IP addresses however must be granted access in order to have a stabled managed cluster.
+
+
+1. Navigate to the Azure portal (https://portal.azure.com) and make your way to the Azure SQL Server home page.
+	TODO:Screenshot of Azure SQL Home Page & click on the 'Show Firewall settings'
+
+1. Click on 'Show Firewall Settings'. This should open the firewall rules of your Azure SQL Server. You'll notice that it has one rule pre-defined, which allows any IP address between the range of 0.0.0.0 and 255.255.255.0 to access the server.
+
+1. Click on the '...' on the right side of this rule and click delete.
+	TODO: Show screenshot
+
+1. Click on save to persist the firewall settings. You should receive a confirmation that the firewall settings have been saved.
+	TODO: Screenshot (ex1-firewall-conf)
+
+1. Now, let's switch to our SQL CLI and try to connect to the Azure SQL Data Warehouse using the following command:
+	````
+	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e 	[Remove creds]
+	````
+
+1. You should receive an error stating that you do not have enough permissions to access the SQL Data Warehouse.
+	TODO: Screenshot (ex1-sql-failed-conn) [Remove Creds]
+
+1. Make a note of the IP address.
+
+1. Switch back to the Azure SQL Server on the Azure portal and add a new Firewall rule with the following details:
+	1. Rule Name: 'Readinnes IP'
+	2. Start IP: <The IP you just recorded>
+	3. End IP: <The IP you just recorded>
+
+1. Save the changes. This should grant access to the Data Warehouse to only your IP Address.
+
+1. Let's switch again to our SQL CLI and try to connect again to our Data Warehouse. You should now be successful in connecting to the Warehouse.
+	TODO: Screenshot
+
+
+<a name="Exercise2"></a>
+### Exercise 2: Authentication & Authorization ###
+
+The primary concept of authentication & authorization is to create separate user identities and permissions for different roles. This is particularly important when you have different departments within your company working on the same Azure SQL Server or if an ISV has customers accessing the same server for information.
+
+>**Note:** (HDInsight Parity) Apache Hadoop contains a component called as 'Apache Ranger' Ranger helps you in securing your cluster. Apache Ranger also helps you create new users and assign them appropriate roles.
+
+#### Task 1 - Creating Authentication ####
+
+1. From the CLI, let's login to the **master** database.
+	````
+	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d master -e
+	````
+
+1. Create a login for customer1 on the master database by executing the following command:
+	````
+	CREATE LOGIN customer1 WITH PASSWORD = 'P@ssword1';
+	````
+	
+1. Exit out of the current session
+	````
+	.quit
+	````
+
+1. Next, let's login to the **readinessdw** database with the admin credentials.
+	````
+	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e
+	````
+
+#### Task 2 - Creating Authorization ####
+
+1. We'll create the user on our data warehouse as well and give our newly created user reading privileges to the database. This can be achieved by the following command. Reading privileges will ensure that the user cannot delete or modify the data in the database.
+	````
+	CREATE USER customer1 FOR LOGIN customer1;
+
+	EXEC sp_addrolemember 'db_datareader', 'customer1'
+	````
+
+1. Exit out of the current session again.
+	````
+	.quit
+	````
+
+1. Now, login to the Data Warehouse using the customer 1 credentials.
+	````
+	mssql -s readinesssqlsvr10.database.windows.net -u customer1@readinesssqlsvr10 -p P@ssword1 -d readinessdw -e
+	````
+
+1. Once logged in, let's run a simple select query to ensure that the new user has rights to do so.
+	````
+	SELECT top 10 * from adw.DimProductCatalog
+	````
+
+	TODO: Screenshot (Results) [ex2-select-query]
+
+1. Now, let's try deleting the table. Since we only gave our user READ access to the database, we should not be able to delete the database.
+	````
+	DROP TABLE adw.DimProductsCatalog
+	````
+
+	TODO: Screenshot (ex2-drop-table)
+
+
+
+<a name="Exercise3"></a>
+### Exercise 2: Row-level Security ###
+
+Row-level security is an important feature for ISVs and SaaS application providers that are handling data from multiple customers. It is important to ensure that you are exposing each customer to only their data. Azure SQL DB offers Row-level security out-of-the-box. However, other analytical data stores, such as SQL Data Warehouse & Apache Hive do not offer this feature. In this exercise, we will add row-level security to our data warehouse.
+
+>**NOTE:** (Azure SQL DB parity) Row-level Security in Azure SQL DB is based on the same concept as what is being discussed in this exercise. More details can be found here: https://msdn.microsoft.com/library/dn765131.aspx
+
+>**Note:**: (Hive on HDInsight parity) As previously mentioned, authentication & roles can be managed via Apache Ranger. The underlying concept of Row-level security is same as what is being discussed in this exercise can be replicated to Apache Hive with the help of Apache Ranger.
+
+
+1. For the purposes of this exercise, we will assume that we have a different manufacturer or every category of products that we sell on our e-commerce website i.e. We have one customer that is selling 'Lighting' on our webiste, whereas another one selling 'Wheels & Tires', etc.
+
+1. We will create separate users for these customers and give them permissions to only view their sales and not sales of any other category.
+
+1. Let's start by logging into our **master** database using our admin credentials and creating logins for these users
+	````
+	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d master -e	
+
+	CREATE LOGIN lighting_user WITH PASSWORD = 'P@ssword1'
+	CREATE LOGIN wheels_user WITH PASSWORD = 'P@ssword2'
+
+	.quit
+	````
+
+1. Now, let's switch to our **readinessdw** data warehouse and create users for these for logins.
+	````
+	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e
+
+	CREATE USER lighting_user FOR LOGIN lighting_user
+	CREATE USER wheels_user FOR wheels_user
+
+	
