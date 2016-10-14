@@ -289,7 +289,7 @@ The primary concept of authentication & authorization is to create separate user
 	````
 	CREATE USER customer1 FOR LOGIN customer1;
 
-	EXEC sp_addrolemember 'db_datareader', 'customer1'
+	EXEC sp_addrolemember N'db_datareader', N'customer1'
 	````
 
 1. Exit out of the current session again.
@@ -319,7 +319,7 @@ The primary concept of authentication & authorization is to create separate user
 
 
 <a name="Exercise3"></a>
-### Exercise 2: Row-level Security ###
+### Exercise 3: Row-level Security ###
 
 Row-level security is an important feature for ISVs and SaaS application providers that are handling data from multiple customers. It is important to ensure that you are exposing each customer to only their data. Azure SQL DB offers Row-level security out-of-the-box. However, other analytical data stores, such as SQL Data Warehouse & Apache Hive do not offer this feature. In this exercise, we will add row-level security to our data warehouse.
 
@@ -342,11 +342,47 @@ Row-level security is an important feature for ISVs and SaaS application provide
 	.quit
 	````
 
-1. Now, let's switch to our **readinessdw** data warehouse and create users for these for logins.
+1. Now, let's switch to our **readinessdw** data warehouse.
 	````
 	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e
+	````
 
-	CREATE USER lighting_user FOR LOGIN lighting_user
-	CREATE USER wheels_user FOR wheels_user
+1. The first step here is to create a new **schema** in order to create views on top of our data
+	````
+	CREATE SCHEMA App
+	AUTHORIZATION dbo
+	````
 
-	
+1. Next, we'll create a new database role that only has access to this newly created **App** schema
+	````
+	CREATE ROLE app_view AUTHORIZATION [dbo]
+
+
+	GRANT SELECT, VIEW DEFINITION
+	ON SCHEMA::App
+		TO app_view
+	````
+
+1. We shall now create new users on our database for our different manufacturers. Notice how we set the default schema to **App**
+
+	````
+	CREATE LOGIN lighting_user FOR LOGIN lighting_user WITH DEFAULT_SCHEMA = App
+	CREATE LOGIN wheels_user FOR LOGIN wheels_user WITH DEFAULT_SCHEMAR = App
+	````
+
+1. Finally, we shall assign the role of **app_view** to our newly created users. This will restrict them to only those tables and views that are within the _app_ schema.
+	````
+	EXEC sp_addrolemember N'app_view',N'lighting_user'
+	EXEC sp_addrolemember N'app_view',N'wheels_user'
+	````
+
+1. We can quickly test to ensure that our users don't have the rights to see any tables by logging into the data warehouse using their credentials and running the **.tables** command.
+	````
+	mssql -s readinesssqlsvr10.database.windows.net -u lighting_user@readinesssqlsvr10 -p P@ssword1 -d readinessdw -e
+
+	.tables
+	````
+	TODO: Screenshot (ex3-user-view-no-tables)
+
+1. Now that we've assigned our users to the **app** schema. Let's add some views to the schema so that our users can see the data that they're really interested in.
+

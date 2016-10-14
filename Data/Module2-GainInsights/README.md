@@ -1846,7 +1846,7 @@ In this task, you'll create a report based on the SQL Data Warehouse dataset you
 
 	In the navigation pane, your reports are listed under the **Reports** heading. Each listed report represents one or more pages of visualizations based on one or more of the underlying datasets.
 
-1. In the _Fields_ pane, check **category** and **views** from the **adf.ProfitableProducts** table.
+1. In the _Fields_ pane, check **category** and **views** from the **adw.ProfitableProducts** table.
 
 	![Product fields](Images/ex4task2-fields.png?raw=true "Product fields")
 
