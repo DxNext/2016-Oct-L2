@@ -2,6 +2,8 @@
 
 Chances are you already have an application you're running locally that you'd like to deploy to Azure App Services. Or, maybe you are using a tool such as Sublime, or Visual Studio Code, and don't have access to the cool right-click menus offered in Visual Studio Community (or Professional). If that's the case, you have several options available to you when it comes to deploying your application to App Services.
 
+You can obtain the necessary software and source code by following the [setup instructions](setup.md).
+
 ## Overall Migration Steps
 
 Regardless of how you intend to deploy your application to App Services, you have two main steps; you can either deploy your application first, or you can deploy your data store. App Services supports both scenarios. This allows you to migrate your application piecemeal, ensuring uptime during your migration, or the ability to test your application without placing all services into the cloud.
@@ -28,4 +30,4 @@ You can migrate your SQL Server database to Microsoft Azure SQL Database, while 
 
 ### Data Store First with ASP.NET
 
-You can create a NoSQL server on Microsoft Azure as a managed service (Platform as a Service, or PaaS), by using [https://azure.microsoft.com/en-us/documentation/articles/documentdb-protocol-mongodb/](Azure DocumentDB with MongoDB protocol support), which supports many of the same calls that MongoDB supports. You can walk through the steps by following **[Migrating MongoDB to DocumentDB](mongodb-first.md)**. 
+You can create a NoSQL server on Microsoft Azure as a managed service (Platform as a Service, or PaaS), by using [https://azure.microsoft.com/en-us/documentation/articles/documentdb-protocol-mongodb/](Azure DocumentDB with MongoDB protocol support), which supports many of the same calls that MongoDB supports. You can walk through the steps by following **[Migrating MongoDB to DocumentDB](mongodb-first.md)**.
