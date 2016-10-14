@@ -92,7 +92,7 @@ Navigate to the Setup Folder under 'Module 2'. You will find a folder called Set
 In this section you will create a new storage container, and load sample data that will be used later in the module. 
 
 
-1. Open **Azure Storage Explorer** or the tool of your preference to connect to the new storage account that was created by the ARM template. You will need the storage account name and key in order to connect to it. In order to get the Storage account name and key, head over to the Azure portal (https://portal.azure.com) and navigate to the Storage Account and find the 'Keys' section. Copy the name and one of the keys (either primary or secondary) and connect to the Storage account via the storage explorer using the account name and key.
+1. Open **Azure Storage Explorer** or the tool of your preference to connect to the new storage account that was created by the ARM template (or create a storage account in case you are manually creating all resources). You will need the storage account name and key in order to connect to it. In order to get the Storage account name and key, head over to the Azure portal (https://portal.azure.com) and navigate to the Storage Account and find the 'Keys' section. Copy the name and one of the keys (either primary or secondary) and connect to the Storage account via the storage explorer using the account name and key.
 	1. On the left pane of _Azure Storage Explorer_, right-click on **Storage Accounts** and select **Connect to Azure Storage...** 
 	1. Enter the account name and key in the dialog, then click **OK**.
 
@@ -108,12 +108,12 @@ In this section you will create a new storage container, and load sample data th
 
 1. Create new blob containers by right clicking on the storage account name and clicking 'Create Blob Container'.
 
-1. Create the following two containers:
+1. Create the following two private containers:
 	1. partsunlimited
 	1. processeddata
 
 1. Verify the three new Blob Containers exist. 
-	1. In _Azure Storage Explorer_ expand your account and expand **Blob Containers** to verify two new containers with the name **partsunlimited** & **processeddata** were created. A separate container for the HDInsight cluster will also be present. 
+	1. In _Azure Storage Explorer_ expand your account and expand **Blob Containers** to verify two new containers with the name **partsunlimited** & **processeddata** were created. A separate container for the HDInsight cluster will also be present (if you have run the setup scripts to auto-create the resources). 
 
 1. Switch back to your repository and navigate to the folder path: Module2-GainInsights\Setup\Assets.
 
@@ -332,6 +332,13 @@ In this task, you'll write a Hive query to generate product stats (views and car
 		ALTER TABLE LogsRaw ADD IF NOT EXISTS PARTITION (year=2016, month=10, day=08) LOCATION 'wasb://partsunlimited@<StorageAccountName>.blob.core.windows.net/logs/2016/10/08';
 		ALTER TABLE LogsRaw ADD IF NOT EXISTS PARTITION (year=2016, month=10, day=09) LOCATION 'wasb://partsunlimited@<StorageAccountName>.blob.core.windows.net/logs/2016/10/09';
 
+		SELECT CAST(get_json_object(jsonentry,"$.productId") as BIGINT),
+		CAST(get_json_object(jsonentry,"$.userId") as BIGINT),
+		get_json_object(jsonentry,"$.eventDate"),
+		CAST(get_json_object(jsonentry,"$.quantity") as INT),
+		CAST(get_json_object(jsonentry,"$.price") as DOUBLE)
+		from LogsRaw;
+
 		````
 
 		> **Note**: The CREATE EXTERNAL TABLE command that we used here, creates an external table, the data file can be located outside the default container and does not move the data file.
@@ -443,7 +450,7 @@ In this task, we'll create our hive scripts to process out data. This is used to
 	AS SELECT get_json_object(jsonentry, "$.skuNumber") as skuNumber,
 			  get_json_object(jsonentry, "$.id") as id,
 			  get_json_object(jsonentry, "$.productId") as productId,
-			  get_json_object(jsonentry, "$.categoryId") as categoryId,
+			  get_json_object(jsonentry, "$.category.categoryId") as categoryId,
 			  get_json_object(jsonentry, "$.category.name") as categoryName,
 			  get_json_object(jsonentry, "$.title") as title,
 			  get_json_object(jsonentry, "$.price") as price,
@@ -1023,7 +1030,7 @@ In this task, you'll create the input and output tables corresponding to the lin
 		"structure": [
 			{
 				"name": "eventdate",
-				"type": "DateTime"	
+				"type": "Datetime"	
 			},
 			{
 				"name": "userid",
@@ -1703,7 +1710,7 @@ Instead of invoking the Stored Procedure along with the copy activity, you can u
 
 1. Create a new dataset for the ProfitableProducts table that will be the output of the new pipeline.
  1. In the Editor for the Data Factory, click **New dataset** button on the toolbar and click **Azure SQL Data Warehouse** from the drop down menu.
- 1. Set the **name** to "StatsSqlDWOuput" and the **linkedServiceName** to "AzureSqlDWLinkedService"
+ 1. Set the **name** to "ProfitableProductsSQL" and the **linkedServiceName** to "AzureSqlDWLinkedService"
  1. Set the **tableName** property to **adw.ProfitableProducts**:
 
 		````JavaScript
