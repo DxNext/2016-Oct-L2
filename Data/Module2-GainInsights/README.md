@@ -549,7 +549,7 @@ Once you have had some experience using PolyBase and querying Azure SQL Data War
 
 1. In Visual Studio, enter the SQL Server credentials (dwadmin/P@ssword123).
 
-1. In the _SQL Server Object Explorer_, expand the server and right-click the **partsunlimited** database.   Select **New Query...**.
+1. In the _SQL Server Object Explorer_, expand the server and right-click the **readinessdw** database.   Select **New Query...**.
 
 >**Note:** For Mac/Linux users, please install the SQL CLI npm package by using the command line tool (_npm install -g sql-cli_). 
 >Now, you can access your database by typing **mssql -s yourServerName.database.windows.net -u yourUsername@yourServerName -p yourPassword -d yourDatabase –e**. Once connected, you can run the SQL commands below. The only thing to keep in mind is that the entire SQL command needs to be submitted together. A carriage return will attempt to execute your query.
