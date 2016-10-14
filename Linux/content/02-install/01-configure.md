@@ -4,8 +4,7 @@ Now that we are inside our machine we need to install these tools:
 
 1. MongoDB
 1. Node.js
-1. Bower and Gulp
-1. MEAN
+1. The rest of the packages
 
 ## Package managers (.deb and .rpm)
 
@@ -157,27 +156,31 @@ sudo yum install gcc-c++ make git fontconfig bzip2 libpng-devel ruby ruby-devel
     Permissions follow the next rule:
 
     ![alt text][permissions]
-    There are multiple ways of fixing this file's permissions. Choose one of the followin commands to do so:
+    **Note:*** When enabled, the sticky bit prevents users in that directory from deleting files and folders that don't belong to them.
 
-    Octal
+    There are multiple ways of fixing this file's permissions. Choose one of the following commands to do so:
+
+    - Octal
 
     ```Shell
     sudo chmod 644 /etc/yum.repos.d/mongodb.org-3.2.repo
     ```
-    Removing multiple permissions
+    - Removing multiple permissions
 
     ```Shell
     sudo chmod a-x,g-w,o-w /etc/yum.repos.d/mongodb.org-3.2.repo
     ```
-    Setting each specific permission
+
+    - Setting each specific permission
+
     ```Shell
     sudo chmod u=rw,g=r,o=r /etc/yum.repos.d/mongodb.org-3.2.repo
     ```
-    Mixed mode
+    - Mixed mode
+
     ```Shell
     sudo chmod a=r,u+w /etc/yum.repos.d/mongodb.org-3.2.repo
     ```
-    And if you were wondering about the sticky bit: When enabled, it prevents users in that directory from deleting files and folders that don't belong to them.
     Please verify that your file has the following permissions:
     ```Shell
     -rw-r--r--.  1 root root  204 Oct 12 23:01 mongodb.org-3.2.repo
@@ -233,14 +236,131 @@ sudo yum install gcc-c++ make git fontconfig bzip2 libpng-devel ruby ruby-devel
     ```Shell
     sudo yum install epel-release
     ```
-1. Install node
+
+1. Install [NodeJS](https://nodejs.org)
+
     ```Shell
     sudo yum install nodejs
     ```
-1. Check the installed version
+
+1. Check the installed version of NodeJS and [NPM](https://www.npmjs.com/)
+
     ```Shell
     node --version
+    -------------------------
     v6.7.0
     ```
+
+     ```Shell
+    npm version
+    -------------------------
+    {   npm: '3.10.3',
+        ares: '1.10.1-DEV',
+        http_parser: '2.7.0',
+        icu: '50.1.2',
+        modules: '48',
+        node: '6.7.0',
+        openssl: '1.0.1e-fips',
+        uv: '1.9.1',
+        v8: '5.1.281.83',
+        zlib: '1.2.7' }
+    ```
+
+## The rest of the packages
+
+1. We are going to use the [Bower Package Manager](http://bower.io/) to manage our front-end packages.
+
+    ```Shell
+    sudo npm install -g bower
+    --------------------------------------------------------
+    /usr/bin/bower -> /usr/lib/node_modules/bower/bin/bower
+    /usr/lib
+    └── bower@1.7.9
+    ```
+1. We will be using `'git'` to clone directories
+
+    ```Shell
+    sudo yum install git
+    ```
+
+1. We clone the latest version of [MEAN.JS](https://github.com/meanjs/mean) boilerplate
+
+    ```Shell
+    git clone https://github.com/meanjs/mean.git meanjs
+    ```
+
+1. And we move to the meanjs folder we just created
+
+    ```Shell
+    cd meanjs
+    ```
+
+1. We install all the depondencies for the boilerplate
+
+    ```Shell
+    npm install
+    ```
+
+    - When the npm packages install process is over, npm will initiate a bower install command to install all the front-end modules needed for the application
+
+    - To update these packages later on, just run npm update
+
+1. We can run the app now:
+
+    ```Shell
+    npm start
+    ```
+    
+    We should see something like this
+
+    ```Shell
+    --
+    MEAN.JS - Development Environment
+
+    Environment:     development
+    Server:          http://0.0.0.0:3000
+    Database:        mongodb://localhost/mean-dev
+    App version:     0.5.0-beta
+    MEAN.JS version: 0.5.0-beta
+    --
+    ```
+
+1. Open another SSH connection to our server and run the following command
+    
+    ```Shell
+    wget http://0.0.0.0:3000
+    --------------------------------------------------------------
+    --2016-10-14 00:17:58--  http://0.0.0.0:3000/
+    Connecting to 0.0.0.0:3000... connected.
+    HTTP request sent, awaiting response... 200 OK
+    Length: 9736 (9.5K) [text/html]
+    Saving to: ‘index.html’
+
+    100%[===================================================================================================================================>] 9,736       --.-K/s   in 0.001s
+
+    2016-10-14 00:17:58 (9.74 MB/s) - ‘index.html’ saved [9736/9736]
+    ```
+
+    Notice that in the previous terminal we are receiving a `'GET'` request
+
+    ```Shell
+    info: GET / 200 38.696 ms - 9736
+    ```
+
+    And if we see the content of the file:
+
+    ```Shell
+    less index.html
+    ----------------
+    <meta property="og:title" content="MEAN.JS - Development Environment">
+    ```
+
+    You will see that this file is the basic "Hello world" file from Mean.JS, you can move around with the arrow keys and close the file with the `'q'` key.
+
+    But also if you can check your page going to your FQDN or your IP Address. And if you dont remember it, you can always use `'azure vm show <group-name> <vm-name>'`
+    ![alt text][mean]
+
+
+[mean]: ../../img/mean.jpg "You can save your changes every time you want"
 
 [permissions]: ../../img/permissions.png "You can save your changes every time you want"
