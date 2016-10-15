@@ -10,11 +10,11 @@ namespace PartsUnlimited.Models
     {
         public static IEnumerable<Category> GetCategories()
         {
-            yield return new Category { Name = "Brakes", Description = "Brakes description", ImageUrl = "product_brakes_disc.jpg" };
-            yield return new Category { Name = "Lighting", Description = "Lighting description", ImageUrl = "product_lighting_headlight.jpg" };
-            yield return new Category { Name = "Wheels & Tires", Description = "Wheels & Tires description", ImageUrl = "product_wheel_rim.jpg" };
-            yield return new Category { Name = "Batteries", Description = "Batteries description", ImageUrl = "product_batteries_basic-battery.jpg" };
-            yield return new Category { Name = "Oil", Description = "Oil description", ImageUrl = "product_oil_premium-oil.jpg" };
+            yield return new Category { CategoryId=0, Name = "Brakes", Description = "Brakes description", ImageUrl = "product_brakes_disc.jpg" };
+            yield return new Category { CategoryId=1, Name = "Lighting", Description = "Lighting description", ImageUrl = "product_lighting_headlight.jpg" };
+            yield return new Category { CategoryId=2, Name = "Wheels & Tires", Description = "Wheels & Tires description", ImageUrl = "product_wheel_rim.jpg" };
+            yield return new Category { CategoryId=3, Name = "Batteries", Description = "Batteries description", ImageUrl = "product_batteries_basic-battery.jpg" };
+            yield return new Category { CategoryId=4, Name = "Oil", Description = "Oil description", ImageUrl = "product_oil_premium-oil.jpg" };
         }
 
         public static IEnumerable<Product> GetProducts(IEnumerable<Category> categories)

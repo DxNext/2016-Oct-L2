@@ -129,8 +129,8 @@
             var eventTypes = new List<string>() { "add", "view", "checkout", "remove" };
             var eventWeight = new List<int>() {32, 54, 20, 10 };
 
-            /*
-            var messagestring = JsonConvert.SerializeObject(products, new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            //Write Product Catalog data to files
+          /*  var messagestring = JsonConvert.SerializeObject(products, new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver() });
             System.IO.File.WriteAllText(@".\productcatalog.json", messagestring);
             */
 

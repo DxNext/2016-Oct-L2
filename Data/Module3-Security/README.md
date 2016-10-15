@@ -366,8 +366,9 @@ Row-level security is an important feature for ISVs and SaaS application provide
 1. We shall now create new users on our database for our different manufacturers. Notice how we set the default schema to **App**
 
 	````
-	CREATE LOGIN lighting_user FOR LOGIN lighting_user WITH DEFAULT_SCHEMA = App
-	CREATE LOGIN wheels_user FOR LOGIN wheels_user WITH DEFAULT_SCHEMAR = App
+	CREATE USER lighting_user FOR LOGIN lighting_user WITH DEFAULT_SCHEMA = App
+	
+	CREATE USER wheels_user FOR LOGIN wheels_user WITH DEFAULT_SCHEMAR = App
 	````
 
 1. Finally, we shall assign the role of **app_view** to our newly created users. This will restrict them to only those tables and views that are within the _app_ schema.
@@ -384,5 +385,78 @@ Row-level security is an important feature for ISVs and SaaS application provide
 	````
 	TODO: Screenshot (ex3-user-view-no-tables)
 
-1. Now that we've assigned our users to the **app** schema. Let's add some views to the schema so that our users can see the data that they're really interested in.
+1. Now that we've assigned our users to the **app** schema. Let's add some views to the schema so that our users can see the data that they're really interested in. 
+
+	1. Let's logout of of the current user.
+		````
+		.quit
+		````
+
+	1. Log back into the Data warehouse using the admin credentials
+		````
+		mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e
+		````
+
+	1. Now, let's modify our tables to add another column to the table called as **TenantId**. Took keep it simple, we'll let the value of TenantId be the same as CategoryId.
+		````
+		ALTER TABLE adw.DimProductCatalog ADD TenantId int NULL
+		````
+
+		````
+		UPDATE adw.DimProductCatalog SET TenantId = CategoryId
+		````
+
+	1. Next, let's create a mapping table between our **Users** and **TenantId** so that we know which information to display when a specific user logs in.
+		````
+		CREATE Table adw.UserTenant (UserName nvarchar(20), TenantId int)	
+
+		INSERT INTO adw.UserTenant VALUES ('lighting_user', 1)
+		INSERT INTO adw.UserTenant VALUES ('wheels_user',2)
+		````
+
+	1. Now, let's create a view on top of our fact table that joins with our dimension table and adds the product attributes to each transaction. We'll join the data with our UserTenant table to filter out the values that are not to be shown.
+
+		````
+		CREATE VIEW app.FactWebsiteActivity as 
+			SELECT a.*, b.Title, b.CategoryName, b.CostPrice, b.SalePrice, b.TenantId 
+				from adw.FactWebsiteActivity a 
+					INNER JOIN adw.DimProductCatalog b ON a.ProductId = b.ProductId 
+					INNER JOIN adw.UserTenant c on b.TenantId = c.TenantId
+				WHERE c.UserName = System_User
+		````
+
+1. Now that our view is created. Let's log in to the database using our **lighting_user** profile and run some queries on the data. You should see similar results as shown in the screenshot.
+	````
+	mssql -s readinesssqlsvr10.database.windows.net -u lighting_user@readinesssqlsvr10 -p P@ssword1 -d readinessdw -e
+	
+	.tables
+
+	SELECT COUNT(*) from App.FactWebsiteActivity
+	````
+		TODO: Screenshot (ex3-show-tables-app-view)
+		
+
+1. Let's also run a simple select query on the view to ensure we are not seeing data that we aren't supposed to.
+	````
+	SELECT TOP 200 * from App.FactWebsiteActivity
+	````
+		TODO: Screenshot (ex3-select-query)
+
+1. Let's run the steps again for the other user to ensure that we see a different dataset than what was just returned by the SELECT query.
+
+	````
+	mssql -s readinesssqlsvr10.database.windows.net -u lighting_user@readinesssqlsvr10 -p P@ssword1 -d readinessdw -e
+	
+	.tables
+
+	SELECT COUNT(*) from App.FactWebsiteActivity
+
+	SELECT TOP 200 * from App.FactWebsiteActivity
+	````
+
+With that, we have successfully added Row Level security to our Data Warehouse.
+
+
+<a name="Exercise4"></a>
+### Exercise 4: Transparent Data Encryption on your data ###
 
