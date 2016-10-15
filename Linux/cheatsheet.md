@@ -48,5 +48,16 @@ C:\Users\USERNAME\AppData\Local\lxss\home\USERNAME\.ssh
 1. whenever you don't know where there is a tool, you can use provide to look for it
 
     ```Shell
-    yum provides killall
+    yum whatprovides command
     ```
+
+1. Delete a folder and everything in it forever
+
+    ```Shell
+    rm -rf folder
+    ```
+
+1. Training material for LFCS exam
+http://aka.ms/linuxlfcsprep
+
+1. <ctrl+r> to search command history (or '/' in vi-mode)
