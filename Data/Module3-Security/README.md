@@ -460,3 +460,27 @@ With that, we have successfully added Row Level security to our Data Warehouse.
 <a name="Exercise4"></a>
 ### Exercise 4: Transparent Data Encryption on your data ###
 
+Transparent Data Encryption (TDE) helps encrypt database files on the source disk. It's an important requirement for many companies to have their data encrypted at rest. TDE is supported out-of-the-box by Azure SQL DB and Azure SQL Data Warehouse. HDInsight uses Azure Blob Storage underneath the covers as its storage layer and Azure Blob Storage supports Data Encryption at-rest.
+
+1. To Enable Encryption on your data Warehouse, connect to the **master** database on the server hosting the database using a login that is an administrator or a member of the **dbmanager** role in the master database
+
+	````
+	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d master -e
+
+	ALTER DATABASE [readinessdw] SET ENCRYPTION ON;
+
+	````
+
+1. Finally, let's verify that the data warehouse is indeed encrypted.
+
+	````
+	SELECT
+    [name],
+    [is_encrypted]
+		FROM
+    sys.databases
+	````
+	TODO: Screenshot (ex4-encryption)
+With that, we've successfully completed Module 3.
+
+To recap, in this module, we've covered the basics of how you can secure your database.
