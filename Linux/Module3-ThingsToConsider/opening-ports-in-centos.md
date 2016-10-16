@@ -1,0 +1,1 @@
+You may use the Digital Ocean [tutorial here](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-firewalld-on-centos-7) to learn more about managing the firewall in CentOS.
