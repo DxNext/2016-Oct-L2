@@ -37,7 +37,7 @@
     1.	WA Linux Agent
 
     
-5.	Containers - 2h
+5.	Docker Containers - 2h
     1.	Docker intro
     1.	Deploy MEAN
     1.	Stateful vs stateless
@@ -47,7 +47,7 @@
         1.	Publish changes to production server (Release work)
         1.	Mount volume in personal computer
         
-6.	ACS - 1h
+6.	Azure Container Services - 1h
     1.	Docker Swarm
     1.	DC/OS
     
@@ -55,7 +55,7 @@
     1.	Intro
     1.	Demo deploying Wordpress from git
 
-8.	Linux takeaways (MKTG) BRUNO OGUZ
+8.	Linux takeaways
     1.	Advantages of running linux on Azure
     2.	Keypoints where Azure is better than AWS
     3.	When to choose what Linux distro

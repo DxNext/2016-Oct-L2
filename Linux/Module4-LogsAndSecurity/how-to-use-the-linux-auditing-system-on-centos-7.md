@@ -1,0 +1,1 @@
+Please follow the steps in [this great Digital Ocean article.](https://www.digitalocean.com/community/tutorials/how-to-use-the-linux-auditing-system-on-centos-7)
