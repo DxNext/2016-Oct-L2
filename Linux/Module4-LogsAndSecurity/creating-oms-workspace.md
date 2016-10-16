@@ -10,16 +10,16 @@ You can create an free OMS workspace using the OMS website. Or, you can use a Mi
 ## Sign up quickly using Microsoft Azure
 
 1. Go to the [Azure portal](https://portal.azure.com) and sign in, browse the list of services, and then select **Log Analytics (OMS)**.  
-    ![Azure portal](./media/log-analytics-get-started/oms-onboard-azure-portal.png)
+    ![Azure portal](./media/oms-onboard-azure-portal.png)
 2. Click **Add**, then select choices for the following items:
     - **OMS Workspace** name
     - **Subscription** - If you have multiple subscriptions, choose the one you want to associate with the new workspace.
     - **Resource group**
     - **Location**
     - **Pricing tier**  
-        ![quick create](./media/log-analytics-get-started/oms-onboard-quick-create.png)
+        ![quick create](./media/oms-onboard-quick-create.png)
 3. Click **Create** and you'll see the workspace details in the Azure portal.       
-    ![workspace details](./media/log-analytics-get-started/oms-onboard-workspace-details.png)         
+    ![workspace details](./media/oms-onboard-workspace-details.png)         
 4. Click the **OMS Portal** link to open the Operations Management Suite website with your new workspace.
 
 You're ready to start using the Operations Management Suite portal.
@@ -29,7 +29,7 @@ You can learn more about setting up your workspace and linking existing workspac
 ## Get started with the Operations Management Suite portal
 To choose solutions and connect the servers that you want to manage, click the **Settings** tile and follow the steps in this section.  
 
-![get started](./media/log-analytics-get-started/oms-onboard-get-started.png)  
+![get started](./media/oms-onboard-get-started.png)  
 
 1. **Connect a source** - Choose how you would like to connect to your server environment to gather data:
     - [Connect Linux servers with the OMS Agent for Linux.](./install-oms-agent-for-linux.md)
@@ -37,4 +37,4 @@ To choose solutions and connect the servers that you want to manage, click the *
 
 2. **Gather data** Configure at least one data source to populate data to your workspace. When done, click **Save**.    
 
-    ![gather data](./media/log-analytics-get-started/oms-onboard-logs.png)
+    ![gather data](./media/oms-onboard-logs.png)
