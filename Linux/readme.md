@@ -19,7 +19,7 @@
     1.	Import database
     1.	Git integration and deployment
     
-3.	Things to consider before deploying to production
+3.	[Things to consider before deploying to production](./Module3-ThingsToConsider/readme.md)
     
 4.	[Linux logging and security basics](./Module4-LogsAndSecurity/readme.md)
        
