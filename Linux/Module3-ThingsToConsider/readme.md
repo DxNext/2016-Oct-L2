@@ -1,6 +1,6 @@
 Here's some information that you would like to consider before deploying your app to production:
 
-1. Opening the ports used by your application in Linux firewall
+1. [Opening the ports used by your application in Linux firewall](./opening-ports-in-centos.md)
 2. Opening the ports used by your application in Azure
     - [Using Azure Portal](./opening-ports-in-azure-portal.md)
     - [Using Azure Resource Manager](./opening-ports-in-arm.md)
