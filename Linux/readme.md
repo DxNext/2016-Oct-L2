@@ -21,11 +21,11 @@
     
 3.	Things to consider before deploying to production
     
-[4.	Linux logging and security basics](./Module4-LogsAndSecurity/readme.md)
+4.	[Linux logging and security basics](./Module4-LogsAndSecurity/readme.md)
        
-[5.	Docker Containers](./Module3-DockerContainers/readme.md)
+5.	[Docker Containers](./Module3-DockerContainers/readme.md)
         
-[6.	Azure Container Services](./Module6-AzureContainerServices/readme.md)
+6.	[Azure Container Services](./Module6-AzureContainerServices/readme.md)
     
 7.	Linux AppServices (Tuxedo)
     1.	Intro
