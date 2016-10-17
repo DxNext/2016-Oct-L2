@@ -1239,7 +1239,7 @@ In this task, you'll create the input and output tables corresponding to the lin
  1. Click **Deploy** on the toolbar to deploy the dataset.
 
 
- 1. Let's also create a SQL DW dataset for the Product Catalog table. Following the steps from the previous datasets, the JSON should look as follows. You'll notice that we've marked this dataset as **external**. For the purposes of this lab, the data is already loaded into SQL DW in the previous exercise. 
+ 1. Let's also create a SQL DW dataset for the Product Catalog table. Following the steps from the previous datasets, the JSON should look as follows. You'll notice that we've marked this dataset as **external**. For the purposes of this lab, the data is already loaded into SQL DW in the previous exercise and hence this dataset needs to be marked as external.
 
 >**NOTE**: Using the 'Clone' option for the ADF JSON helps speed up the process.
  
