@@ -13,11 +13,11 @@
             <h2>Model Information</h2>
             <p>
                 Please enter your Recommendations <strong>Account Key</strong>:&nbsp;&nbsp;&nbsp;
-                <asp:TextBox ID="ModelKey" runat="server" OnTextChanged="ModelKey_TextChanged"></asp:TextBox>
+                <asp:TextBox ID="ModelKey" runat="server" OnTextChanged="ModelKey_TextChanged" AutoPostBack="true"></asp:TextBox>
             </p>
             <p>
                 Select a Trained Model from the List:&nbsp;&nbsp;&nbsp;
-                <asp:DropDownList ID="ModelSelect" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+                <asp:DropDownList ID="ModelSelect" runat="server" OnSelectedIndexChanged="ModelSelect_SelectedIndexChanged" AutoPostBack="true">
                 </asp:DropDownList>
                 </p>
         </div>

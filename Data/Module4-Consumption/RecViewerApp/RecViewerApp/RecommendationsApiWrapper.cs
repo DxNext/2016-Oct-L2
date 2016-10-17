@@ -68,7 +68,7 @@ namespace RecViewerApp
         /// <param name="modelName">Name for the model</param>
         /// <param name="description">Description for the model</param>
         /// <returns>Model Information.</returns>
-        public IEnumerable<ModelInfo> GetModels(string description = null)
+        public ModelInfoList GetModels(string description = null)
         {
             var uri = BaseUri + "/models/";
             var response = _httpClient.GetAsync(uri).Result;
@@ -80,7 +80,7 @@ namespace RecViewerApp
             }
 
             var jsonString = ExtractReponse(response);
-            var modelInfo = JsonConvert.DeserializeObject<IEnumerable<ModelInfo>>(jsonString);
+            var modelInfo = JsonConvert.DeserializeObject<ModelInfoList>(jsonString);
             return modelInfo;
         }
 

@@ -21,7 +21,7 @@ namespace RecViewerApp
         {
             recommender = new RecommendationsApiWrapper(ModelKey.Text, BaseUri);
             var modelsInfo = recommender.GetModels("Parts Unlimited Store");
-            foreach(var model in modelsInfo)
+            foreach(var model in modelsInfo.Models)
             {
                 ModelSelect.Items.Add(new ListItem(model.Name, model.Id));
             }
