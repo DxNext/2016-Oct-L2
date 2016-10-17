@@ -32,18 +32,18 @@
     // To use Azure Machine Learning Frequently Bought Together Recommendation Service,
     // please refer to the instructions under docs/MachineLearning.md in this repository.
     "AzureMLRecommendations": {
-      "AccountEmail": "",
-      "AccountKey": "",
-      "ModelId": "3f1153a2-8387-4dbd-8c06-83156981eac5"
+      "AccountEmail": "tereadinesssg",
+      "AccountKey": "ed026d0b8a7449d0b4350211ba84ccbd",
+      "ModelId": "4f3d099d-9e10-4959-88b2-232e7908a062"
     },
     "ApplicationInsights": {
       "InstrumentationKey": "efc04167-3227-40ff-aa88-46a271dba379"
     },
     "DocumentDB": {
-      "Database": "PartsUnlimited",
-      "Collection": "Products",
-      "Endpoint": "https://datacodelabs.documents.azure.com:443/",
-      "AuthKey": "rXROjc1jLX2Ekg6OPYvo6okGmIlqzKAcfaJrt2j1YMaGXE0P59oGKFAUKMFeKpHe0J4UodqmZsaZl9i6Pj0drQ=="
+      "Database": "defaultcoll",
+      "Collection": "defaultcollection",
+      "Endpoint": "https://datacampdocdb.documents.azure.com:443/",
+      "AuthKey": "a74ChdsrWTvpr1172plYsr2UL5qwExZGrAp6T9fwjvuA8zmSLSwPMTpIwfVY5z5z2FwaxlqwugFtfSwV7Fd9hQ=="
     }
   }
 }

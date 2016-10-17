@@ -34,11 +34,11 @@ namespace Recommendations
 
     public class RecommendationsSampleApp
     {
-        private static string AccountKey = "397ffc2fe7cf478cb321a1e4996ff48e"; // <---  Set to your API key here.
+        private static string AccountKey = "ed026d0b8a7449d0b4350211ba84ccbd"; // <---  Set to your API key here.
         private const string BaseUri = "https://westus.api.cognitive.microsoft.com/recommendations/v4.0"; 
         private static RecommendationsApiWrapper recommender = null;
-        private static string ProductCatalogPath = @"C:\Work\Projects\oct16_upskilling\Data\Module4-Consumption\data\product_catalog"; //<-- Enter the File Path to the Product Catalog
-        private static string UsageFilesPath = @"C:\Work\Projects\oct16_upskilling\Data\Module4-Consumption\data\structuredlogs"; //<-- Enter the File Path to the Usage files
+        private static string ProductCatalogPath = @"C:\repos\2016-Oct-L2\Data\Module4-Consumption\data\product_catalog"; //<-- Enter the File Path to the Product Catalog
+        private static string UsageFilesPath = @"C:\repos\2016-Oct-L2\Data\Module4-Consumption\data\structuredlogs"; //<-- Enter the File Path to the Usage files
 
         /// <summary>
         /// 1) Builds a recommendations model and upload catalog and usage data
