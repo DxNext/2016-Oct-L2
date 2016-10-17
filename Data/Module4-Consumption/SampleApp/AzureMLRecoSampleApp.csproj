@@ -104,24 +104,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Resources\batchInput.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\catalog.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\usageA.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\usageB.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\usageC.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\usageD.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
