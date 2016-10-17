@@ -1,0 +1,30 @@
+{
+"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+"contentVersion": "1.0.0.0",
+"parameters": {
+    "uniqueSuffix":{
+        "value":"10"
+    },
+    "userName": {
+        "value": "labuser"
+    },
+    "password": {
+        "value":"labP@ssword1"
+    },
+    "location": {
+        "value": "West US"
+    },
+    "storageAccountSubName":{
+        "value":"hdistr"
+    },
+    "sqlServerSubName":{
+        "value":"readinesssqlsvr"
+    },
+    "SqlDWName":{
+        "value":"readinessdw"
+    },
+    "SqlDWServiceLevelObjective":{
+        "value": "DW100"
+    }
+}
+}
