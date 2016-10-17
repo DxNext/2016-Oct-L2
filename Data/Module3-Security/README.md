@@ -46,7 +46,7 @@ OR
 ### Setup (To be completed if you did not complete Module 2) ###
 In order to work on this exercise, it is recommended that you complete module 2. However, if you have not completed module 2, please follow this setup in order to successfully complete this exercise.
 
->**Note:** If you've completed **Module 2**, you may **skip the setup** and start with Exercise #1.
+>**Note:** If you've completed **Module 2**, you may **skip the setup** and start with Exercise #1. However, we recommend having a seperate setup for Module 3.
 
 <a name="SqlDWCreation"> </a>
 #### SQL Data Warehouse Creation #####
@@ -223,23 +223,29 @@ When creating the he SQL DW, we whitelisted _almost_ all IP address. So, in this
 
 
 1. Navigate to the Azure portal (https://portal.azure.com) and make your way to the Azure SQL Server home page.
-	TODO:Screenshot of Azure SQL Home Page & click on the 'Show Firewall settings'
+	![Firewall setting on Azure SQL Server home page](Images/ex1-show-firewall-settings.png?raw=true "Firewall setting on SQL server homepage")
+		
+			_Firewall setting on Azure SQL Server home page_
 
-1. Click on 'Show Firewall Settings'. This should open the firewall rules of your Azure SQL Server. You'll notice that it has one rule pre-defined, which allows any IP address between the range of 0.0.0.0 and 255.255.255.0 to access the server.
+1. Click on 'Show Firewall Settings'. This should open the firewall rules of your Azure SQL Server. You'll notice that it has one rule pre-defined, which allows any IP address between the range of 0.0.0.0 and 255.255.255.0 to access the server. (You will not see this if you have skipped the setup in Module 3 and are using manually created setup from Module 2).
 
 1. Click on the '...' on the right side of this rule and click delete.
-	TODO: Show screenshot
+	
 
 1. Click on save to persist the firewall settings. You should receive a confirmation that the firewall settings have been saved.
-	TODO: Screenshot (ex1-firewall-conf)
+	![Firewall setting confirmation](Images/ex1-firewall-conf.png?raw=true "Firewall setting confirmation")
+		
+			_Firewall setting confirmation_
 
 1. Now, let's switch to our SQL CLI and try to connect to the Azure SQL Data Warehouse using the following command:
 	````
-	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e 	[Remove creds]
+	mssql -s <servername>.database.windows.net -u <username>@<servername> -p <password> -d <datawarehousename> -e 
 	````
 
 1. You should receive an error stating that you do not have enough permissions to access the SQL Data Warehouse.
-	TODO: Screenshot (ex1-sql-failed-conn) [Remove Creds]
+	![Failed connecting to SQL Server](Images/ex1-sql-failed-conn.png?raw=true "Failed connecting to SQL Server")
+		
+			_Failed connecting to SQL Server_
 
 1. Make a note of the IP address.
 
@@ -251,7 +257,9 @@ When creating the he SQL DW, we whitelisted _almost_ all IP address. So, in this
 1. Save the changes. This should grant access to the Data Warehouse to only your IP Address.
 
 1. Let's switch again to our SQL CLI and try to connect again to our Data Warehouse. You should now be successful in connecting to the Warehouse.
-	TODO: Screenshot
+	![Successfully connected to SQL Server](Images/ex1-sql-failed-conn.png?raw=true "Successfully connected to SQL Server")
+		
+			_Successfully connected to SQL Server_
 
 
 <a name="Exercise2"></a>
@@ -307,14 +315,20 @@ The primary concept of authentication & authorization is to create separate user
 	SELECT top 10 * from adw.DimProductCatalog
 	````
 
-	TODO: Screenshot (Results) [ex2-select-query]
+	![Select query results](Images/ex2-select-query.png?raw=true "Select query results")
+		
+			_Select query results_
+
 
 1. Now, let's try deleting the table. Since we only gave our user READ access to the database, we should not be able to delete the database.
 	````
 	DROP TABLE adw.DimProductsCatalog
 	````
 
-	TODO: Screenshot (ex2-drop-table)
+	![Drop table error](Images/ex2-drop-table.png?raw=true "Drop table error")
+		
+			_Drop table error_
+
 
 
 
@@ -332,9 +346,9 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 1. We will create separate users for these customers and give them permissions to only view their sales and not sales of any other category.
 
-1. Let's start by logging into our **master** database using our admin credentials and creating logins for these users
+1. Let's start by logging into our **master** database using our admin credentials and creating logins for these users. Do not forget to log off as Customer1 created in the previous exercise.
 	````
-	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d master -e	
+	mssql -s <servername>.database.windows.net -u <username>@readinesssqlsvr10 -p <password> -d master -e	
 
 	CREATE LOGIN lighting_user WITH PASSWORD = 'P@ssword1'
 	CREATE LOGIN wheels_user WITH PASSWORD = 'P@ssword2'
@@ -349,8 +363,7 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 1. The first step here is to create a new **schema** in order to create views on top of our data
 	````
-	CREATE SCHEMA App
-	AUTHORIZATION dbo
+	CREATE SCHEMA App AUTHORIZATION dbo
 	````
 
 1. Next, we'll create a new database role that only has access to this newly created **App** schema
@@ -358,9 +371,7 @@ Row-level security is an important feature for ISVs and SaaS application provide
 	CREATE ROLE app_view AUTHORIZATION [dbo]
 
 
-	GRANT SELECT, VIEW DEFINITION
-	ON SCHEMA::App
-		TO app_view
+	GRANT SELECT, VIEW DEFINITION ON SCHEMA::App TO app_view
 	````
 
 1. We shall now create new users on our database for our different manufacturers. Notice how we set the default schema to **App**
@@ -383,7 +394,9 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 	.tables
 	````
-	TODO: Screenshot (ex3-user-view-no-tables)
+	![No tables returned](Images/ex3-user-view-no-tables.png?raw=true "No tables returned")
+		
+			_No tables returned_
 
 1. Now that we've assigned our users to the **app** schema. Let's add some views to the schema so that our users can see the data that they're really interested in. 
 
