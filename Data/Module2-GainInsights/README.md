@@ -989,7 +989,7 @@ In this task, you'll create the input and output tables corresponding to the lin
 	"external": true
 	````
 
-    The final _RawJsonData_ dataset should look like the following snippet:
+1. The final _RawJsonData_ dataset should look like the following snippet:
     
 	````JavaScript
 	{
@@ -1138,91 +1138,6 @@ In this task, you'll create the input and output tables corresponding to the lin
 
  1. Click **Deploy** on the toolbar to deploy the dataset.
 
- 1. (Optional) Finally, let's create a raw and structured dataset for the Product Catalog data. Following the steps laid out in the previous steps, our dataset should look as follows. Do not forget to mark this dataset as external.
- 	
-	>**Note:** This step is optional since we've already added the Product Catalog data to the SQL DW database during our earlier exercise. 
-
-		````JavaScript
-		{
-			"name": "RawProductCatalogBlob",
-			"properties": {
-				"type": "AzureBlob",
-				"linkedServiceName": "AzureStorageLinkedService",
-				"typeProperties": {
-					"folderPath": "partsunlimited/productcatalog",
-					"format": {
-						"type": "JsonFormat"
-					}
-				},
-				"availability": {
-					"frequency": "Day",
-					"interval": 1
-				},
-				"external": true
-			}
-		}
-
-		````
-
- 1. (Optional) Here's what the Structured Dataset would look like.
-
-	````JavaScript
-		{
-			"name": "StructuredProductCatalogBlob",
-			"properties": {
-				"type": "AzureBlob",
-				"linkedServiceName": "AzureStorageLinkedService",
-				"structure": [
-					{
-						"name": "skuNumber",
-						"type": "String"
-					},
-					{
-						"name": "id",
-						"type": "Int32"
-					},
-					{
-						"name": "productId",
-						"type": "String"
-					},
-					{
-						"name": "categoryId",
-						"type": "String"
-					},
-					{
-						"name": "categoryName",
-						"type": "String"
-					},
-					{
-						"name": "title",
-						"type": "String"
-					},
-					{
-						"name": "price",
-						"type": "Double"
-					},
-					{
-						"name": "salePrice",
-						"type": "Double"
-					},
-					{
-						"name": "costPrice",
-						"type": "Double"
-					}			
-				],
-				"typeProperties": {
-					"folderPath": "processeddata/product_catalog",
-					"format": {
-						"type": "TextFormat"
-					}
-				},
-				"availability": {
-					"frequency": "Day",
-					"interval": 1
-				}
-			}
-		}
-	````
 
 1. Create the dataset for the SQL Data Warehouse output using the same structure:
 
@@ -1324,9 +1239,8 @@ In this task, you'll create the input and output tables corresponding to the lin
  1. Click **Deploy** on the toolbar to deploy the dataset.
 
 
- 1. (Optional) Let's also create a SQL DW dataset for the Product Catalog table. Following the steps from the previous datasets, the JSON should look as follows. You'll notice that we've marked this dataset as **external**. For the purposes of this lab, the data is already loaded into SQL DW in the previous exercise. 
+ 1. Let's also create a SQL DW dataset for the Product Catalog table. Following the steps from the previous datasets, the JSON should look as follows. You'll notice that we've marked this dataset as **external**. For the purposes of this lab, the data is already loaded into SQL DW in the previous exercise. 
 
->**NOTE:** If you completed all of the other optional exercises, please DO NOT mark this dataset as external.
 >**NOTE**: Using the 'Clone' option for the ADF JSON helps speed up the process.
  
 	````JavaScript
@@ -1475,7 +1389,7 @@ An _HDInsight Hive activity_ executes Hive queries on a _HDInsight_ cluster.
 	],
 	````
 
-	This activity will run the **addpartitions.hql** script to create the date partition corresponding to the current slice.
+This activity will run the **addpartitions.hql** script to create the date partition corresponding to the current slice.
 
 1. Add another Hive activity to run the "2_structuredlogs.hql" script located in the storage at "partsunlimited\Scripts\structuredlogs.hql" and pass the slice date components as parameters:
 
@@ -1511,40 +1425,89 @@ An _HDInsight Hive activity_ executes Hive queries on a _HDInsight_ cluster.
 	],
 	````
 
+1. The final Pipeline JSON would look like as follows:
+	````JavaScript
+	{
+    "name": "HadoopPipeline",
+    "properties": {
+        "description": "Enter the pipeline description here",
+        "activities": [
+            {
+                "type": "HDInsightHive",
+                "typeProperties": {
+                    "scriptPath": "partsunlimited\\Scripts\\3_addpartitions.hql",
+                    "scriptLinkedService": "AzureStorageLinkedService",
+                    "defines": {
+                        "StorageAccountName": "<StorageAccountName>",
+                        "Year": "$$Text.Format('{0:yyyy}',SliceStart)",
+                        "Month": "$$Text.Format('{0:MM}',SliceStart)",
+                        "Day": "$$Text.Format('{0:dd}',SliceStart)"
+                    }
+                },
+                "inputs": [
+                    {
+                        "name": "RawJsonData"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "DummyDataset"
+                    }
+                ],
+                "policy": {
+                    "timeout": "01:00:00",
+                    "concurrency": 1,
+                    "retry": 3
+                },
+                "scheduler": {
+                    "frequency": "Day",
+                    "interval": 1
+                },
+                "name": "CreatePartitionHiveActivity",
+                "linkedServiceName": "HDInsightLinkedService"
+            },
+            {
+                "type": "HDInsightHive",
+                "typeProperties": {
+                    "scriptPath": "partsunlimited\\Scripts\\2_structuredlogs.hql",
+                    "scriptLinkedService": "AzureStorageLinkedService",
+                    "defines": {
+                        "Year": "$$Text.Format('{0:yyyy}',SliceStart)",
+                        "Month": "$$Text.Format('{0:MM}',SliceStart)",
+                        "Day": "$$Text.Format('{0:dd}',SliceStart)"
+                    }
+                },
+                "inputs": [
+                    {
+                        "name": "DummyDataset"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "WebsiteActivityBlob"
+                    }
+                ],
+                "policy": {
+                    "timeout": "01:00:00",
+                    "concurrency": 1,
+                    "retry": 3
+                },
+                "scheduler": {
+                    "frequency": "Day",
+                    "interval": 1
+                },
+                "name": "ProcessDataHiveActivity",
+                "linkedServiceName": "HDInsightLinkedService"
+            }
+        ],
+        "start": "2016-10-06T00:00:00Z",
+        "end": "2016-10-10T00:00:00Z"
+    	}
+	}
+	````
+
 1. Click **Deploy** on the toolbar to create and deploy the pipeline.
 
-
-1. (Optional) Finally, let's also create a pipeline to move our product catalog data.
-
-	````JavaScript
-	"activities": [
-		{
-			 //...
-		},
-		{
-			 "name": "ProductCatalogHiveActivity",
-			 "type": "HDInsightHive",
-			 "linkedServiceName": "HDInsightLinkedService",
-			 "typeProperties": {
-				  "scriptPath": "partsunlimited\\Scripts\\4_productcatalog.hql",
-				  "scriptLinkedService": "AzureStorageLinkedService",
-				  "defines": {
-				      "StorageAccountName": "<StorageAccountName>"
-				  }
-			 },
-			 "inputs": [
-				  { "name": "RawProductCatalogBlob" }
-			 ],
-			 "outputs": [
-				  { "name": "StructuredProductCatalogBlob" }
-			 ],
-			 "scheduler": {
-				  "frequency": "Day",
-				  "interval": 1
-			 }
-		}
-	],
-	````
 
 
 
@@ -1561,43 +1524,6 @@ In this task, you'll create a new pipeline to move the Hive activity output (sto
 1. Set the **start** date to be 2 days before the current date.
 
 1. Set the **end** date to be tomorrow.
-
-1. (Optional) Let's first create a Copy activity to move the Product Catalog data from Blob Storage to SQL DW. Notice in the _Sink_ section, how Polybase has been used to copy the data to SQL Data Warehouse.
-	````JavaScript
-	"activities": [
-		{
-			"type": "Copy",
-			"name": "ProductCatalogToDWActivity",
-			"typeProperties": {
-				"source": {
-					"type": "BlobSource"
-				},
-				"sink": {
-					"type": "SqlDWSink",
-                    "sqlWriterCleanupScript": "$$Text.Format('TRUNCATE table adw.DimProductCatalog')",
-                    "writeBatchSize": 0,
-                    "writeBatchTimeout": "00:00:00"
-
-				}
-			},
-			"inputs": [
-				{
-					"name": "StructuredProductCatalogBlob"
-				}
-			],
-			"outputs": [
-				{
-					"name": "StructuredProductCatalogSQL"
-				}
-			],
-			"scheduler": {
-				"frequency": "Day",
-				"interval": 1
-			}
-		}
-	]
-	
-	````
 
 1. Add a Move activity to move the generated tabular blobs to the SQL Data Warehouse. Notice in the _Sink_ section, how Polybase has been used to copy the data to SQL Data Warehouse.
 
@@ -1634,6 +1560,55 @@ In this task, you'll create a new pipeline to move the Hive activity output (sto
 		}
 	]
 	````
+
+1. Here's what the final JSON of the _LogsToDWPipeline_ pipeline looks like:
+	````JavaScript
+	{
+    "name": "LogsToDWPipeline",
+    "properties": {
+        "description": "Enter the pipeline description here",
+        "activities": [
+            {
+                "type": "Copy",
+                "typeProperties": {
+                    "source": {
+                        "type": "BlobSource"
+                    },
+                    "sink": {
+                        "type": "SqlDWSink",
+                        "sqlWriterCleanupScript": "$$Text.Format('DELETE FROM adw.FactWebsiteActivity WHERE EventDate >= \\'{0:yyyy-MM-dd HH:mm}\\' AND EventDate < \\'{1:yyyy-MM-dd HH:mm}\\'', WindowStart, WindowEnd)",
+                        "writeBatchSize": 0,
+                        "writeBatchTimeout": "00:00:00"
+                    }
+                },
+                "inputs": [
+                    {
+                        "name": "WebsiteActivityBlob"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "WebsiteActivitySQL"
+                    }
+                ],
+                "policy": {
+                    "timeout": "1.00:00:00",
+                    "concurrency": 1,
+                    "retry": 3
+                },
+                "scheduler": {
+                    "frequency": "Day",
+                    "interval": 1
+                },
+                "name": "LogsToDWPipeline"
+            }
+        ],
+        "start": "2016-10-06T00:00:00Z",
+        "end": "2016-10-10T00:00:00Z"
+    }
+}
+	````
+
 
 1. Click **Deploy** on the toolbar to create and deploy the pipeline.
 
@@ -1702,7 +1677,7 @@ In this task, you'll explore the features of the Monitoring App using the data f
 There are more features to continue exploring in the Monitoring App. You can also configure _alerts_ to create email notifications on various events (failure, success, etc.), re-run failed activities and even configure the app layout by dragging the panes.
 
 <a name="Ex4Task4"></a>
-#### (Optional) Task 4 - Executing Stored Procedure in SQL Data Warehouse ####
+#### Task 4 - Executing Stored Procedure in SQL Data Warehouse ####
 
 In this task you will add a new pipeline to run the stored procedure that populates the adw.ProfitableProducts table in the SQL Data Warehouse.
 
@@ -1748,6 +1723,8 @@ Instead of invoking the Stored Procedure along with the copy activity, you can u
 		}
 		````
 
+1. Here's what the final pipeline woud
+
  1. Click **Deploy** on the toolbar to create and deploy the new dataset.
 
 1. Now, create the pipeline to run the **adw.asp_populate_ProfitableProducts** stored procedure.
@@ -1767,6 +1744,9 @@ Instead of invoking the Stored Procedure along with the copy activity, you can u
 				 "inputs":[
 					{
 						"name": "WebsiteActivitySQL"
+					},
+					{
+						"name": "StructuredProductCatalogSQL"
 					}
 				 ],
 				 "outputs": [
@@ -1782,6 +1762,46 @@ Instead of invoking the Stored Procedure along with the copy activity, you can u
 			}
 		],
 		````
+
+1. Here's what the final pipeline JSON would look like:
+
+	````JavaScript
+	{
+    "name": "ProfitableProductsSQL",
+    "properties": {
+        "description": "Enter the pipeline description here",
+        "activities": [
+            {
+                "type": "SqlServerStoredProcedure",
+                "typeProperties": {
+                    "storedProcedureName": "adw.asp_populate_ProfitableProducts"
+                },
+                "inputs": [
+                    {
+                        "name": "WebsiteActivitySQL"
+                    },
+                    {
+                        "name": "StructuredProductCatalogSQL"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "ProfitableProductsSQL"
+                    }
+                ],
+                "scheduler": {
+                    "frequency": "Day",
+                    "interval": 1
+                },
+                "name": "SqlDWSprocActivity"
+            }
+        ],
+        "start": "2016-10-06T00:00:00Z",
+        "end": "2016-10-10T00:00:00Z"
+    }
+}
+
+	````
 
  1. Click **Deploy** on the toolbar to create and deploy the pipeline.
 
