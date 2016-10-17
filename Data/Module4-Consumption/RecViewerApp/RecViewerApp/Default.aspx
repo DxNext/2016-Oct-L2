@@ -11,29 +11,60 @@
     <div class="row">
         <div class="col-md-4">
             <h2>Model Information</h2>
-            <p>
+            <p class="lead">
                 Please enter your Recommendations <strong>Account Key</strong>:&nbsp;&nbsp;&nbsp;
                 <asp:TextBox ID="ModelKey" runat="server" OnTextChanged="ModelKey_TextChanged" AutoPostBack="true"></asp:TextBox>
             </p>
-            <p>
+            <p class="lead">
                 Select a Trained Model from the List:&nbsp;&nbsp;&nbsp;
-                <asp:DropDownList ID="ModelSelect" runat="server" OnSelectedIndexChanged="ModelSelect_SelectedIndexChanged" AutoPostBack="true">
+                <asp:DropDownList ID="ModelSelect" runat="server" OnSelectedIndexChanged="ModelSelect_SelectedIndexChanged" >
                 </asp:DropDownList>
                 </p>
         </div>
-        <div class="col-md-4">
+        <div class="row">
             <h2>Partsunlimited Products</h2>
-            <p>
-                &nbsp;</p>
-            <p>
-                &nbsp;</p>
+            <table>
+                <tr>
+                    
+                    <td>
+                         <div class='col-md-8'>
+                             <div class="carousel slide media-carousel" id="products">
+                                 <div class="carousel-inner">
+                                     <asp:Repeater ID="productdetails" runat="server" OnItemCommand="productdetails_ItemCommand" >
+                                         <ItemTemplate>
+                                             
+                                             <div class="item <%# (Container.ItemIndex == 0 ? "active" : "") %>">
+                                <div class="row">
+                          <div class="col-md-4">
+                              <asp:ImageButton runat="server" CommandName="Click" ImageUrl="<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).productsrc%>" CommandArgument="<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).productID%>" Height="200" Width="400" CausesValidation="false" />
+                            <!-- <a  class="thumbnail" href="#"><img alt="" src='<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).productsrc%>'></a>-->
+                          </div>          
+                            <!-- <asp:Button ID="btn" CommandName="Click" Text="myBtn" runat="server" 
+                        CommandArgument='<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).productID%>' /> -->
+                    </div>
+                          </div>
+                        
+
+                                         </ItemTemplate>
+                                      </asp:Repeater>  
+                                  </div>
+                                   <a data-slide="prev" href="#products" class="left carousel-control">‹</a>
+                                    <a data-slide="next" href="#products" class="right carousel-control">›</a>
+
+                              </div>
+                          </div>
+                    </td>
+                    
+                </tr>
+            </table>
+          
         </div>
-        <div class="col-md-4">
+        <div class="row">
             <h2>Recommendations</h2>
             <p>
                 &nbsp;</p>
             <p>
-                &nbsp;</p>
+                                &nbsp;</p>
         </div>
     </div>
 
