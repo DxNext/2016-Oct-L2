@@ -111,14 +111,40 @@ If you've completed Module 2 of this lab, you should have the product catalog an
 
 1. You will need Product Catalog data and the Usage data. You can find that in the '..\Module4-Consumption\data' folder.
 
-#######START HERE############## - Add steps on how to view the data, the format the model expects and where to paste the folderPaths
+1. As mentioned earlier, in order to train the ML Recommendations model, we need to upload our Product Catalog and our website's usage data. This data was produced by output in Module 2. We will be consuming this output in order to train out model.
+
+1. The Recommendations model expects the data to be in a certain format. All files need to be comma (,) separated.
+	1. The following is the format the **Product Catalog** data needs to be in:
+		- Product ID
+		- Product Title
+		- Category ID
+		- Description (Optional)
+		- Comma separated list of features (Optional)
+	
+	1. The following in the format the **Usage Data** needs to be in:
+		- User ID
+		- Product ID
+		- Time (Format: yyyy/MM/ddThh:mm:ss)
+		- Event (Purchase/Click/AddShopCart/RemovateShopCart)
+
+1. Let's open the data files and see what the data looks like.
+
+	- Product Catalog Data
+		TODO: Screenshot
+
+	- Usage Data
+		TODO: Screenshot
+
+
+1. Let's switch back to our visual studio solution and add the values for **ProductCatalogPath** and the **UsageFilesPath** variables with the folder paths of the product catalog and the usage data folders, respectively.
 
 1. Run the solution and take note of the **Model Id** that is shown when the application finishes, you'll need it for the following task.
 
 	TODO: Screenshot (ex1-console-output.png)
 
 <a name="Ex1Task3"></a>
-#### Task 3 - Updating your website to get recommendations ####
+#### Task 3 - Viewing recommendations in action ####
+	TODO: Task 3 is not working. Needs to be re-done
 
 In this task, you'll update the PartsUnlimited website to use the Recommendations API. To learn more, go to: https://azure.microsoft.com/en-us/documentation/articles/machine-learning-recommendation-api-documentation/
 
