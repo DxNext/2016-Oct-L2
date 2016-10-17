@@ -22,6 +22,7 @@ namespace RecViewerApp
         {
             if (!Page.IsPostBack)
             {
+                // Get the list from products file
                 List<ProductDetailsDisplay> products = new List<ProductDetailsDisplay>() {
                 new ProductDetailsDisplay { productsrc="images/product_brakes_disc.jpg",productID="1" },
                 new ProductDetailsDisplay { productsrc="images/product_lighting_bugeye-headlight.jpg",productID="2" },
