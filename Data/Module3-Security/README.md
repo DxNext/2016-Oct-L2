@@ -183,7 +183,7 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 	bcp.exe adw.DimProductCatalog in ...\Module3-Security\Setup\data\product_catalog\000000_0 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 	````
 
-	![Import Data into SQL DW using bcp](Images/setup-bcp.png?raw=true "Import Data into SQL DW using bcp")
+	![Import Data into SQL DW using bcp](Images/setup-bcp.jpg?raw=true "Import Data into SQL DW using bcp")
 		
 			_Import Data into SQL DW using bcp_
 
@@ -225,7 +225,7 @@ When creating the he SQL DW, we whitelisted _almost_ all IP address. So, in this
 1. Navigate to the Azure portal (https://portal.azure.com) and make your way to the Azure SQL Server home page.
 	![Firewall setting on Azure SQL Server home page](Images/ex1-show-firewall-settings.png?raw=true "Firewall setting on SQL server homepage")
 		
-			_Firewall setting on Azure SQL Server home page_
+			
 
 1. Click on 'Show Firewall Settings'. This should open the firewall rules of your Azure SQL Server. You'll notice that it has one rule pre-defined, which allows any IP address between the range of 0.0.0.0 and 255.255.255.0 to access the server. (You will not see this if you have skipped the setup in Module 3 and are using manually created setup from Module 2).
 
@@ -235,7 +235,7 @@ When creating the he SQL DW, we whitelisted _almost_ all IP address. So, in this
 1. Click on save to persist the firewall settings. You should receive a confirmation that the firewall settings have been saved.
 	![Firewall setting confirmation](Images/ex1-firewall-conf.png?raw=true "Firewall setting confirmation")
 		
-			_Firewall setting confirmation_
+			
 
 1. Now, let's switch to our SQL CLI and try to connect to the Azure SQL Data Warehouse using the following command:
 	````
@@ -245,7 +245,7 @@ When creating the he SQL DW, we whitelisted _almost_ all IP address. So, in this
 1. You should receive an error stating that you do not have enough permissions to access the SQL Data Warehouse.
 	![Failed connecting to SQL Server](Images/ex1-sql-failed-conn.png?raw=true "Failed connecting to SQL Server")
 		
-			_Failed connecting to SQL Server_
+			
 
 1. Make a note of the IP address.
 
@@ -259,7 +259,7 @@ When creating the he SQL DW, we whitelisted _almost_ all IP address. So, in this
 1. Let's switch again to our SQL CLI and try to connect again to our Data Warehouse. You should now be successful in connecting to the Warehouse.
 	![Successfully connected to SQL Server](Images/ex1-sql-failed-conn.png?raw=true "Successfully connected to SQL Server")
 		
-			_Successfully connected to SQL Server_
+			
 
 
 <a name="Exercise2"></a>
@@ -317,7 +317,7 @@ The primary concept of authentication & authorization is to create separate user
 
 	![Select query results](Images/ex2-select-query.png?raw=true "Select query results")
 		
-			_Select query results_
+			
 
 
 1. Now, let's try deleting the table. Since we only gave our user READ access to the database, we should not be able to delete the database.
@@ -327,7 +327,7 @@ The primary concept of authentication & authorization is to create separate user
 
 	![Drop table error](Images/ex2-drop-table.png?raw=true "Drop table error")
 		
-			_Drop table error_
+			
 
 
 
@@ -396,7 +396,7 @@ Row-level security is an important feature for ISVs and SaaS application provide
 	````
 	![No tables returned](Images/ex3-user-view-no-tables.png?raw=true "No tables returned")
 		
-			_No tables returned_
+			
 
 1. Now that we've assigned our users to the **app** schema. Let's add some views to the schema so that our users can see the data that they're really interested in. 
 
@@ -440,25 +440,25 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 1. Now that our view is created. Let's log in to the database using our **lighting_user** profile and run some queries on the data. You should see similar results as shown in the screenshot.
 	````
-	mssql -s readinesssqlsvr10.database.windows.net -u lighting_user@readinesssqlsvr10 -p P@ssword1 -d readinessdw -e
+	mssql -s <servername>.database.windows.net -u lighting_user@<servername> -p P@ssword1 -d readinessdw -e
 	
 	.tables
 
 	SELECT COUNT(*) from App.FactWebsiteActivity
 	````
-		TODO: Screenshot (ex3-show-tables-app-view)
+		![Show tables](Images/ex3-show-tables-app-view.png?raw=true "Show tables")
 		
 
 1. Let's also run a simple select query on the view to ensure we are not seeing data that we aren't supposed to.
 	````
 	SELECT TOP 200 * from App.FactWebsiteActivity
 	````
-		TODO: Screenshot (ex3-select-query)
+		![Select top 200 rows](Images/ex3-select-query.png?raw=true "Select top 200 rows")
 
 1. Let's run the steps again for the other user to ensure that we see a different dataset than what was just returned by the SELECT query.
 
 	````
-	mssql -s readinesssqlsvr10.database.windows.net -u lighting_user@readinesssqlsvr10 -p P@ssword1 -d readinessdw -e
+	mssql -s <server name>.database.windows.net -u lighting_user@<server name> -p P@ssword1 -d readinessdw -e
 	
 	.tables
 
@@ -478,13 +478,14 @@ Transparent Data Encryption (TDE) helps encrypt database files on the source dis
 1. To Enable Encryption on your data Warehouse, connect to the **master** database on the server hosting the database using a login that is an administrator or a member of the **dbmanager** role in the master database
 
 	````
-	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d master -e
+	mssql -s <server name>.database.windows.net -u <user name>@readinesssqlsvr10 -p <password> -d master -e
 
 	ALTER DATABASE [readinessdw] SET ENCRYPTION ON;
 
 	````
+	You may get a timeout message, please do ensure you execute the next query to check if the encryption has been turned on.
 
-1. Finally, let's verify that the data warehouse is indeed encrypted.
+1. Finally, let's verify that the data warehouse is indeed encrypted. 
 
 	````
 	SELECT
@@ -493,7 +494,9 @@ Transparent Data Encryption (TDE) helps encrypt database files on the source dis
 		FROM
     sys.databases
 	````
-	TODO: Screenshot (ex4-encryption)
+	![Encryption status](Images/ex4-encryption.png?raw=true "Encryption status")
+
+	
 With that, we've successfully completed Module 3.
 
 To recap, in this module, we've covered the basics of how you can secure your database.
