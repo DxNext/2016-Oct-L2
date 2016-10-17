@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Formatting;
 using System.Linq;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace RecViewerApp
 {
@@ -67,7 +68,7 @@ namespace RecViewerApp
         /// <param name="modelName">Name for the model</param>
         /// <param name="description">Description for the model</param>
         /// <returns>Model Information.</returns>
-        public ModelInfo[] GetModels(string description = null)
+        public IEnumerable<ModelInfo> GetModels(string description = null)
         {
             var uri = BaseUri + "/models/";
             var response = _httpClient.GetAsync(uri).Result;
@@ -79,7 +80,7 @@ namespace RecViewerApp
             }
 
             var jsonString = ExtractReponse(response);
-            var modelInfo = JsonConvert.DeserializeObject<ModelInfo[]>(jsonString);
+            var modelInfo = JsonConvert.DeserializeObject<IEnumerable<ModelInfo>>(jsonString);
             return modelInfo;
         }
 
