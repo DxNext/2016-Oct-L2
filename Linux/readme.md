@@ -31,13 +31,4 @@
     1.	Intro
     1.	Demo deploying Wordpress from git
 
-8.	Linux takeaways
-    1.	Advantages of running linux on Azure
-    2.	Keypoints where Azure is better than AWS
-    3.	When to choose what Linux distro
-    4.	When to use which container/orchestration technology
-        1.	Open shift
-        2.	Deis
-        3.	DC/OS
-        4.	Docker Datacenter
-        5.	ACS
+8.	[Linux Takeaways](./Module8-LinuxTakeaways/readme.md)
