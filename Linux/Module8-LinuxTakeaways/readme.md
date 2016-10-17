@@ -1,4 +1,4 @@
-Linux Takeaways
+Linux Takeaways [Download PowerPoint Deck](Linux%20at%20Microsoft.pptx)
 
 1. Why Microsoft Loves Linux
 2. List of all Distros Supported
