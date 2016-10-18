@@ -108,7 +108,7 @@ In this section you will create a new storage container, and load sample data th
 
 1. Create new blob containers by right clicking on the storage account name and clicking 'Create Blob Container'.
 
-1. Create the following two private containers:
+1. Create the following two containers and mark them public access for blobs:
 	1. partsunlimited
 	1. processeddata
 
