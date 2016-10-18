@@ -235,7 +235,7 @@ In this task, you'll create an output that will store the query results in Blob 
 	- **Path pattern**: Type in a file prefix to use when writing blob output. E.g. analyticsoutput-{date}
 	- **Event Serializer Format**: JSON.
 	- **Encoding**: UTF8.
-	- **Format**: Line Separated
+	- **Format**: Array
 
 1. Click **Create**.
 
