@@ -31,9 +31,11 @@ The following is required to complete this module:
 
 - [Visual Studio Community 2015][1] or greater.
 - [NodeJS][2]
+- [Microsoft Bot Framework Emulator][3]
 
 [1]: https://www.visualstudio.com/products/visual-studio-community-vs
 [2]: https://nodejs.org/en/download/
+[3]: https://download.botframework.com/bf-v3/tools/emulator/publish.htm
 
 <a name="Setup"></a>
 ### Setup ###
