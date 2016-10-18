@@ -62,3 +62,19 @@ cat ~/.ssh/id_rsa.pub
     http://aka.ms/linuxlfcsprep
 
 1. <ctrl+r> to search command history (or '/' in vi-mode)
+
+## Import an SSH key to Putty
+
+1. Save your private key to a text file for instance `'Documents/private.txt'`
+
+    ```Shell
+    cat ~/.ssh/id_rsa
+    ```
+
+1. Load it into PuttyGen `'File' > 'Load private key'
+
+1. Save private key as `'.ppk'` file.
+
+1. Import it in Putty `'Connection' > 'SSH' > 'Auth' > 'Private key file for authentication:'`
+
+1. Save your profile changes in the main window and profit!

@@ -71,6 +71,10 @@ We can also use `'vscode'` to edit our files in our computer.
 
 **Note:** Sometimes you need to resize the Windows 10 bash window to see the instructions of nano.
 
+1. (Putty users) Go to `'Connection' > 'SSH' > 'Tunnels'` and add a remote rule for port `'52689'`. Remember to save your configuration in the profile.
+
+![alt text][tunnel]
+
 1. SSH back into your VM and install `'rmate'`.
 
     ```bash
@@ -97,6 +101,8 @@ We can also use `'vscode'` to edit our files in our computer.
     ```bash
     rmate -p 52689 file.txt
     ```
+Note*: Textmate and Sublime also support this capability.
 
+[fhs]: img/fhs.jpg "This is what the filesystem in Linux looks like"
 
-[fhs]: img/fhs.jpg "You can save your changes every time you want"
+[tunnel]: img/putty-tunnel.jpg "Make sure you mark it as Remote"

@@ -52,3 +52,6 @@ With this change done you can easily start your SSH connection by only using the
     ssh myVM
 ```
 
+## Following step
+
+1. [Inside your VM](04-inside-vm.md)
