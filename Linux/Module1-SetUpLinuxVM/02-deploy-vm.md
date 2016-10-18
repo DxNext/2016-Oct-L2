@@ -60,9 +60,9 @@
     ```
     And we can see the details of our VM.
     Please, take a moment to verify that you have created a CentOS VM with two data disks, a public IP, and a proper FQDN. 
-1. Alternatively, you could set up the VM fro the portal, just make sure you add you SSH public key.
+1. Alternatively, when you use the portal you need to make sure you use the SSH public key.
 
     ![alt text][set-vm-up]
 
 
-[set-vm-up]:../../img/set-vm-up.jpg "Fill it up with your info."
+[set-vm-up]:img/set-vm-up.jpg "Fill it up with your info."
