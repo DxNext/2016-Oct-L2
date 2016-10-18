@@ -321,7 +321,7 @@ In this task, you'll add a new output to your Stream Analytics job.
         a.userId, a.productId, a.EventDate 
     FROM 
         IoTHubInput as A TIMESTAMP BY EventDate
-    LEFT OUTER JOIN IoTHub as B TimeStamp By EventDate
+    LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
     ON a.userId=b.userId AND a.productId = b.productId and b.type='checkout'
     AND DATEDIFF(minute, A, B) BETWEEN 0 AND 5
     WHERE a.type = 'add'
@@ -375,7 +375,7 @@ Overall, your query should look as follows:
         a.userId, a.productId, a.EventDate 
     FROM 
         IoTHubInput as A TIMESTAMP BY EventDate
-    LEFT OUTER JOIN IoTHub as B TimeStamp By EventDate
+    LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
     ON a.userId=b.userId AND a.productId = b.productId and b.type='checkout'
     AND DATEDIFF(minute, A, B) BETWEEN 0 AND 5
     WHERE a.type = 'add'
