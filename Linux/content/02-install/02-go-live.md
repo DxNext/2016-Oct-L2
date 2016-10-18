@@ -133,9 +133,10 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     Already up-to-date.
 
     Child process exit code: 0
-    ```
      ```
-1. Open a new SSH session to your VM and install the dependencies (one by one)
+1. Open a new SSH session to your VM and correct the dependecies in the package json file. Change `'"grunt-node-inspector": "~0.1.3",'` to `'"grunt-node-inspector": ">=0.1.3",'`
+
+1. Install the dependencies (one by one)
 
     ```bash
     cd ~/northwind
@@ -148,15 +149,15 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     ```
 
     After you are done with the dependencies run:
-    
-    ``bash
-    npm init
+
+    ```bash
     npm start
     ```
 
 1. Test the app in the browser
-1. commit a file
+1. Commit a file
 1. profit!
+
 
 
 
