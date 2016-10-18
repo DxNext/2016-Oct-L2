@@ -104,7 +104,7 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 		````
 		1. If you used the default naming & credentials, this is what the mssql command looks like:
 		````
-		mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e
+		mssql -s readinesssqlsvr<uniqueSuffix>.database.windows.net -u labuser@readinesssqlsvr<uniqueSuffix> -p labP@ssword1 -d readinessdw -e
 		````
 
 	1. (For visual studio) Go to the Azure Portal (http://portal.azure.com) and navigate to the new SQL Data Warehouse you created.
@@ -180,7 +180,7 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 
 
 	````
-	bcp.exe adw.DimProductCatalog in ...\Module3-Security\Setup\data\product_catalog\000000_0 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	bcp.exe adw.DimProductCatalog in ...\Module3-Security\Setup\data\product_catalog\000000_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 	````
 
 	![Import Data into SQL DW using bcp](Images/setup-bcp.jpg?raw=true "Import Data into SQL DW using bcp")
@@ -191,13 +191,13 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 1. Similarly, let's upload our Fact data. Since our Fact data is made up of multiple files, we'll run the bcp command multiple times.
 
 	````
-	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_0 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 
-	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_1 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_1 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 	
-	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_0 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 	
-	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_1 -S readinesssqlsvr10.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_1 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 	````
 
 1. You can verify that the data has been successfully loaded by switching back to your favorite SQL tool (VS or commandline) and executing the following SQL query.
@@ -214,6 +214,8 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 
 <a name="Exercise1"></a>
 ### Exercise 1: Set Firewall rules ###
+
+>**Note:** The code samples below assume that you have used **labuser** as your admin username and **labP@ssword1** as your password.
 
 Setting firewall rules are the most basic way of securing your data store. Azure SQL Servers allow you to add firewall rules to your database. This helps you restrict access to the databases only those computers/IPs that have been white-listed in the firewall rules.
 
@@ -273,7 +275,7 @@ The primary concept of authentication & authorization is to create separate user
 
 1. From the CLI, let's login to the **master** database.
 	````
-	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d master -e
+	mssql -s readinesssqlsvr<uniqueSuffix>.database.windows.net -u labuser@readinesssqlsvr<uniqueSuffix> -p labP@ssword1 -d master -e
 	````
 
 1. Create a login for customer1 on the master database by executing the following command:
@@ -288,7 +290,7 @@ The primary concept of authentication & authorization is to create separate user
 
 1. Next, let's login to the **readinessdw** database with the admin credentials.
 	````
-	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e
+	mssql -s readinesssqlsvr<uniqueSuffix>.database.windows.net -u labuser@readinesssqlsvr<uniqueSuffix> -p labP@ssword1 -d readinessdw -e
 	````
 
 #### Task 2 - Creating Authorization ####
@@ -307,7 +309,7 @@ The primary concept of authentication & authorization is to create separate user
 
 1. Now, login to the Data Warehouse using the customer 1 credentials.
 	````
-	mssql -s readinesssqlsvr10.database.windows.net -u customer1@readinesssqlsvr10 -p P@ssword1 -d readinessdw -e
+	mssql -s readinesssqlsvr<uniqueSuffix>.database.windows.net -u customer1@readinesssqlsvr<uniqueSuffix> -p P@ssword1 -d readinessdw -e
 	````
 
 1. Once logged in, let's run a simple select query to ensure that the new user has rights to do so.
@@ -348,7 +350,7 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 1. Let's start by logging into our **master** database using our admin credentials and creating logins for these users. Do not forget to log off as Customer1 created in the previous exercise.
 	````
-	mssql -s <servername>.database.windows.net -u <username>@readinesssqlsvr10 -p <password> -d master -e	
+	mssql -s <servername>.database.windows.net -u <username>@readinesssqlsvr<uniqueSuffix> -p <password> -d master -e	
 
 	CREATE LOGIN lighting_user WITH PASSWORD = 'P@ssword1'
 	CREATE LOGIN wheels_user WITH PASSWORD = 'P@ssword2'
@@ -358,7 +360,7 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 1. Now, let's switch to our **readinessdw** data warehouse.
 	````
-	mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e
+	mssql -s readinesssqlsvr<uniqueSuffix>.database.windows.net -u labuser@readinesssqlsvr<uniqueSuffix> -p labP@ssword1 -d readinessdw -e
 	````
 
 1. The first step here is to create a new **schema** in order to create views on top of our data
@@ -390,7 +392,7 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 1. We can quickly test to ensure that our users don't have the rights to see any tables by logging into the data warehouse using their credentials and running the **.tables** command.
 	````
-	mssql -s readinesssqlsvr10.database.windows.net -u lighting_user@readinesssqlsvr10 -p P@ssword1 -d readinessdw -e
+	mssql -s readinesssqlsvr<uniqueSuffix>.database.windows.net -u lighting_user@readinesssqlsvr<uniqueSuffix> -p P@ssword1 -d readinessdw -e
 
 	.tables
 	````
@@ -407,7 +409,7 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 	1. Log back into the Data warehouse using the admin credentials
 		````
-		mssql -s readinesssqlsvr10.database.windows.net -u labuser@readinesssqlsvr10 -p labP@ssword1 -d readinessdw -e
+		mssql -s readinesssqlsvr<uniqueSuffix>.database.windows.net -u labuser@readinesssqlsvr<uniqueSuffix> -p labP@ssword1 -d readinessdw -e
 		````
 
 	1. Now, let's modify our tables to add another column to the table called as **TenantId**. Took keep it simple, we'll let the value of TenantId be the same as CategoryId.
@@ -478,7 +480,7 @@ Transparent Data Encryption (TDE) helps encrypt database files on the source dis
 1. To Enable Encryption on your data Warehouse, connect to the **master** database on the server hosting the database using a login that is an administrator or a member of the **dbmanager** role in the master database
 
 	````
-	mssql -s <server name>.database.windows.net -u <user name>@readinesssqlsvr10 -p <password> -d master -e
+	mssql -s <server name>.database.windows.net -u <user name>@<server name> -p <password> -d master -e
 
 	ALTER DATABASE [readinessdw] SET ENCRYPTION ON;
 

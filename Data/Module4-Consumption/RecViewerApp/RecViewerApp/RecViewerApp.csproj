@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AspNet.ScriptManager.jQuery, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.3.1.1\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -76,9 +80,6 @@
     </Reference>
     <Reference Include="AspNet.ScriptManager.bootstrap">
       <HintPath>..\packages\AspNet.ScriptManager.bootstrap.3.0.0\lib\net45\AspNet.ScriptManager.bootstrap.dll</HintPath>
-    </Reference>
-    <Reference Include="AspNet.ScriptManager.jQuery">
-      <HintPath>..\packages\AspNet.ScriptManager.jQuery.1.10.2\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ScriptManager.MSAjax">
       <HintPath>..\packages\Microsoft.AspNet.ScriptManager.MSAjax.5.0.0\lib\net45\Microsoft.ScriptManager.MSAjax.dll</HintPath>
@@ -186,10 +187,62 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="images\admin_icon.png" />
+    <Content Include="images\admin_mo_icon.png" />
+    <Content Include="images\cart_icon.png" />
+    <Content Include="images\cart_mo_icon.png" />
+    <Content Include="images\community_1.png" />
+    <Content Include="images\community_2.png" />
+    <Content Include="images\community_3.png" />
+    <Content Include="images\community_4.png" />
+    <Content Include="images\deploy_button.png" />
+    <Content Include="images\facebook_icon.jpg" />
+    <Content Include="images\favicon.ico" />
+    <Content Include="images\hero_image1.jpg" />
+    <Content Include="images\hero_image2.jpg" />
+    <Content Include="images\hero_image3.jpg" />
+    <Content Include="images\home_icon.png" />
+    <Content Include="images\home_mo_icon.png" />
+    <Content Include="images\login_profile_icon.png" />
+    <Content Include="images\login_safe_icon.png" />
+    <Content Include="images\mobile_search_icon.png" />
+    <Content Include="images\product_batteries_basic-battery.jpg" />
+    <Content Include="images\product_batteries_jumper-leads.jpg" />
+    <Content Include="images\product_batteries_premium-battery.jpg" />
+    <Content Include="images\product_brakes_disc-calipers-red.jpg" />
+    <Content Include="images\product_brakes_disc.jpg" />
+    <Content Include="images\product_brakes_disk-pad-combo.jpg" />
+    <Content Include="images\product_lighting_bugeye-headlight.jpg" />
+    <Content Include="images\product_lighting_headlight.jpg" />
+    <Content Include="images\product_lighting_lightbulb.jpg" />
+    <Content Include="images\product_oil_filters.jpg" />
+    <Content Include="images\product_oil_oil-filter-combo.jpg" />
+    <Content Include="images\product_oil_premium-oil.jpg" />
+    <Content Include="images\product_wheel_rim-blue.jpg" />
+    <Content Include="images\product_wheel_rim-red.jpg" />
+    <Content Include="images\product_wheel_rim.jpg" />
+    <Content Include="images\product_wheel_tyre-rim-chrome-combo.jpg" />
+    <Content Include="images\product_wheel_tyre-wheel-combo-pack.jpg" />
+    <Content Include="images\product_wheel_tyre-wheel-combo.jpg" />
+    <Content Include="images\profile_icon.png" />
+    <Content Include="images\profile_mo_icon.png" />
+    <Content Include="images\remove_icon.png" />
+    <Content Include="images\search_icon.png" />
+    <Content Include="images\search_mo_icon.png" />
+    <Content Include="images\shopnow_button.png" />
+    <Content Include="images\social_placeholder.png" />
+    <Content Include="images\submenu_image1.jpg" />
+    <Content Include="images\submenu_image2.jpg" />
+    <Content Include="images\submenu_image3.jpg" />
+    <Content Include="images\submenu_image4.jpg" />
+    <Content Include="images\unlimited_logo.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -224,8 +277,9 @@
     <Content Include="Bundle.config" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Site.Mobile.Master" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -359,7 +413,6 @@
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
