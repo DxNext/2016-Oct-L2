@@ -20,6 +20,10 @@
 
     ![alt text][puttygen-keys]
 
+## Following step
+
+[Deploy VM with Azure-cli](02-deploy-vm.md)
+
 [puttygen]: img/puttygen.jpg "PuTTYgen is the tool that allows you to create your SSH access keys"
 [puttygen-mouse]: img/puttygen-mouse.jpg "Move your mouse to generate the key"
 [puttygen-generate]: img/puttygen-gen.jpg "The time it takes depends on how strong you chose the key to be"

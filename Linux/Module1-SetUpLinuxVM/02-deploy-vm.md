@@ -64,5 +64,9 @@
 
     ![alt text][set-vm-up]
 
+# Following step
+
+1. [Bash - Connect to VM](03-connect-to-vm-bash.md)
+1. [Putty - Connect to VM](03-connect-to-vm-putty.md)
 
 [set-vm-up]:img/set-vm-up.jpg "Fill it up with your info."
