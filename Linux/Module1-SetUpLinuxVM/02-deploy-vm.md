@@ -41,7 +41,7 @@
     ```
     It would look something  like this:
     ```Shell
-    azure group deployment create my-centos-demo-name centos --template-uri hhttps://raw.githubusercontent.com/DxNext/2016-Oct-L2/master/Linux/Module1-SetUpLinuxVM/vm-details/azuredeploy.json
+    azure group deployment create my-centos-demo-name centos --template-uri https://raw.githubusercontent.com/DxNext/2016-Oct-L2/master/Linux/Module1-SetUpLinuxVM/vm-details/azuredeploy.json
     ```
 1. Please provide the values for the an username, ssh public key and a name for the VM.
 1. After a few minutes we will have the following result:
@@ -64,9 +64,9 @@
 
     ![alt text][set-vm-up]
 
-# Following step
+## Following step
 
 1. [Bash - Connect to VM](03-connect-to-vm-bash.md)
 1. [Putty - Connect to VM](03-connect-to-vm-putty.md)
 
-[set-vm-up]:img/set-vm-up.jpg "Fill it up with your info."
+[set-vm-up]:img/set-vm-up.jpg "Fill it up with your public key"

@@ -18,62 +18,62 @@ There are many out in the wild but these are some of the most popular ones. The 
 
 1. First of all lets get the latest definitions for yum:
 
-```Shell
-sudo yum update
-```
+    ```Shell
+    sudo yum update
+    ```
 
-Confirm the update
+    Confirm the update
 
-```Shell
-Transaction Summary
-================================================
-Install   1 Package
-Upgrade  69 Packages
+    ```Shell
+    Transaction Summary
+    ================================================
+    Install   1 Package
+    Upgrade  69 Packages
 
-Total download size: 96 M
-Is this ok [y/d/N]: y
-```
+    Total download size: 96 M
+    Is this ok [y/d/N]: y
+    ```
 
 1. While this is working lets open a new SSH connection to our server and run the following command
 
-```Shell
-ls -la /etc/yum.repos.d/
-```
+    ```Shell
+    ls -la /etc/yum.repos.d/
+    ```
 
-This folder contains all the information and repos that yum uses to maintain the packages installed in our OS. The listed files are the basic repos installed by default in our CentOS VM.
+    This folder contains all the information and repos that yum uses to maintain the packages installed in our OS. The listed files are the basic repos installed by default in our CentOS VM.
 
-```Shell
-cat /etc/yum.repos.d/CentOS-Sources.repo
-```
+    ```Shell
+    cat /etc/yum.repos.d/CentOS-Sources.repo
+    ```
 
-For instance the source repo contains the definitions to the base, release, extra and extended functionality packages.
+    For instance the source repo contains the definitions to the base, release, extra and extended functionality packages.
 
-The update process should have ended by now, so lets close the connection and lets get back to our previous terminal.
+    The update process should have ended by now, so lets close the connection and lets get back to our previous terminal.
 
-```Shell
-exit
-```
+    ```Shell
+    exit
+    ```
 
-In our main terminal we should see something like this:
+    In our main terminal we should see something like this:
 
-```Shell
-Verifying  : systemd-libs-219-19.el7_2.9.x86_64              139/139
+    ```Shell
+    Verifying  : systemd-libs-219-19.el7_2.9.x86_64              139/139
 
-Installed:
-  kernel.x86_64 0:3.10.0-327.36.1.el7
+    Installed:
+    kernel.x86_64 0:3.10.0-327.36.1.el7
 
-Updated:
-  NetworkManager.x86_64 1:1.0.6-31.el7_2                    NetworkManager-libnm.x86_64 1:1.0.6-31.el7_2              NetworkManager-team.x86_64 1:1.0.6-31.el7_2
-  NetworkManager-tui.x86_64 1:1.0.6-31.el7_2                bash.x86_64 0:4.2.46-20.el7_2                             bind-libs.x86_64 32:9.9.4-29.el7_2.4
+    Updated:
+    NetworkManager.x86_64 1:1.0.6-31.el7_2                    NetworkManager-libnm.x86_64 1:1.0.6-31.el7_2              NetworkManager-team.x86_64 1:1.0.6-31.el7_2
+    NetworkManager-tui.x86_64 1:1.0.6-31.el7_2                bash.x86_64 0:4.2.46-20.el7_2                             bind-libs.x86_64 32:9.9.4-29.el7_2.4
 
-Complete!
-```
+    Complete!
+    ```
 
 1. Now we must install the a set of basic tools we need:
 
-```Shell
-sudo yum install gcc-c++ make git fontconfig bzip2 libpng-devel ruby ruby-devel
-```
+    ```Shell
+    sudo yum install gcc-c++ make git fontconfig bzip2 libpng-devel ruby ruby-devel
+    ```
 
 ## MongoDB
 
@@ -357,10 +357,13 @@ sudo yum install gcc-c++ make git fontconfig bzip2 libpng-devel ruby ruby-devel
 
     You will see that this file is the basic "Hello world" file from Mean.JS, you can move around with the arrow keys and close the file with the `'q'` key.
 
-    But also if you can check your page going to your FQDN or your IP Address. And if you dont remember it, you can always use `'azure vm show <group-name> <vm-name>'`
+    But also if you can check your page going to your FQDN or your IP Address. And if you dont remember it, you can always use `'azure vm show <group-name> <vm-name>'` to remember this info.
+
     ![alt text][mean]
 
+## Following step
 
-[mean]: ../../img/mean.jpg "You can save your changes every time you want"
+1. [Make your app work](02-go-live.md)
 
-[permissions]: ../../img/permissions.png "You can save your changes every time you want"
+[mean]: img/mean.jpg "Hello world!"
+[permissions]: img/permissions.png "One bit per permission"

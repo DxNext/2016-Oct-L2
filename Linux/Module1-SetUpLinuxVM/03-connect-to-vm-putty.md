@@ -16,6 +16,6 @@
 
 1. [Inside your VM](04-inside-vm.md)
 
-[putty]: img/putty.jpg "You can use txt as an extension for your public key if you prefer it"
-[putty-select]: img/putty-select.jpg " "
+[putty]: img/putty.jpg ""
+[putty-select]: img/putty-select.jpg ""
 [putty-save]: img/putty-save.jpg "You can save your changes every time you want"

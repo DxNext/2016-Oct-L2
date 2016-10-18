@@ -85,7 +85,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     ```
 
     We need to modify the `'package.json'` file to include the following line in the scripts section:
-    
+
     ```json
     "start": "node index.js"
     ```
@@ -160,6 +160,9 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
 
 
 
+## Following step
+
+1. [Things to consider](../Module3-ThingsToConsider/readme.md)
 
 [fork]: ../../img/fork.jpg "Fork it!"
 [deploy-key]: ../../img/deploy-key.jpg "Add the whole key"

@@ -8,3 +8,7 @@
     1. [Bash](03-connect-to-vm-bash.md)
     1. [Putty](03-connect-to-vm-putty.md)
 1. [Inside your VM](04-inside-vm.md)
+
+## Following step
+
+1. [Make your app work](../Module2-AppDeployment/readme.md)

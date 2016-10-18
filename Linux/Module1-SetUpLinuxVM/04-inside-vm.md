@@ -105,4 +105,4 @@ Note*: Textmate and Sublime also support this capability.
 
 [fhs]: img/fhs.jpg "This is what the filesystem in Linux looks like"
 
-[tunnel]: img/putty-tunnel.jpg "Make sure you mark it as Remote"
+[tunnel]: img/putty-tunnel.jpg "Make sure you mark it as remote"
