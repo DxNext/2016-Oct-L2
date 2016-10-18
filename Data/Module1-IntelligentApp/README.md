@@ -262,6 +262,14 @@ In this exercise, you'll use Azure Stream Analytics with Microsoft Power BI. You
 #### Task 1 - Adding an input for Reference Data ####
 Since our streaming data only contains productId, we need to Join our input stream to our product catalog data in order to get meaningful results. In order to do that, we will first add the product catalog data as a reference dataset to the stream analytics query
 
+1. Create a Container to contain reference data and set its access to Blob.
+
+	1. Return to **Azure Storage Explorer** or the tool of your preference.
+
+	1. Create a new Blob Container with the name "**processeddata**" and "Container" access level. In _Azure Storage Explorer_ expand your account and right-click on **Blob Containers**, select **Create Blob Container** and enter "processeddata". Press enter to create the container. Then right-click on the new container and select **Set Public Access Level..** and choose **Public read access for blobs**.
+
+	1. In the **Assets** folder, locate the **productcatalog.json** file and upload it to your **processeddata** container.
+
 1. From the [Azure portal](https://portal.azure.com/), go to Stream Analytics and click the one you created.
 
 1. Click the **STOP** button at the top of the page. We need to stop it in order to add a new input/output.
