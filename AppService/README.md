@@ -2,21 +2,17 @@
     1. When to use App Service
         1. [https://azure.microsoft.com/en-us/documentation/articles/app-service-value-prop-what-is/](https://azure.microsoft.com/en-us/documentation/articles/app-service-value-prop-what-is/)
         1. [https://azure.microsoft.com/en-us/documentation/articles/cloud-services-choose-me/](https://azure.microsoft.com/en-us/documentation/articles/cloud-services-choose-me/)
-
     1. Which App Service
     1. Practical Exercise (small
       groups)
-
 1. App Services - Creation / Management / Deployment (45)
     1. Portal
     1. Git [Node lab]
-    1. CLI (new cli) [Ignite session](https://myignite.microsoft.com/secondscreen/2673)
+    1. CLI (new cli) ([Ignite session](https://myignite.microsoft.com/secondscreen/2673))
     1. Visual Studio
-
 1. Functions (45 minute instructor led lab)
     1. Presentation /
       instructor led ([https://blogs.msdn.microsoft.com/appserviceteam/2016/10/04/get-some-hands-on-time-with-serverless-development-right-now-for-free/](https://blogs.msdn.microsoft.com/appserviceteam/2016/10/04/get-some-hands-on-time-with-serverless-development-right-now-for-free/))
-
 1. Self-Paced Labs (1.5 hours)
     1. Functions
     1. Migration Labs ([https://github.com/GeekTrainer/app-services-migration](https://github.com/GeekTrainer/app-services-migration))
