@@ -1,4 +1,5 @@
 # Using Azure CLI to provision the VM
+
 1. We will be using Azure CLI, if you don't have it you can find it [here](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/)
 1. We login into our account
     ```Shell
@@ -11,7 +12,7 @@
     ```
 1. We need to make sure our subsc is on ARM mode type the following:
     ```Shell
-    azure 
+    azure
     ```
     Notice that at the end of you will see the mode:
     ```Shell
@@ -40,7 +41,7 @@
     ```
     It would look something  like this:
     ```Shell
-    azure group deployment create my-centos-demo-name centos --template-uri http://104.45.147.168/azuredeploy.json
+    azure group deployment create my-centos-demo-name centos --template-uri hhttps://raw.githubusercontent.com/DxNext/2016-Oct-L2/master/Linux/Module1-SetUpLinuxVM/vm-details/azuredeploy.json
     ```
 1. Please provide the values for the an username, ssh public key and a name for the VM.
 1. After a few minutes we will have the following result:

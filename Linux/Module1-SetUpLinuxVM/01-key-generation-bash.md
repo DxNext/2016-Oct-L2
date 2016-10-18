@@ -1,13 +1,14 @@
 # Create a pair of SSH keys using Bash (For Mac, Linux and Windows 10 with Bash installed)
+
 1. Use *'ssh-keygen'* to create an RSA SSH key of 4096 bits pointing to our e-mail address.
-    
-    ```Shell
+
+    ```bash
     ssh-keygen -t rsa -b 4096 -C "mymail@brus.ml"
     ```
 
 1. After this command you will be asked for a location to save your powerful key, you can give it a custom location but it's not really necessary unless you actually handle multiple keys.
 
-    ```Shell      
+    ```Shell
     Enter a file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]
     ```
 
@@ -16,7 +17,7 @@
     ```Shell
         Enter passphrase (empty for no passphrase): [Type a passphrase]
         Enter same passphrase again: [Type passphrase again]
-    ``` 
+    ```
 
 3. Now, after your key was created just *cat* the content of your public key (if you used a different location, make sure you use the correct file). This is the 
 
