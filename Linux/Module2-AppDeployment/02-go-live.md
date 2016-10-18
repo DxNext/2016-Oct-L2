@@ -154,11 +154,19 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     npm start
     ```
 
-1. Test the app in the browser
-1. Commit a file
-1. profit!
+1. Test the app in the browser, then commit a file on the fly and profit!
 
+## Create user account and populate database
 
+1. Sign up and create the user `'admin'` with the password `'password'`.
+
+1. Now use the npm package `'migrate'` to populate the database and review the new elements in the website.
+
+    ```bash
+    migrate up
+    ```
+
+1. L
 
 ## Following step
 
