@@ -103,6 +103,10 @@ We can also use `'vscode'` to edit our files in our computer.
     ```
 Note*: Textmate and Sublime also support this capability.
 
+## Following step
+
+1. [Module 2](../Module2-AppDeployment/readme.md)
+
 [fhs]: img/fhs.jpg "This is what the filesystem in Linux looks like"
 
 [tunnel]: img/putty-tunnel.jpg "Make sure you mark it as remote"

@@ -166,7 +166,29 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     migrate up
     ```
 
-1. L
+1. Open MongoDB cli
+
+    ```bash
+    mongo
+    help
+    show dbs
+    use northwindnode-dev
+    show collections
+    db.categories.find()
+    db.categories.findOne()
+    db.categories.find({"name":{$regex : ".*s"}})
+    ```
+
+1. Update one category.
+
+    ```bash
+    db.categories.findAndModify({
+    query: { name: "Beverages" },
+    update: { $set: { "description" : "not beer" } },
+    })
+    ```
+
+1. Verify the result by refreshing the list of categories in the webpage.
 
 ## Following step
 
