@@ -52,6 +52,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -97,10 +101,6 @@
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <Private>True</Private>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Web.Optimization.WebForms">
       <Private>True</Private>
@@ -186,56 +186,57 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="Resources\productcatalog.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="images\admin_icon.png" />
-    <Content Include="images\admin_mo_icon.png" />
-    <Content Include="images\cart_icon.png" />
-    <Content Include="images\cart_mo_icon.png" />
-    <Content Include="images\community_1.png" />
-    <Content Include="images\community_2.png" />
-    <Content Include="images\community_3.png" />
-    <Content Include="images\community_4.png" />
-    <Content Include="images\deploy_button.png" />
-    <Content Include="images\facebook_icon.jpg" />
-    <Content Include="images\favicon.ico" />
-    <Content Include="images\hero_image1.jpg" />
-    <Content Include="images\hero_image2.jpg" />
-    <Content Include="images\hero_image3.jpg" />
-    <Content Include="images\home_icon.png" />
-    <Content Include="images\home_mo_icon.png" />
-    <Content Include="images\login_profile_icon.png" />
-    <Content Include="images\login_safe_icon.png" />
-    <Content Include="images\mobile_search_icon.png" />
-    <Content Include="images\product_batteries_basic-battery.jpg" />
-    <Content Include="images\product_batteries_jumper-leads.jpg" />
-    <Content Include="images\product_batteries_premium-battery.jpg" />
-    <Content Include="images\product_brakes_disc-calipers-red.jpg" />
-    <Content Include="images\product_brakes_disc.jpg" />
-    <Content Include="images\product_brakes_disk-pad-combo.jpg" />
-    <Content Include="images\product_lighting_bugeye-headlight.jpg" />
-    <Content Include="images\product_lighting_headlight.jpg" />
-    <Content Include="images\product_lighting_lightbulb.jpg" />
-    <Content Include="images\product_oil_filters.jpg" />
-    <Content Include="images\product_oil_oil-filter-combo.jpg" />
-    <Content Include="images\product_oil_premium-oil.jpg" />
-    <Content Include="images\product_wheel_rim-blue.jpg" />
-    <Content Include="images\product_wheel_rim-red.jpg" />
-    <Content Include="images\product_wheel_rim.jpg" />
-    <Content Include="images\product_wheel_tyre-rim-chrome-combo.jpg" />
-    <Content Include="images\product_wheel_tyre-wheel-combo-pack.jpg" />
-    <Content Include="images\product_wheel_tyre-wheel-combo.jpg" />
-    <Content Include="images\profile_icon.png" />
-    <Content Include="images\profile_mo_icon.png" />
-    <Content Include="images\remove_icon.png" />
-    <Content Include="images\search_icon.png" />
-    <Content Include="images\search_mo_icon.png" />
-    <Content Include="images\shopnow_button.png" />
-    <Content Include="images\social_placeholder.png" />
-    <Content Include="images\submenu_image1.jpg" />
-    <Content Include="images\submenu_image2.jpg" />
-    <Content Include="images\submenu_image3.jpg" />
-    <Content Include="images\submenu_image4.jpg" />
-    <Content Include="images\unlimited_logo.png" />
+    <Content Include="Images\admin_icon.png" />
+    <Content Include="Images\admin_mo_icon.png" />
+    <Content Include="Images\cart_icon.png" />
+    <Content Include="Images\cart_mo_icon.png" />
+    <Content Include="Images\community_1.png" />
+    <Content Include="Images\community_2.png" />
+    <Content Include="Images\community_3.png" />
+    <Content Include="Images\community_4.png" />
+    <Content Include="Images\deploy_button.png" />
+    <Content Include="Images\facebook_icon.jpg" />
+    <Content Include="Images\favicon.ico" />
+    <Content Include="Images\hero_image1.jpg" />
+    <Content Include="Images\hero_image2.jpg" />
+    <Content Include="Images\hero_image3.jpg" />
+    <Content Include="Images\home_icon.png" />
+    <Content Include="Images\home_mo_icon.png" />
+    <Content Include="Images\login_profile_icon.png" />
+    <Content Include="Images\login_safe_icon.png" />
+    <Content Include="Images\mobile_search_icon.png" />
+    <Content Include="Images\product_batteries_basic-battery.jpg" />
+    <Content Include="Images\product_batteries_jumper-leads.jpg" />
+    <Content Include="Images\product_batteries_premium-battery.jpg" />
+    <Content Include="Images\product_brakes_disc-calipers-red.jpg" />
+    <Content Include="Images\product_brakes_disc.jpg" />
+    <Content Include="Images\product_brakes_disk-pad-combo.jpg" />
+    <Content Include="Images\product_lighting_bugeye-headlight.jpg" />
+    <Content Include="Images\product_lighting_headlight.jpg" />
+    <Content Include="Images\product_lighting_lightbulb.jpg" />
+    <Content Include="Images\product_oil_filters.jpg" />
+    <Content Include="Images\product_oil_oil-filter-combo.jpg" />
+    <Content Include="Images\product_oil_premium-oil.jpg" />
+    <Content Include="Images\product_wheel_rim-blue.jpg" />
+    <Content Include="Images\product_wheel_rim-red.jpg" />
+    <Content Include="Images\product_wheel_rim.jpg" />
+    <Content Include="Images\product_wheel_tyre-rim-chrome-combo.jpg" />
+    <Content Include="Images\product_wheel_tyre-wheel-combo-pack.jpg" />
+    <Content Include="Images\product_wheel_tyre-wheel-combo.jpg" />
+    <Content Include="Images\profile_icon.png" />
+    <Content Include="Images\profile_mo_icon.png" />
+    <Content Include="Images\remove_icon.png" />
+    <Content Include="Images\search_icon.png" />
+    <Content Include="Images\search_mo_icon.png" />
+    <Content Include="Images\shopnow_button.png" />
+    <Content Include="Images\social_placeholder.png" />
+    <Content Include="Images\submenu_image1.jpg" />
+    <Content Include="Images\submenu_image2.jpg" />
+    <Content Include="Images\submenu_image3.jpg" />
+    <Content Include="Images\submenu_image4.jpg" />
+    <Content Include="Images\unlimited_logo.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
