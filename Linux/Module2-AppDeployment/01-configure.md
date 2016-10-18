@@ -85,14 +85,14 @@ There are many out in the wild but these are some of the most popular ones. The 
 
     ```Shell
     cd /this-repo/
-    scp materials/mongodb.org-3.2.repo myVM:/home/vmUsername
+    scp Module2-AppDeployment/meanapp/mongodb.org-3.2.repo myVM:/home/vmUsername
     ```
 
     For PuTTY we need to do the same in CMD or PowerShell but using the command `'pscp'`
 
     ```Shell
     cd /this-repo/
-    pscp materials/mongodb.org-3.2.repo myVM:/home/vmUsername
+    pscp Module2-AppDeployment/meanapp/mongodb.org-3.2.repo myVM:/home/vmUsername
     ```
 
     The Transaction should be over in a second:
