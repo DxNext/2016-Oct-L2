@@ -46,7 +46,7 @@ In this exercise, you will use Azure IoT Hubs to track the user behavior in your
 
 There is a fantastic online resource already written that details exactly how to create your IoT hub and you can find it here [Getting Started](https://azure.microsoft.com/en-gb/documentation/articles/iot-hub-csharp-csharp-getstarted/).  The article then goes on to cover how you can register your device with the IoT Hub using C#.  We have already done this part for you.  From your IoT Hub though you will need to grab a few details and these are;
 
-- The hub connection string (Settings | Shared access policies | iothubowner
+- The hub connection string (Settings | Shared access policies | iothubowner)
 - The hub host name
 
 Now we have an IoT hub ready to receive events from our device/s
@@ -147,7 +147,7 @@ Settings for PartsUnlimitedDataGen
 - Connect to IoT hub and start sending messages
 
 
-You should now have events streaming to your IoT Hub.  We have always found it useful to actually look at the events as they land on the IoT hub because even though they may be getting there, they may not be in the format you think they are.  This is where you can use something like Device Explorer.
+You should now have events streaming to your IoT Hub.  We have always found it useful to actually look at the events as they land on the IoT hub because even though they may be getting there, they may not be in the format you think they are.  This is where you can use something like [Device Explorer](https://github.com/Azure/azure-iot-sdks/tree/master/tools/DeviceExplorer).
 
 Paste in your IoT Hub Connection String --> Hit **Update** --> Now move to the **Data** tab and push the **monitor** button
 
