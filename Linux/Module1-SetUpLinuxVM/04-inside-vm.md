@@ -20,7 +20,7 @@ CentOS follows the [Filesystem Hierarchy Standard(FHS)](http://www.pathname.com/
 
 ## File edition
 
-1. **Nano** - Easiest to learn, more limited than `'vi'` or `'nano'`.
+1. **Nano** - Easiest to learn, more limited than `'vi'` or `'emacs'`.
 1. **Vi, vim** - Very powerful, it take some time to get used to it.
 1. **Emacs** - Very powerful as well, different form of input from `'vi'`. Not installed by default.
 1. **VS Code, sublime** - Full code editor, but you can only edit one file at a time.
