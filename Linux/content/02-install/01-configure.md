@@ -310,7 +310,7 @@ sudo yum install gcc-c++ make git fontconfig bzip2 libpng-devel ruby ruby-devel
     ```Shell
     npm start
     ```
-    
+
     We should see something like this
 
     ```Shell
@@ -326,7 +326,7 @@ sudo yum install gcc-c++ make git fontconfig bzip2 libpng-devel ruby ruby-devel
     ```
 
 1. Open another SSH connection to our server and run the following command
-    
+
     ```Shell
     wget http://0.0.0.0:3000
     --------------------------------------------------------------

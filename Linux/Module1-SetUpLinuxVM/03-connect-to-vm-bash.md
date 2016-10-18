@@ -18,8 +18,8 @@
     [myUserName@vm-name ~]$
     ```
 
-**SO, WE ARE IN!**
-    
+**WE ARE IN!**
+
 *Note: If the server is asking you for a password, but you set up a passwordless connection, it could mean that SSH is not finding your pair of keys on this terminal session. Use `ssh -v` option to make it easier to find the problem with a verbose connection.
 You may need to make sure that your key is valid and is set to your terminal with `ssh-add` read [this](http://stackoverflow.com/questions/17846529/could-not-open-a-connection-to-your-authentication-agent).
 You can also specify that you are using the correct SSH key with `ssh -i path/to/key`.
@@ -33,6 +33,7 @@ Your life can be easier if you can create a `config` file on `.ssh` folder.
 touch ~/.ssh/config
 code ~/.ssh/config
 ```
+
 You can take the following lines as an example, just make sure to replace the relevant information and save it after you are done:
 
 ```Shell
@@ -51,3 +52,6 @@ With this change done you can easily start your SSH connection by only using the
     ssh myVM
 ```
 
+## Following step
+
+1. [Inside your VM](04-inside-vm.md)
