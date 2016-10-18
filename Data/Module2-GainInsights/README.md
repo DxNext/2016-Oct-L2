@@ -31,7 +31,7 @@ The following is required to complete this module:
 
 - [Microsoft Visual Studio Community 2015][1] or greater
 - [Microsoft Azure Storage Explorer][2] or any other tool to manage Azure Storage
-- [Microsoft Azure PowerShell][3] (1.0 or above) OR [Azure CLI][4] (You will need NodeJS installed on your machine in order to use Azure CLI)
+- [Microsoft Azure PowerShell][3] (1.0 or above) OR [Azure CLI][4] (You will need NodeJS installed on your machine in order to use Azure CLI) (instructions below are for using the cross-platform CLI.  You can perform all the same tasks with PowerShell, though, you'll need to look them up)
 - Putty or any other ssh tool
 
 [1]: https://www.visualstudio.com/products/visual-studio-community-vs
