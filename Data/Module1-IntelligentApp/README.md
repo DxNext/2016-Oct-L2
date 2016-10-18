@@ -254,7 +254,7 @@ In this task you'll run the Stream Analytics job and view the output in Visual S
 
 
 
-### Exercise 3: Visualizing your data with Power BI (optional - requires Organizational account ###
+### Exercise 3: Visualizing your data with Power BI (optional - requires Organizational account) ###
 
 In this exercise, you'll use Azure Stream Analytics with Microsoft Power BI. You will learn how to build a live dashboard quickly. You will also learn how to perform a JOIN operation in Azure Steam Analytics.
 
