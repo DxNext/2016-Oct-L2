@@ -221,7 +221,7 @@ In this task, you'll create an output that will store the query results in Blob 
 
 1. Create a Container such as eventhubanalytics and set its access to Blob.
 
-	1. Open the **Azure Storage Explorer** or the tool of your preference and configure a new storage account using the account name and key from the storage account you created. In _Azure Storage Explorer_, right-click on **Storage Accounts**, select **Attach External Storage...** and enter the account name and key in the dialog, then click **OK**.
+	1. Open the [**Azure Storage Explorer**](http://azurestorageexplorer.codeplex.com/) or the tool of your preference and configure a new storage account using the account name and key from the storage account you created. In _Azure Storage Explorer_, right-click on **Storage Accounts**, select **Attach External Storage...** and enter the account name and key in the dialog, then click **OK**.
 
 	1. Create a new Blob Container with the name "**eventhubanalytics**" and "Container" access level. In _Azure Storage Explorer_ expand your account and right-click on **Blob Containers**, select **Create Blob Container** and enter "eventhubanalytics". Press enter to create the container. Then right-click on the new container and select **Set Public Access Level..** and choose **Public read access for blobs**.
 
