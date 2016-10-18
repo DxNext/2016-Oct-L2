@@ -164,6 +164,6 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
 
 1. [Things to consider](../Module3-ThingsToConsider/readme.md)
 
-[fork]: ../../img/fork.jpg "Fork it!"
-[deploy-key]: ../../img/deploy-key.jpg "Add the whole key"
-[webhook]: ../../img/webhook.jpg "3030 is the port"
+[fork]: img/fork.jpg "Fork it!"
+[deploy-key]: img/deploy-key.jpg "Add the whole key"
+[webhook]: img/webhook.jpg "3030 is the port"
