@@ -85,7 +85,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     ```
 
     We need to modify the `'package.json'` file to include the following line in the scripts section:
-    
+
     ```json
     "start": "node index.js"
     ```
@@ -154,13 +154,24 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     npm start
     ```
 
-1. Test the app in the browser
-1. Commit a file
-1. profit!
+1. Test the app in the browser, then commit a file on the fly and profit!
 
+## Create user account and populate database
 
+1. Sign up and create the user `'admin'` with the password `'password'`.
 
+1. Now use the npm package `'migrate'` to populate the database and review the new elements in the website.
 
-[fork]: ../../img/fork.jpg "Fork it!"
-[deploy-key]: ../../img/deploy-key.jpg "Add the whole key"
-[webhook]: ../../img/webhook.jpg "3030 is the port"
+    ```bash
+    migrate up
+    ```
+
+1. L
+
+## Following step
+
+1. [Things to consider](../Module3-ThingsToConsider/readme.md)
+
+[fork]: img/fork.jpg "Fork it!"
+[deploy-key]: img/deploy-key.jpg "Add the whole key"
+[webhook]: img/webhook.jpg "3030 is the port"
