@@ -1,1 +1,1 @@
-![list-your-containers](./images/list-your-containers.png)
+![list-your-containers](../images/list-your-containers.png)

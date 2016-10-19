@@ -1,1 +1,1 @@
-![use-new-image](./images/use-new-image.png)
+![use-new-image](../images/use-new-image.png)

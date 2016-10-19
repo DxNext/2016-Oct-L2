@@ -1,1 +1,1 @@
-![run-a-simple-container](./images/run-a-simple-container.png)
+![run-a-simple-container](../images/run-a-simple-container.png)

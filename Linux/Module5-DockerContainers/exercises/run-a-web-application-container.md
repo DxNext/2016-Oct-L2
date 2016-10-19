@@ -1,1 +1,1 @@
-![run-a-web-application-container](./images/run-a-web-application-container.png)
+![run-a-web-application-container](../images/run-a-web-application-container.png)

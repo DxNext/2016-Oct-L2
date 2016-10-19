@@ -1,1 +1,1 @@
-![run-a-container-and-get-terminal-access](./images/run-a-container-and-get-terminal-access.png)
+![run-a-container-and-get-terminal-access](../images/run-a-container-and-get-terminal-access.png)

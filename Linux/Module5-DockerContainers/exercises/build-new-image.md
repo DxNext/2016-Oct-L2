@@ -1,1 +1,1 @@
-![build-new-image](./images/build-new-image.png)
+![build-new-image](../images/build-new-image.png)

@@ -1,1 +1,1 @@
-![install-docker](./images/install-docker.png)
+![install-docker](../images/install-docker.png)
