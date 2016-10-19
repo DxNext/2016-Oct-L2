@@ -32,7 +32,7 @@ The following is required to complete this module:
 - [Microsoft Visual Studio Community 2015][1] or greater
 - [Microsoft Command Line Utilities 13.1 for SQL Server][2] or greater
 OR
-- [Node JS][3] & [SQL commandline utility for NodeJS][4] 
+- [Node JS][3] & [MS SQL commandline utility for NodeJS][4] 
 
 
 [1]: https://www.visualstudio.com/products/visual-studio-community-vs
@@ -46,7 +46,7 @@ OR
 ### Setup (To be completed if you did not complete Module 2) ###
 In order to work on this exercise, it is recommended that you complete module 2. However, if you have not completed module 2, please follow this setup in order to successfully complete this exercise.
 
->**Note:** If you've completed **Module 2**, you may **skip the setup** and start with Exercise #1. However, we recommend having a seperate setup for Module 3.
+>**Note:** If you've completed **Module 2**, you may **skip the setup** and start with Exercise #1.
 
 <a name="SqlDWCreation"> </a>
 #### SQL Data Warehouse Creation #####
