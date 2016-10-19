@@ -23,6 +23,7 @@ namespace RecViewerApp
         private static string modelId = null;
         private static long activeBuildId = 0;
         private static IEnumerable<ProductDetailsDisplay> products = null;
+        private static List<ProductDetailsDisplay> recs = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -60,15 +61,30 @@ namespace RecViewerApp
             /// Gets the product ID, 
             if (e.CommandName.Equals("Click"))
             {
+                recs = new List<ProductDetailsDisplay>();
                 var itemIndex = e.Item.ItemIndex;
                 var modelInfo = (string)ModelSelect.SelectedValue;
                 modelId = modelInfo.Split('_')[0];
                 activeBuildId = Int64.Parse(modelInfo.Split('_')[1]);
-                var recs = recommender.GetRecommendations(modelId,activeBuildId,products.ElementAt(itemIndex).productID,5);
+                var recos = recommender.GetRecommendations(modelId,activeBuildId,products.ElementAt(itemIndex).productID,5);
 
-                recommendations.DataSource = recs.RecommendedItemSetInfo;
+                var rawRecs = recos.RecommendedItemSetInfo;
+                foreach (var rec in rawRecs)
+                {
+                    var recId = rec.Items.ElementAt(0).Id;
+                    var recNum = Int32.Parse(recId) - 1;
+                   // var prod = products.Where(x => x.productID.Equals(recId)).Select(x => x);
+                    recs.Add(products.ElementAt(recNum)); //Since the product ID is at a zero-based index and the list is at a 1-based index
+                }
+
+                recommendations.DataSource = recs;
                 recommendations.DataBind();
             }
+        }
+
+        protected void recdetails_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+
         }
     }
 }

@@ -30,16 +30,207 @@ In this module, you'll see how to:
 The following is required to complete this module:
 
 - [Visual Studio Community 2015][1] or greater.
-- [NodeJS][2]
 - [Microsoft Bot Framework Emulator][3]
+- [NodeJS][2] & [MS SQL commandline utility for NodeJS][4] 
 
 [1]: https://www.visualstudio.com/products/visual-studio-community-vs
 [2]: https://nodejs.org/en/download/
 [3]: https://download.botframework.com/bf-v3/tools/emulator/publish.htm
+[4]: https://www.npmjs.com/package/sql-cli
+
 
 <a name="Setup"></a>
 ### Setup ###
 
+##### For Exercise 2 (Only to be done if you did not complete Module #2) #####
+In order to work on this exercise, it is recommended that you complete module 2. However, if you have not completed module 2, please follow this setup in order to successfully complete this exercise.
+
+>**Note:** If you've completed **Module 2**, you may **skip the setup** and start with Exercise #1.
+
+<a name="SqlDWCreation"> </a>
+#### SQL Data Warehouse Creation #####
+
+Navigate to the Setup Folder under **Module 4**. You will find a folder called Setup\CLI. 
+
+1. Update the parameters.json file.  Update parameters with a unique suffix for use across the services. Save the file. Particularly, you will want to update the 'uniqueSuffix' variable. This will help keep your resource names globally unique. We will be executing the azuredeploy.json ARM template, which will help us setup the resources needed for this lab.
+
+1. Open a command prompt and navigate to the cli directory.  
+
+1. Execute the following statements to log into your Azure subscription
+
+	````
+	azure login
+
+	azure account list
+
+	````
+
+1. Copy the subscription id from the subscription to use in the lab.  Paste it in the following script and execute in the command prompt.
+
+	````
+	azure account set <subcriptionid>
+
+	````
+
+1. Execute the following command to create a resource group.  Use the same unique prefix from the parameters file. 
+
+	````
+	azure group create <ResourceGroupName> <Location>
+
+	````
+
+1. Execute the following statement to execute the ARM template that will deploy the Azure SQL  DW.  Set <DeploymentName> with the same prefix used for the ResourceGroupName.
+
+	````
+	azure group deployment create -f <path to azuredeploy.json> -e <path to parameters.json> -g <ResourceGroupName> -n <DeploymentName>
+
+	````
+
+1. Next, let's load up the data into our Data Warehouse. We will be using the 'bcp' tool to achieve this. You can find the data files under the folder 'Module3-Security\Setup\data'.
+
+>**Note:** (For Mac Users) You will need to create a  blob storage account and a container within the account named 'processeddata'. Then, upload the data found in the data folder to the 'processeddata' container and follow the Exercise 2 - Tasks 1-4 in module 2 to load your data into SQL DW.
+
+>**Note:** (For Ubuntu Users) Please follow [this][1] blog to install bcp on your machine to setup sqlcmd and bcp on your machine.
+
+[1]: https://blogs.msdn.microsoft.com/joseph_idzioreks_blog/2015/09/13/azure-sql-database-sqlcmd-and-bcp-on-ubuntu-linux/
+
+
+1. Connect to the SQL Data Warehouse using the command line tool or using Visual Studio 
+	1. (For Command Line) Ensure that the SQL-CLI node package is installed on your machine.
+		1. From the command line, connect to the SQL DW using the following command:
+		````
+		mssql -s <serverName>.database.windows.net -u <username>@<servername> -p <password> -d <databaseName> -e
+		````
+		1. If you used the default naming & credentials, this is what the mssql command looks like:
+		````
+		mssql -s readinesssqlsvr<uniqueSuffix>.database.windows.net -u labuser@readinesssqlsvr<uniqueSuffix> -p labP@ssword1 -d readinessdw -e
+		````
+
+	1. (For visual studio) Go to the Azure Portal (http://portal.azure.com) and navigate to the new SQL Data Warehouse you created.
+
+		1. In the _SQL Data Warehouse_ blade, click **Open in Visual Studio**. In the new blade, click **Open in Visual Studio**.
+
+			![Open Data Warehouse in Visual Studio](Images/setup-open-vs.png?raw=true "Open Data Warehouse in Visual Studio")
+		
+			_Open Data Warehouse in Visual Studio_
+
+		1. Confirm you want to switch apps if prompted.
+
+		1. In Visual Studio, enter the SQL Server credentials (labuser/labP@ssword1).
+
+		1. In the _SQL Server Object Explorer_, expand the server and right-click the **readinessdw** database.   Select **New Query...**.
+
+
+1. Enter the following commands to create a new schema for our internally managed tables. We will be 
+
+	````SQL
+	CREATE SCHEMA [adw]
+	GO
+
+	````
+
+1.  Execute the following in a query window to create a new partitioned table.  Note this table will be created based on a SELECT statement issued on the external table. 
+
+	````SQL
+	CREATE TABLE adw.FactWebsiteActivity
+	(
+		EventDate datetime2,
+		UserId nvarchar(20),
+		Type nvarchar(20),
+		ProductId nvarchar(20), 
+		Quantity int, 
+		Price float
+	)
+	WITH (
+		CLUSTERED COLUMNSTORE INDEX,
+		DISTRIBUTION = HASH(ProductID)
+		)
+	
+	GO
+	````
+
+1. Similarly, let's pull our latest and greatest product catalog data from blob storage.
+
+	````SQL
+	IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = 'adw' AND TABLE_NAME = 'DimProductCatalog')
+		DROP TABLE adw.DimProductCatalog
+	GO
+
+	CREATE TABLE adw.DimProductCatalog
+	(
+		SkuNumber nvarchar(50),
+		Id int,
+		ProductId nvarchar(20),
+		CategoryId nvarchar(20),
+		CategoryName nvarchar(100),
+		Title nvarchar(100),
+		Price float,
+		SalePrice float,
+		CostPrice float
+	)
+	WITH (
+		CLUSTERED COLUMNSTORE INDEX,
+		DISTRIBUTION = HASH(ProductID)
+		)
+	
+	````
+
+1. Now, let's do a bulk insert into our 2 tables. Let's start with our Product Catalog table. We will use 'bcp' via the command line for this. Be sure to exit out of the SQL CLI or the sqlcmd before running bcp. Execute the following command to load the Product Catalog data.
+
+
+	````
+	bcp.exe adw.DimProductCatalog in ...\Module3-Security\Setup\data\product_catalog\000000_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	````
+
+	![Import Data into SQL DW using bcp](Images/setup-bcp.jpg?raw=true "Import Data into SQL DW using bcp")
+		
+			_Import Data into SQL DW using bcp_
+
+
+1. Similarly, let's upload our Fact data. Since our Fact data is made up of multiple files, we'll run the bcp command multiple times.
+
+	````
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_1 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_1 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
+	````
+
+1. You can verify that the data has been successfully loaded by switching back to your favorite SQL tool (VS or commandline) and executing the following SQL query.
+	````SQL
+	SELECT * from adw.DimProductCatalog
+	GO
+
+	SELECT count(*) from adw.FactWebsiteActivity
+	GO
+	````
+
+1. Finally, let's create and populate the **adw.ProfitableProducts** table, which can be done by executing the following SQL command.
+
+	````SQL
+	IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = 'adw' AND TABLE_NAME = 'ProfitableProducts')
+			DROP TABLE adw.ProfitableProducts
+
+		CREATE TABLE adw.ProfitableProducts
+		WITH
+		(   
+			CLUSTERED COLUMNSTORE INDEX,
+			DISTRIBUTION = ROUND_ROBIN
+		)
+		AS
+		SELECT 
+			a.ProductId, 
+			b.CategoryName,
+			SUM(a.Price - (b.CostPrice*a.Quantity)) as Profit
+		FROM adw.FactWebsiteActivity AS a LEFT OUTER JOIN adw.DimProductCatalog AS b
+			ON a.ProductId = b.ProductId
+		WHERE  DATEDIFF(day, a.eventdate, GetDate()) < 30
+		AND a.[Type]='checkout'
+		GROUP BY a.ProductId, b.CategoryName;
+	````
 
 
 <a name="Exercise1"></a>
@@ -146,42 +337,31 @@ If you've completed Module 2 of this lab, you should have the product catalog an
 
 <a name="Ex1Task3"></a>
 #### Task 3 - Viewing recommendations in action ####
-	TODO: Task 3 is not working. Needs to be re-done
 
-In this task, you'll update the PartsUnlimited website to use the Recommendations API. To learn more, go to: https://azure.microsoft.com/en-us/documentation/articles/machine-learning-recommendation-api-documentation/
+In this task, you'll view your recommendation model in action by viewing them on a website, which calls the recommendations API.
 
-1. Open in Visual Studio the **PartsUnlimited.sln** solution located at **Source / Ex1 / Begin / PartsUnlimited** folder.
+1. Open in Visual Studio the **RecViewerApp.sln** solution located at **Module4-Consumption / RecViewerApp** folder.
 
-1. Open the **config.json** file located in the **PartsUnlimited** website.
+1. Run the application. Once it loads, enter your Recommendations API **account key** and select your **ModelID**.
 
-1. Set the AzureMLRecommendations **AccountEmail**, **AccountKey** and **ModelId** settings with the values that you got from the previous task.
-
-1. Now set the Azure DocumentDB **Endpoint** and **AuthKey** using the _URI_ and _Primary Key_ that you obtained while creating it in the [Creating the DocumentDB database](../Module1-IntelligentApp#task-1---creating-the-documentdb-database) module. If you do not have them, you can use these credentials:
-
- URL:
- https://data-module3.documents.azure.com:443/
-
- Key:
- mywgRcMYpcsaRo72hbTw4HZRnEPAMzffzEYZVCZXXOWlslpnsUDwACsftxQBdSIGCC0APiq3g9dYYk2J550Eqg==
-
-1. Open the **AzureMLRecommendationEngine.cs** file located in the **Recommendations** folder.
-
-1. Check the **GetRecommendationsAsync** method. Get recommendations of the active build of type "Recommendation" or "Fbt" based on a list of seeds (input) items. The response includes one entry per recommended item, including the Rating of the recommendation; higher number means higher confidence. This is what the product recommendation HTTP request looks like:
-
-	````
-	HTTP GET method
-	<rootURI>/ItemRecommend?modelId=%27<modelId>%27&itemIds=%27<itemId>%27&numberOfResults=<int>&includeMetadata=<bool>&apiVersion=%271.0%27
-	````
-
-1. Run the application and select any product to see the details and recommended items.
-
-	>**Note**: If you see any CSS issue, stop the app, right-click on PartsUnlimited Dependencies and select **Restore Packages**. Then, run the grunt task **default** in the 'Task Runner Explorer' window.
+1. Once you fill the information in, click on any of the products shown under the **Products** section.
 
 	![Recommendations for an item](Images/ex1-task2-website.png?raw=true "Recommendations for an item")
 
 	_Recommendations for an item_
 
+	TODO: Screenshot of Webpage without Recs
 
+
+1. You should see Recommendations show up for each product that you click on.
+
+	TODO: Screenshot of Recs
+
+1. Let's examine the code. Go to the Visual Studio solution and open up the **Default.aspx.cs** file. Examine the method called **ModelKey_TextChanged**. This method calls the **GetModels()** method that returns all the models for the Recommendation API key.
+
+1. Next, examine the **productdetails_ItemCommand** method. This method calls the **GetRecommendations** method, which in-turn returns recommendations for any selected product.
+
+1. Finally, open the **RecommendationsApiWrapper.cs** file. This file contains the different methods required to interact with the Recommendations API. This class is available as a part of the Sample App that can be downloaded via the Azure documentation [here](https://github.com/microsoft/Cognitive-Recommendations-Windows)
 
 ### Appendix ###
 
@@ -190,3 +370,150 @@ In this task, you'll update the PartsUnlimited website to use the Recommendation
 1. [Recommendation API - Documentation](https://azure.microsoft.com/en-us/documentation/articles/machine-learning-recommendation-api-documentation/)
 
 
+1. [Getting Started with Recommendations API](https://azure.microsoft.com/en-us/documentation/articles/cognitive-services-recommendations-quick-start/)
+
+
+
+
+<a name="Exercise2"></a>
+### Exercise 2: Powering your Bot using Data ###
+
+In this exercise, we will use the Bot framework to connect our data to make our bot intelligent.
+
+>**Note:** We will not be utilizing [LUIS](https://luis.ai) for the bot built in this lab. This lab is meant to be a showcase of how bots are yet another application connecting to your data source and how you can add smarts to your bot by connecting it to your analytical data store.
+
+#### Task 1: Understanding the Code ####
+
+1. Open in Visual Studio the **DBAccessBotDemo.sln** solution located at **Module4-Consumption / DBAccessBotDemo** folder.
+
+1. Open the file **MessagesController.cs** found in the **Controller** folder. 
+
+1. Enter the ADO.NET SQL DW Connection String for the private variable called **connectionString**. Your connection string should look as follows:
+
+	````
+	Server = tcp:<server name>.database.windows.net,1433; Database = <data warehouse name>; User ID = <username>; Password = <password>; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;
+	````
+
+1. If you used the default values in the ARM template to create the SQL Server and the Data Warehouse, the connection string should look similar to the one below:
+
+	````
+	Server = tcp:readinesssqlsvr<uniqueSuffx>.database.windows.net,1433; Database = readinessdw; User ID = labuser; Password = labP@ssword1; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;
+	````
+
+1. Notice the **StartAsync** method. This method allows you to have a dialogue with the bot. This method calls the **MessageReceivedAsync** method.
+
+1. In the **MessageReceivedAsync** method, we are creating a connection to our SQL DW using the connection string.
+
+	````
+	//Connect to DataWarehouse and put content of query into reader
+            using (var connection = new SqlConnection(connectionString)) //Call out
+            {
+                connection.Open();
+	````
+
+1. At the end of the **MessageReceivedAsync** method, notice how we're again calling the same method, thus ensuring that our program does not end after the first message has been sent.
+
+		````
+		context.Wait(MessageReceivedAsync)
+		````
+
+
+1. Once our connection is created and opened, it's now time to send a query to our database and receive a result back. It is **Very Important** to note that we should **ONLY** connect to **Analytical** data stores and **not** transactional data stores for querying of our data. In this case, the SQL Data Warehouse acts as our **Analytical Data Store** and hence we're connecting to it to fetch our results.
+
+1. We've created three (3) intents for this lab. All of them help us get information about our e-commerce store using our SQL Data Warehouse table.
+	1. Identifying Profit for a Specified Product
+		- In this case, we're submitting questions to the bot such as "**Show me the profit for product: Filter Set**". This intent should fire a query to the Data Warehouse and should pull down the profits for the product titled **Filter Set**.
+	1. 	Products making profit lesser than a certain threshold
+		- Here, the inten is to understand if there are certain products that are not making enough profit. Here, we're expecting questions such as "**Show me products that have made profits of less than 20000**". This intent should execute a query to give you products whose profits are less than the 20000 threshold. 
+	1. Most Profitable Products
+		- : The intent here is to understand the store's highest profiting product. The questions that we're expecting here are of the type "**Show me the most profitable product**".
+
+>**Note:** In a real-world scenario, the aforementioned intents would be handled and identified using [LUIS](https://luis.ai). However, in this case, we have used _if_ statements to filter the question and identify the intent.
+
+
+#### Task 2: Writing the SQL queries to pull the data ####
+
+We will be connecting to the SQL table **adw.ProfitableProducts** to pull down the results.
+
+1. In the code, review how we submit a SQL Query to the SQL DW and how we read the output of that query. We're using **GetString(ColumnNumber)** and **GetDouble(ColumnNumber)** to cast and handle our output data.
+	````
+	using (var Command = new SqlCommand())
+    {
+        Command.Connection = connection;
+        Command.CommandType = System.Data.CommandType.Text; 
+        Command.CommandText = @"select * from dbo.MyTable";
+
+        SqlDataReader reader = Command.ExecuteReader();
+
+		while (reader.Read())
+        {
+			Console.WriteLine(String.Format("Profit for {0}: ${1}", reader.GetString(0), reader.GetDouble(1).ToString()));
+		}
+	}
+	````
+
+1. Now, let's write our SQL Queries for the intents that we have defined.
+
+	1. Identifying profit for a specified product
+		- In this case, the query would look something like follows. Notice how the **title** field is a variable which is being populated by the end user's input.
+		
+		````
+		select a.Profit, b.title from adw.ProfitableProducts a INNER JOIN adw.DimProductCatalog b ON a.productId=b.productId WHERE b.title='" + title + "' 
+		````
+		- _Explanation of the Query_: This query joins the ProfitableProducts table with our DimProductCatalog table to fetch the profit for each product along with the product titles and then filters on the specific requested title using the WHERE clause.
+		 
+		- Let's paste this query in the section that asks you to insert **Query1**
+				TODO: Screenshot (ex2-task2-q1)
+
+
+	1.  Products making profit lesser than a certain threshold
+		- Here, we would query the database to check for products with profit<_threshold_. The query would be as follows. Notice how the **threshold** field gets populated dynamically.
+		````
+		select a.*, b.title from adw.ProfitableProducts a INNER JOIN adw.DimProductCatalog b ON a.productId=b.productID WHERE a.Profit <'" + threshold + "' 
+		````
+		- _Explanation of the Query_: This query joins the ProfitableProducts table with our DimProductCatalog table to fetch the profit for each product along with the product titles and then filters out the products that have profits less than the _threshold_ using the WHERE clause.
+		
+		- Let's paste this query in the section that asks you to insert **Query1**
+				TODO: Screenshot (ex2-task2-q2)
+
+
+	1. Most Profitable Products
+		- In this scenario, we want to find out our most profitable product. For this, the query would look as follows:
+		````
+		select top 1 a.*, b.title from adw.ProfitableProducts a INNER JOIN adw.DimProductCatalog b ON a.productId=b.productID ORDER BY a.Profit DESC
+		````
+		- _Explanation of the Query_: This query joins the ProfitableProducts table with our DimProductCatalog table to fetch the profit for each product along with the product titles and then ORDERS products according to their profits so that we have out most profitable product as row #1. Then, we use the **Top 1** filter to only fetch the first row of this select query.
+		
+		- Let's paste this query in the section that asks you to insert **Query1**
+				TODO: Screenshot (ex2-task2-q3)
+		
+
+1. Finally, notice how we are exposing the results out to the client using the **context.PostAsync()** method.
+		TODO: Screenshot (ex2-task2-result)
+
+
+#### Task 3: See the bot in action ####
+
+1. Let's execute this program. Once executed, it should open a tab in your browser and take you to a **localhost** address. Copy that address.
+
+1. Now, open the **Bot Framework Emulator** program.
+
+1. On the top, under the section **Bot Url**, please paste the following url. Please be sure to replace the port number with the port number you copied in the previous step. Now you are ready to interact with the bot.
+
+	````
+	http://localhost:<port number>/api/messages
+	````
+	TODO: Screenshot (ex2-task3-boturl)
+
+1. Let's test our scenarios.
+
+	1. Let's type the question: **what is the profit for product: Filter Set**. Ensure that you do not miss the colon(:) and that you only have the product title name after the colon. This will ensure that we can parse the question on the backend correctly. Your output should look as follows:
+		TODO: Screenshot (ex2-task3-q1)
+
+	1. Next Question: **show me products that have made profit less than 20000**. Ensure that you put the threshold number at the very end of the sentence and you either use the phrase _less than_ or use the symbol (<).
+		TODO: Screenshot (ex2-task3-q2)
+
+	1. Last one: **show me the most profitable product**. Ensure that you use the phrase _most profitable_ for the command to work.
+		TODO: Screenshot (ex2-task3-q3)
+
+With this, we have successfully connected our bot to our Data warehouse and created a smart bot, which is always able to answer questions about our profitable products based on the most latest and accurate data.

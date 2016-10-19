@@ -7,9 +7,9 @@
         <p class="lead">Adds smarts to your e-commerce store by adding Product Recommendations</p>
         <p><a href="https://azure.microsoft.com/en-us/documentation/articles/machine-learning-recommendation-api-documentation/" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
     </div>
-
-    <div class="row">
-        <div class="col-md-4">
+    <hr />
+    <div class="modelInfoRow">
+        <div class="modelInfoCol">
             <h2>Model Information</h2>
             <p class="lead">
                 Please enter your Recommendations <strong>Account Key</strong>:&nbsp;&nbsp;&nbsp;
@@ -17,10 +17,11 @@
             </p>
             <p class="lead">
                 Select a Trained Model from the List:&nbsp;&nbsp;&nbsp;
-                <asp:DropDownList ID="ModelSelect" runat="server" OnSelectedIndexChanged="ModelSelect_SelectedIndexChanged" >
+                <asp:DropDownList ID="ModelSelect" runat="server" OnSelectedIndexChanged="ModelSelect_SelectedIndexChanged" Height="43px" Width="281px" >
                 </asp:DropDownList>
                 </p>
         </div>
+        <hr />
         <div class="row">
             <h2>Partsunlimited Products</h2>
             <table>
@@ -57,7 +58,7 @@
                     
                 </tr>
             </table>
-          
+          <hr />
         </div>
         <div class="row">
             <h2>Recommendations</h2>
@@ -86,8 +87,8 @@
                                          </ItemTemplate>
                                       </asp:Repeater>  
                                   </div>
-                                   <a data-slide="prev" href="#products" class="left carousel-control">‹</a>
-                                    <a data-slide="next" href="#products" class="right carousel-control">›</a>
+                                   <a data-slide="prev" href="#recs" class="left carousel-control">‹</a>
+                                    <a data-slide="next" href="#recs" class="right carousel-control">›</a>
 
                               </div>
                           </div>
