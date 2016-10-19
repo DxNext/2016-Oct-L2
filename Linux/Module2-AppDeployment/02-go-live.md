@@ -160,11 +160,12 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
 
 ## Create user account and populate database
 
-1. Sign up and create the user `'admin'` with the password `'password'`.
+1. In the Northwind website click on the `'Sign up'` button on the top right and create the user `'admin'` with the password `'password'`.
 
-1. Now use the npm package `'migrate'` to populate the database and review the new elements in the website.
+1. Back in your SSH session inside the `'northwind'` folder use the npm package `'migrate'` to populate the database and review the new elements in the website.
 
     ```bash
+    cd ~/northwind
     migrate up
     ```
 
