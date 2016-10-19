@@ -141,7 +141,6 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
 1. Install the dependencies (one by one)
 
     ```bash
-    cd ~/northwind
     sudo npm install -g node-inspector
     sudo npm install -g node-gyp
     sudo npm install -g mocha
@@ -153,6 +152,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     After you are done with the dependencies run:
 
     ```bash
+    npm install
     npm start
     ```
 
