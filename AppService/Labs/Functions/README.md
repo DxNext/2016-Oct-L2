@@ -121,7 +121,7 @@ public class ImageText : TableEntity
     public string Uri {get; set; }
 }
 
-public static void Run( ICloudBlob myBlob, ICollector outputTable, TraceWriter log) 
+public static void Run( ICloudBlob myBlob, ICollector<ImageText> outputTable, TraceWriter log) 
 {
      try  
     {
@@ -270,14 +270,14 @@ The function input argument is of type _IQueryable&lt;ImageText&gt;_, which repr
       var result = new List();
 
       var query = from ImageText in inputTable select ImageText;
-      //log.Info($"original query --&gt; {JsonConvert.SerializeObject(query)}");
+      //log.Info($"original query --> {JsonConvert.SerializeObject(query)}");
 
       foreach (ImageText imageText in query)
       {
           result.Add( new SimpleImageText(){Text = imageText.Text, Uri = imageText.Uri});
           //log.Info($"{JsonConvert.SerializeObject()}");
       }
-//    log.Info($"list of results --&gt; {JsonConvert.SerializeObject(result)}");
+//    log.Info($"list of results -->; {JsonConvert.SerializeObject(result)}");
 
       return req.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(result));
   }
@@ -322,11 +322,11 @@ One small note: if you want to view the images, you will need to generate a SAS 
 
       //get container sas token
       var st = GetContainerSasToken(inputContainer);
-      //log.Info($"token --&gt; {st}");
+      //log.Info($"token --> {st}");
       var result = new List();
 
       var query = from ImageText in inputTable select ImageText;
-      //log.Info($"original query --&gt; {JsonConvert.SerializeObject(query)}");
+      //log.Info($"original query --> {JsonConvert.SerializeObject(query)}");
 
       foreach (ImageText imageText in query)
       {
