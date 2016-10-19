@@ -5,7 +5,7 @@ You can get up and running with Log Analytics in the Microsoft Operations Manage
 - Microsoft Operations Management Suite website
 - Microsoft Azure subscription
 
-You can create an free OMS workspace using the OMS website. Or, you can use a Microsoft Azure subscription to create an OMS workspace. Both workspaces are functionally equivalent, except that a free OMS workspace can only send 500 MB of data daily to the OMS service. If you use an Azure subscription, you can also use that subscription to access other Azure services. Regardless of the method that you use to create the workspace, you'll create the workspace with either a Microsoft account or organizational account.
+For simplicity, we will use the Azure Portal.
 
 ## Sign up quickly using Microsoft Azure
 

@@ -1,0 +1,1 @@
+![install-docker](../images/install-docker.png)
