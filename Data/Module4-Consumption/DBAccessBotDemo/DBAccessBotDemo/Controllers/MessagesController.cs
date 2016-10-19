@@ -7,9 +7,11 @@ using Microsoft.Bot.Builder.Dialogs;
 using System.Web.Http.Description;
 using System.Net.Http;
 using System.Diagnostics;
-using QC = System.Data.SqlClient;
+using System.Data.SqlClient;
 
 //Simple bot to demo accessing and pulling data from Datawarehouse 
+//We are not using LUIS to identify the context.
+//The intention is to highlight yet another app that can connect to your data and make it come alive
 //Two different 'dialogs' (not utilizing luis.ai at the moment) 
     //Product function is triggered with 'profit' in the user message and the product that is looked up must be preceded by ':' (ex. Profit for: Filter Set)
     //Second is triggered with 'products' in the user message with a max profit value preceded by '<' (ex. which products made < 50000) 
@@ -21,10 +23,10 @@ namespace DBAccessBotDemo
     [Serializable]
     public class EchoDialog : IDialog<object>
     {
-        private string connectionString = "Server = tcp:readinesssqlsvr10.database.windows.net,1433; Database = readinessdw; User ID = labuser; Password = labP@ssword1; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;";
+        private string connectionString = "";   //<- Enter SQL Connection String here
         public async Task StartAsync(IDialogContext context)
         {
-            context.Wait(MessageReceivedAsync); //Call out
+            context.Wait(MessageReceivedAsync);
 
         }
 
@@ -32,11 +34,12 @@ namespace DBAccessBotDemo
         {
             /*User Dialogs
             -Give me profit on Jumper Leads (Jumper leads will be flexible where it can be any entity)
-            -Show me products that have made less then 50,000
+            -Show me products that have made less then 50,000 (this threshold is flexible)
+            -Show me most profitable products
              */
 
             //Connect to DataWarehouse and put content of query into reader
-            using (var connection = new QC.SqlConnection(connectionString)) //Call out
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -44,24 +47,23 @@ namespace DBAccessBotDemo
                 var message = await argument;
                 string userText = message.Text;
 
+                //****Intent 1 => Show the profits for a specified product
                 if (userText.Contains("profit") && userText.Contains(":"))
                 {
                     string title = userText.Split(':')[1];
                     title = title.Trim(' ');
-                    using (var Command = new QC.SqlCommand())
+                    using (var Command = new SqlCommand())
                     {
                         Command.Connection = connection;
-                        Command.CommandType = System.Data.CommandType.Text; //Call out
-                        Command.CommandText = @"select a.Profit, b.title from adw.ProfitableProducts a INNER JOIN adw.DimProductCatalog b ON a.productId=b.productId WHERE b.title='" + title + "' ";
+                        Command.CommandType = System.Data.CommandType.Text; 
+                        Command.CommandText = @"";  //<- Insert Query 1 here
 
-                        QC.SqlDataReader reader = Command.ExecuteReader();
-
-                        //await context.PostAsync("Output: ");
+                        SqlDataReader reader = Command.ExecuteReader();
 
                         while (reader.Read())
                         {
                             await context.PostAsync(String.Format("Profit for {0}: ${1}", title, reader.GetDouble(0).ToString()));  //Call out
-                            // await context.PostAsync(reader.GetDouble(0).ToString());
+                            
                         }
                         if (reader.HasRows == false)
                         {
@@ -69,22 +71,26 @@ namespace DBAccessBotDemo
                         }
                     }
                 }
+
+
+                //****Intent 2 => Show products that are making profit that are less than a certain dollar threshold
                 else if (userText.Contains("<") || userText.Contains("less than"))
                 {
-                    //Grab integer value 
-                    //String res = userText.Split('<')[1];
-
-                    //int lessThen = Int32.Parse(res.Trim(' '));
-                    int lessThen = Int32.Parse(userText.Split('<')[1].Trim(' ').Replace(",", ""));
-                    using (var Command = new QC.SqlCommand())
+                    
+                    int threshold = 0;
+                    if (userText.Contains("<"))
+                        threshold = Int32.Parse(userText.Split('<')[1].Trim(' ').Replace(",", ""));
+                    else
+                        threshold = Int32.Parse(userText.Split(new string[] { "less than"}, StringSplitOptions.None)[1].Trim(' ').Replace(",", ""));
+                    using (var Command = new SqlCommand())
                     {
                         Command.Connection = connection;
-                        Command.CommandType = System.Data.CommandType.Text; //Call out
-                        Command.CommandText = @"select a.*, b.title from adw.ProfitableProducts a INNER JOIN adw.DimProductCatalog b ON a.productId=b.productID WHERE a.Profit<'" + lessThen + "' ";
+                        Command.CommandType = System.Data.CommandType.Text; 
+                        Command.CommandText = @"";  //<- Insert Query 2 here
 
-                        QC.SqlDataReader reader = Command.ExecuteReader();
+                        SqlDataReader reader = Command.ExecuteReader();
 
-                        String result = String.Format("Products that made less then {0}: \n", lessThen);
+                        String result = String.Format("Products that made less then {0}: \n", threshold);
                         while (reader.Read())
                         {
                             result = result + reader.GetString(3) + ", Profit: "+ reader.GetDouble(2)+ "; ";
@@ -94,19 +100,18 @@ namespace DBAccessBotDemo
 
                     }
                 }
+
+
+                //****Intent 3 => Identify the most profitable product your store sells
                 else if (userText.Contains("most profitable"))
                 {
-                    //Grab integer value 
-                    //String res = userText.Split('<')[1];
-
-                    //int lessThen = Int32.Parse(res.Trim(' '));
-                    using (var Command = new QC.SqlCommand())
+                    using (var Command = new SqlCommand())
                     {
                         Command.Connection = connection;
-                        Command.CommandType = System.Data.CommandType.Text; //Call out
-                        Command.CommandText = @"select top 1 a.*, b.title from adw.ProfitableProducts a INNER JOIN adw.DimProductCatalog b ON a.productId=b.productID ORDER BY a.Profit DESC";
+                        Command.CommandType = System.Data.CommandType.Text; 
+                        Command.CommandText = @"";  //<- Insert Query 3 here
 
-                        QC.SqlDataReader reader = Command.ExecuteReader();
+                        SqlDataReader reader = Command.ExecuteReader();
 
                         String result = String.Format("Most Profitable Product : ");
                         int loopCount = 0;
@@ -135,7 +140,7 @@ namespace DBAccessBotDemo
                     await context.PostAsync("You entered a command that I cannot process please enter pruduct or profit request.");
                 }
 
-                context.Wait(MessageReceivedAsync); //Call out
+                context.Wait(MessageReceivedAsync);
 
             }
         }
