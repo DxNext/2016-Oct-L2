@@ -36,6 +36,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     ```bash
     cd ~
     git clone git@github.com:yourGithubUsername/NorthwindNode.git northwind
+    ```
 
 1. Lets create a git webhook in our server
 
@@ -43,7 +44,8 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     mkdir webhook
     cd webhook
     npm init
-     ```
+    sudo npm install -g express
+    ```
 
      Add the following lines to the `'index.js'` file:
 
