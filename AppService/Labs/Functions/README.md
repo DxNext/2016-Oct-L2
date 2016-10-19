@@ -37,7 +37,7 @@ You can imagine a scenario in which you have a web or mobile app that needs to u
 </form>
 ```
 
-We want our function to receive an image and store it in Azure Blob Storage. This is a classic reader/writer pattern, where you want your API layer to do as little complex computing as possible.  The Azure Functions concept of Bindings enables developers to directly interact with the input and output values of Functions data sources. Those include Azure Storage Queue, Tables, and Blobs as well as Azure Event Hubs, Azure DocumentDB and more. [Click here for full list of binding](https://blogs.msdn.microsoft.com/azure.microsoft.com/en-us/documentation/articles/functions-reference/#bindings]).
+We want our function to receive an image and store it in Azure Blob Storage. This is a classic reader/writer pattern, where you want your API layer to do as little complex computing as possible.  The Azure Functions concept of Bindings enables developers to directly interact with the input and output values of Functions data sources. Those include Azure Storage Queue, Tables, and Blobs as well as Azure Event Hubs, Azure DocumentDB and more. [Click here for full list of bindings](https://blogs.msdn.microsoft.com/azure.microsoft.com/en-us/documentation/articles/functions-reference/#bindings]).
 
 Let’s add an Azure Blob output binding. On the **Integrate** tab, click New Output and choose Azure Storage Blob.
 
@@ -90,7 +90,7 @@ public static HttpResponseMessage Run(HttpRequestMessage req, Stream outputBlob,
         }
     return result;
 }
-``` 
+```
 
 ### Second Function – Performs OCR
 
@@ -98,12 +98,13 @@ Let’s create the second function, called ImageOCR. This function will be trigg
 
 ![](images/Try_4-1024x555.jpg)
 
-Make sure the Azure Storage Blob container name you use to trigger is the same as the Blob container name used to write the image from the first function. If you have not changed the default, the container name of the first function is _outcontainer_.
+Click on **New Function** and choose a **BlobTrigger - C#**.  Make sure the path name you use to trigger is the same as the Blob container name used to write the image from the first function. If you have not changed the default, the container name of the first function is _outcontainer_.
 
 ```csharp
 #r "System.IO"
 #r "System.Runtime"
 #r "System.Threading.Tasks"
+
 #r "Microsoft.WindowsAzure.Storage"
 
 using System;
@@ -132,7 +133,7 @@ public static void Run( ICloudBlob myBlob, ICollector<ImageText> outputTable, Tr
             log.Info($"stream length = {imageFileStream.Length}"); // just to verify
 
             //
-            var visionClient = new VisionServiceClient("YOUR_KEY_GOES_HERE");
+            var visionClient = new VisionServiceClient("YOUR KEY GOES HERE");
 
             // reset stream position to begining 
             imageFileStream.Position = 0;
@@ -185,11 +186,9 @@ static string LogOcrResults(OcrResults results)
 }
 ```
 
-The function is triggered by any file uploaded to the blob container. The default input parameter type of the function is string, but I will be using _ICloudBlob_, as I want to read the image as a stream and I want to get the image file name and URI. As you can see, Azure Functions binding provides a very rich experience.
+The function is triggered by any file uploaded to the blob container. The default input parameter type of the function is string, but I will be using _ICloudBlob_, as I want to read the image as a stream and I want to get the image file name and URI. As you can see, Azure Functions bindings provide a very rich experience.
 
-To perform the OCR on a given image, I am going to use using [Microsoft Cognitive Services](https://www.microsoft.com/en-us/microsoftservices/) , also known as Project Oxford. I could use any 3
-
-rd party tool, bring a dll that implements the algorithm, or write my own. However, leveraging other services as much as possible is a core tenant of Serverless architecture. If you don’t have a Cognitive Services account, sign up for free at [https://www.microsoft.com/cognitive-services](https://www.microsoft.com/cognitive-services)
+To perform the OCR on a given image, I am going to use using [Microsoft Cognitive Services](https://www.microsoft.com/en-us/microsoftservices/) , also known as Project Oxford. I could use any 3rd party tool, bring a dll that implements the algorithm, or write my own. However, leveraging other services as much as possible is a core tenant of Serverless architecture. If you don’t have a Cognitive Services account, sign up for free at [https://www.microsoft.com/cognitive-services](https://www.microsoft.com/cognitive-services)
 
 Using the Cognitive Services is very easy, it comes down to two lines of code:
 
@@ -201,18 +200,11 @@ Using the Cognitive Services is very easy, it comes down to two lines of code:
    var ocrResult = visionClient.RecognizeTextAsync(imageFileStream, "en");
 ```
 
-In order to make the _ImageOCR_ function code work, you’ll need to import _ProjectOxford_ assemblies. Azure functions support _project.json_ files to identify nuget packages (for C#) to be automatically restore with the function. For node.js Azure Functions support npm.
+In order to make the _ImageOCR_ function code work, you’ll need to import _ProjectOxford_ assemblies. Azure functions support _project.json_ files to identify nuget packages (for C#) to be automatically restored with the function. For Node.js, Azure Functions support npm.
 
-In the Functions UI, click on View files and add project.json with the following text. once you save this file, Azure Functions will automatically restore the ProjectOxford package.
+Save your code changes and then, in the Functions UI, click on View files and add **project.json** with the following text. once you save this file, Azure Functions will automatically restore the ProjectOxford package.
  
-![](images/Try_5-1024x555.jpg)
-
-In order to make the ImageOCR function code work, you’ll need to import Project Oxford assemblies. Azure Functions supports a project.json files to identify nuget NuGet packages (for C#) to be automatically restored with the functionFunction. For node.js, Azure Functions supports npm.
-
-In the Functions UI, click on View files and add project.json with the following text. Oonce you save this file, Azure Functions will automatically restore the Project Oxford packages.
-
-```json
-  project.json 
+```json 
   {
     "frameworks": {
       "net46":{
@@ -222,15 +214,19 @@ In the Functions UI, click on View files and add project.json with the following
       }
     }
   }
-``` 
+```
+ 
+
+![](images/Try_5-1024x555.jpg)
 
 We want to save the results somewhere. In this Try Functions example we are using Azure Storage Table. Note – if you have an Azure Subscription, you can use many other Data Services provided by Azure to store and process the results.
 
-Let’s add an output binding to Azure Table Store
+Let’s add an output binding to Azure Table Store.  Click on **Integrate** on the left menu, click **New Output**, and choose **Azure Storage Table**.
 
 ![](images/Try_5_1-1024x555.jpg)
  
-Next, change the Table name from the default to _ImagesText_. The Table parameter name, _outputTable_ will be used in the function code.
+
+Next, change the Table name from the default to _ImageText_. The Table parameter name, _outputTable_ will be used in the function code.
 
 ![](images/Try_5_2-1024x555.jpg)
 
@@ -242,7 +238,7 @@ You have now completed the creation of a function that scans an image, extracts 
 
 The last function we are going to create is of type HTTP trigger and will be used to return list of images and the text we extracted from the images in the second function.
 
-This time we will add an Azure Storage table as an input binding, because you would expect your function to receive the table store object to work with and extract the data. As before, make sure you are using the same table name you used in the second function. Note the Partition Key, which is optional was hard-coded for _TryFunctions_.
+This time we will add an Azure Storage table as an input binding, because you would expect your function to receive the table store object to work with and extract the data. As before, make sure you are using the same table name you used in the second function ("ImageText"). Note the Partition Key, which is optional was hard-coded for _TryFunctions_.
 
 ![](images/Try_61-1024x555.jpg)
 
@@ -259,15 +255,16 @@ The function input argument is of type _IQueryable&lt;ImageText&gt;_, which repr
   using System.Net;
   using System.IO;
   using System.Text;
+  using System.Linq;
   using System.Threading.Tasks;
   using Microsoft.WindowsAzure.Storage.Table;
   using Newtonsoft.Json;
 
-  public static async Task Run(HttpRequestMessage req, IQueryable inputTable,  TraceWriter log)
+  public static  HttpResponseMessage Run(HttpRequestMessage req, IQueryable<ImageText> inputTable,  TraceWriter log)
   {
       log.Info($"C# HTTP trigger function processed a request. RequestUri={req.RequestUri}");
 
-      var result = new List();
+      var result = new List<SimpleImageText>();
 
       var query = from ImageText in inputTable select ImageText;
       //log.Info($"original query --> {JsonConvert.SerializeObject(query)}");
@@ -277,9 +274,9 @@ The function input argument is of type _IQueryable&lt;ImageText&gt;_, which repr
           result.Add( new SimpleImageText(){Text = imageText.Text, Uri = imageText.Uri});
           //log.Info($"{JsonConvert.SerializeObject()}");
       }
-//    log.Info($"list of results -->; {JsonConvert.SerializeObject(result)}");
+//    log.Info($"list of results --> {JsonConvert.SerializeObject(result)}");
 
-      return req.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(result));
+      return  req.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(result));
   }
 
   // used to get rows from table
@@ -299,17 +296,17 @@ The function input argument is of type _IQueryable&lt;ImageText&gt;_, which repr
  
 ### We created three functions, it is time to test them.
 
-You can use any of your favorite tools to generate HTTP calls, including CURL, writing a simple html / Java script, or anything else. To test both HTTP functions I’ll use [Postman](https://www.getpostman.com/), using form-data as a Body to POST to the first function URL. You should receive “great” as a response and if you look at the first function log, in the Try Azure Function UI, you will notice traces from your function. If something went wrong, try debugging it… or ping me on Twitter (@yochayk)
+You can use any of your favorite tools to generate HTTP calls, including CURL, writing a simple html / Java script, or anything else. To test both HTTP functions I’ll use [Postman](https://www.getpostman.com/), using form-data as a Body to POST to the first function URL. You should receive “great” as a response and if you look at the first function log, in the Try Azure Function UI, you will notice traces from your function. If something went wrong, try debugging it…
 
 ![](images/Try_7-500x278.jpg) 
 
 Assuming your first function worked, go to the OCR image function and upload another image. You will notice that the OCR function got triggered, which means your first function successfully saved the image to storage and your second function picked it up. Again, you should see in the log traces from your function.
 
-Use Postman to call the last function and you should see JSON array including two images and the text extracted from them.
+Use Postman to call the last function and you should see JSON array including the URLs for any images uploaded and the text extacted from them.
 
 ![](images/Try_8.jpg)
 
-Here is [repo](https://github.com/yochay/FunctionSimpleImageUpload) with the function. Note, my solution is a little more complex and includes handling multiple uploaded files and adding a SAS token to the container.
+Here is a [repo](https://github.com/yochay/FunctionSimpleImageUpload) with the completed function. Note, this solution is a little more complex and includes handling multiple uploaded files and adding a SAS token to the container.
 
 One small note: if you want to view the images, you will need to generate a SAS token for the container, as by default, an Azure Blob Storage container permission blocks public read access. I’ve added the required code, which generates a 24 access token to images, to the _ImageViewText_ functions. You will also need to pass the blob container as input argument for the functions.
 
@@ -369,8 +366,8 @@ One small note: if you want to view the images, you will need to generate a SAS 
 
 ```
 
-With the updated _ImageViewText_ function you can now test your application with a simple Single Page Application I host on Azure Storage [http://tryfunctionsdemo.blob.core.windows.net/static-site/test-try-functions.html](http://tryfunctionsdemo.blob.core.windows.net/static-site/test-try-functions.html)
+With the updated _ImageViewText_ function you can now test your application with a simple Single Page Application that is hosted on Azure Storage [http://tryfunctionsdemo.blob.core.windows.net/static-site/test-try-functions.html](http://tryfunctionsdemo.blob.core.windows.net/static-site/test-try-functions.html)
 
-[](images/testingWitaSPA-1024x687.jpg)
+![](images/testingWitaSPA-1024x687.jpg)
 
 This simple HTML application has two text box for you to paste the URL of your function. You upload an image by dragging and dropping. You can get images by clinking the GetImages button. The screen capture shows the network calls and console for getting images. You can see on the console, the get images return array of images, with respective URIs and each image text, which we use to then display. Note the images have SAS tokens.
