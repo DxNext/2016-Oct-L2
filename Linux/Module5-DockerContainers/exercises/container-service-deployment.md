@@ -8,11 +8,11 @@ Choose on of the deployment options mentioned above.
 
 Sign in to the Azure portal, select **New**, and search the Azure Marketplace for **Azure Container Service**.
 
-![Create deployment 1](images/acs-portal1.png)  <br />
+![Create deployment 1](.images/acs-portal1.png)  <br />
 
 Select **Azure Container Service**, and click **Create**.
 
-![Create deployment 2](images/acs-portal2.png)  <br />
+![Create deployment 2](.images/acs-portal2.png)  <br />
 
 Enter the following information:
 
@@ -24,13 +24,13 @@ Enter the following information:
 
 Click **OK** when you're ready to proceed.
 
-![Create deployment 3](images/acs-portal3.png)  <br />
+![Create deployment 3](.images/acs-portal3.png)  <br />
 
 Select **"Swarm"** as the Orchestration type. The options are:
 
 Click **OK** when you're ready to proceed.
 
-![Create deployment 4](images/acs-portal4.png)  <br />
+![Create deployment 4](.images/acs-portal4.png)  <br />
 
 Enter the following information:
 
@@ -41,19 +41,19 @@ Enter the following information:
 
 Click **OK** when you're ready to proceed.
 
-![Create deployment 5](images/acs-portal5.png)  <br />
+![Create deployment 5](.images/acs-portal5.png)  <br />
 
 Click **OK** after service validation has finished.
 
-![Create deployment 6](images/acs-portal6.png)  <br />
+![Create deployment 6](.images/acs-portal6.png)  <br />
 
 Click **Create** to start the deployment process.
 
-![Create deployment 7](images/acs-portal7.png)  <br />
+![Create deployment 7](.images/acs-portal7.png)  <br />
 
 If you've elected to pin the deployment to the Azure portal, you can see the deployment status.
 
-![Create deployment 8](images/acs-portal8.png)  <br />
+![Create deployment 8](.images/acs-portal8.png)  <br />
 
 When the deployment has completed, the Azure Container Service cluster is ready for use.
 
@@ -164,7 +164,7 @@ The Docker Swarm clusters that are deployed by Azure Container Service expose RE
 The first thing that you do when you create an SSH tunnel on Linux or OS X is to locate the public DNS name of load-balanced masters. To do this, expand the resource group so that each resource is being displayed. Locate and select the public IP address of the master. This will open up a blade that contains information about the public IP address, which includes the DNS name. Save this name for later use. <br />
 
 
-![Public DNS name](images/pubdns.png)
+![Public DNS name](.images/pubdns.png)
 
 Now open a shell and run the following command where:
 
@@ -201,11 +201,11 @@ Download PuTTY to your Windows system and run the application.
 
 Enter a host name that is comprised of the cluster admin user name and the public DNS name of the first master in the cluster. The **Host Name** will look like this: `adminuser@PublicDNS`. Enter 2200 for the **Port**.
 
-![PuTTY configuration 1](images/putty1.png)
+![PuTTY configuration 1](.images/putty1.png)
 
 Select **SSH** and **Authentication**. Add your private key file for authentication.
 
-![PuTTY configuration 2](images/putty2.png)
+![PuTTY configuration 2](.images/putty2.png)
 
 Select **Tunnels** and configure the following forwarded ports:
 - **Source Port:** Use 2375 for Swarm.
@@ -215,11 +215,11 @@ The following example is configured for DC/OS, but will look similar for Docker 
 
 >[AZURE.NOTE] Port 80 must not be in use when you create this tunnel.
 
-![PuTTY configuration 3](images/putty3.png)
+![PuTTY configuration 3](.images/putty3.png)
 
 When you're finished, save the connection configuration, and connect the PuTTY session. When you connect, you can see the port configuration in the PuTTY event log.
 
-![PuTTY event log](images/putty4.png)
+![PuTTY event log](.images/putty4.png)
 
 When you've configured the tunnel for Docker Swarm, you can access the Swarm cluster through the Docker CLI. You will first need to configure a Windows environment variable named `DOCKER_HOST` with a value of ` :2375`.
 
