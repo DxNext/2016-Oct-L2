@@ -36,6 +36,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     ```bash
     cd ~
     git clone git@github.com:yourGithubUsername/NorthwindNode.git northwind
+    ```
 
 1. Lets create a git webhook in our server
 
@@ -43,7 +44,8 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     mkdir webhook
     cd webhook
     npm init
-     ```
+    sudo npm install -g express
+    ```
 
      Add the following lines to the `'index.js'` file:
 
@@ -134,12 +136,11 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
 
     Child process exit code: 0
      ```
-1. Open a new SSH session to your VM and correct the dependecies in the package json file. Change `'"grunt-node-inspector": "~0.1.3",'` to `'"grunt-node-inspector": ">=0.1.3",'`
+1. Open a new SSH session to your VM and go to the `'~/northwind'` folder and correct the dependecies in the package json file. Change `'"grunt-node-inspector": "~0.1.3",'` to `'"grunt-node-inspector": ">=0.1.3",'`
 
 1. Install the dependencies (one by one)
 
     ```bash
-    cd ~/northwind
     sudo npm install -g node-inspector
     sudo npm install -g node-gyp
     sudo npm install -g mocha
@@ -151,6 +152,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     After you are done with the dependencies run:
 
     ```bash
+    npm install
     npm start
     ```
 
@@ -158,11 +160,12 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
 
 ## Create user account and populate database
 
-1. Sign up and create the user `'admin'` with the password `'password'`.
+1. In the Northwind website click on the `'Sign up'` button on the top right and create the user `'admin'` with the password `'password'`.
 
-1. Now use the npm package `'migrate'` to populate the database and review the new elements in the website.
+1. Back in your SSH session inside the `'northwind'` folder use the npm package `'migrate'` to populate the database and review the new elements in the website.
 
     ```bash
+    cd ~/northwind
     migrate up
     ```
 
