@@ -20,3 +20,5 @@
 1. Demonstrate browser-integrated login by typing `az login` and following the directions.
 1. Change default output format to table by typing `az configure` and selecting the opion for table.
 1. List resources by typing `az resource list`.
+
+> Note: Additional demo commands are demonstrated in the [Ignite presentation](https://myignite.microsoft.com/secondscreen/2673) at 34:00.
