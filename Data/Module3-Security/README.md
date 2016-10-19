@@ -185,7 +185,7 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 
 	![Import Data into SQL DW using bcp](Images/setup-bcp.jpg?raw=true "Import Data into SQL DW using bcp")
 		
-			_Import Data into SQL DW using bcp_
+	_Import Data into SQL DW using bcp_
 
 
 1. Similarly, let's upload our Fact data. Since our Fact data is made up of multiple files, we'll run the bcp command multiple times.
