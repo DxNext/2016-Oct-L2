@@ -318,7 +318,7 @@ In this task, you'll add a new output to your Stream Analytics job.
 	```sql
 	WITH AbandonedCarts as (
     SELECT 
-        a.userId, a.productId, a.EventDate 
+        a.userId, CAST(a.productId as bigint) productId, a.EventDate 
     FROM 
         IoTHubInput as A TIMESTAMP BY EventDate
     LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
@@ -347,7 +347,7 @@ In this task, you'll add a new output to your Stream Analytics job.
 
 	WITH AllEvents AS (
 	SELECT
-	    productId, type, Count(CAST(productId as String)) AS [total]
+	    CAST(productId as bigint) productId, type, Count(CAST(productId as String)) AS [total]
 	FROM
 	    IoTHubInput TIMESTAMP BY EventDate
 	GROUP BY
@@ -364,7 +364,7 @@ Overall, your query should look as follows:
 
 	WITH AllEvents AS (
 	SELECT
-	    productId, type, Count(CAST(productId as String)) AS [total]
+	    CAST(productId as bigint) productId, type, Count(CAST(productId as String)) AS [total]
 	FROM
 	    IoTHubInput TIMESTAMP BY EventDate
 	GROUP BY
@@ -372,7 +372,7 @@ Overall, your query should look as follows:
 	),
 	AbandonedCarts as (
     SELECT 
-        a.userId, a.productId, a.EventDate 
+        a.userId, CAST(a.productId as bigint) productId, a.EventDate 
     FROM 
         IoTHubInput as A TIMESTAMP BY EventDate
     LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
