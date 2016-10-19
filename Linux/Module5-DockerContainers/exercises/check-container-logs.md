@@ -1,0 +1,1 @@
+![check-container-logs](./images/check-container-logs.png)
