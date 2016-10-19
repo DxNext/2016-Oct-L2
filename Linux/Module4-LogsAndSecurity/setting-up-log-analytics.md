@@ -11,7 +11,7 @@ You can get up and running with Log Analytics in the Microsoft Operations Manage
 
 For simplicity, we will use the Azure Portal.
 
-Please follow the below steps OR watch the [tutorial video](https://www.youtube.com/watch?v=mF1wtHPEzT0) (3 mins 41 second).
+Please follow the below steps.
 
 ## Sign up quickly using Microsoft Azure
 
@@ -28,16 +28,14 @@ Please follow the below steps OR watch the [tutorial video](https://www.youtube.
     ![workspace details](./media/oms-onboard-workspace-details.png)         
 4. Click the **OMS Portal** link to open the Operations Management Suite website with your new workspace.
 
-You're ready to start using the Operations Management Suite portal.
-
-You can learn more about setting up your workspace and linking existing workspaces that you created with the Operations Management Suite to Azure subscriptions at [Manage access to Log Analytics](log-analytics-manage-access.md).
-
 
 # 2. Installing the OMS agent to your Linux VM
 
 Now that you have created your OMS workspace, you need to install the OMS agent to your Linux VM.
 
 Run the following commands to download the omsagent, validate the checksum, and install+onboard the agent. *Commands are for 64-bit*. The Workspace ID and Primary Key can be found inside the OMS Portal under Settings in the **connected sources** tab.
+
+![connected-resources](./media/connected-resources.png)
 
 ```
 
