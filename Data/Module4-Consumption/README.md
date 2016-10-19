@@ -346,16 +346,27 @@ In this task, you'll view your recommendation model in action by viewing them on
 
 1. Once you fill the information in, click on any of the products shown under the **Products** section.
 
-	![Recommendations for an item](Images/ex1-task2-website.png?raw=true "Recommendations for an item")
+	![Products on our mock-up Website](Images/ex1-view-products.png?raw=true "Products on our mock-up Website")
 
-	_Recommendations for an item_
+	_Products on our mock-up Website_
 
-	TODO: Screenshot of Webpage without Recs
 
 
 1. You should see Recommendations show up for each product that you click on.
 
-	TODO: Screenshot of Recs
+	![Recommendations for an item](Images/ex1-rec-view-wo-details.png?raw=true "Recommendations for an item")
+
+	_Recommendations for an item_
+
+
+1. Now, click on any recommended item and you will notice that it will also display the **confidence %** and the **reasoning** why it recommended the item.
+	![Recommendations With Reasoning](Images/ex1-rec-view.png?raw=true "Recommendations With Reasoning")
+
+	_Recommendations for an item With Reasoning_
+
+	1. You can easily filter out recommended items that are below a certain threshold.
+
+	1. You can also notice that the reasoning has the words "People who **like this** also **like this**" or "People who **buy this** also **buy this**". Generally, if there is a strong **buying** correlation pattern between two products, you will get the latter reasoning. If there is not a strong buying correlation pattern, you will receive the first reasoning. Since our data is auto-generated, it is less likely that you will see any buying correlations in the recommendations.
 
 1. Let's examine the code. Go to the Visual Studio solution and open up the **Default.aspx.cs** file. Examine the method called **ModelKey_TextChanged**. This method calls the **GetModels()** method that returns all the models for the Recommendation API key.
 
@@ -463,7 +474,11 @@ We will be connecting to the SQL table **adw.ProfitableProducts** to pull down t
 		- _Explanation of the Query_: This query joins the ProfitableProducts table with our DimProductCatalog table to fetch the profit for each product along with the product titles and then filters on the specific requested title using the WHERE clause.
 		 
 		- Let's paste this query in the section that asks you to insert **Query1**
-				TODO: Screenshot (ex2-task2-q1)
+		
+			!Query 1 to pull profits for a specific product](Images/ex2-task2-q1.png?raw=true "Query 1 to pull profits for a specific product")
+		
+			_Query 1 to pull profits for a **specific** product_
+				
 
 
 	1.  Products making profit lesser than a certain threshold
@@ -473,8 +488,11 @@ We will be connecting to the SQL table **adw.ProfitableProducts** to pull down t
 		````
 		- _Explanation of the Query_: This query joins the ProfitableProducts table with our DimProductCatalog table to fetch the profit for each product along with the product titles and then filters out the products that have profits less than the _threshold_ using the WHERE clause.
 		
-		- Let's paste this query in the section that asks you to insert **Query1**
-				TODO: Screenshot (ex2-task2-q2)
+		- Let's paste this query in the section that asks you to insert **Query2**
+		
+			![Query 2 to pull products less than a certain threshold amount](Images/ex2-task2-q2.png?raw=true "Query 2 to pull products less than a certain threshold amount")
+
+			_Query 2 to pull products **less than a certain threshold** amount_
 
 
 	1. Most Profitable Products
@@ -484,12 +502,18 @@ We will be connecting to the SQL table **adw.ProfitableProducts** to pull down t
 		````
 		- _Explanation of the Query_: This query joins the ProfitableProducts table with our DimProductCatalog table to fetch the profit for each product along with the product titles and then ORDERS products according to their profits so that we have out most profitable product as row #1. Then, we use the **Top 1** filter to only fetch the first row of this select query.
 		
-		- Let's paste this query in the section that asks you to insert **Query1**
-				TODO: Screenshot (ex2-task2-q3)
+		- Let's paste this query in the section that asks you to insert **Query3**
+			
+			![Query 3 to pull most profitable products](Images/ex2-task2-q3.png?raw=true "Query 3 to pull most profitable products")
+
+			_Query 3 to pull **most profitable** products_
 		
 
 1. Finally, notice how we are exposing the results out to the client using the **context.PostAsync()** method.
-		TODO: Screenshot (ex2-task2-result)
+		
+	![Returning the output back to the client](Images/ex2-task2-result.png?raw=true "Returning the output back to the client")
+
+	_Returning the output back to the client_
 
 
 #### Task 3: See the bot in action ####
@@ -503,17 +527,26 @@ We will be connecting to the SQL table **adw.ProfitableProducts** to pull down t
 	````
 	http://localhost:<port number>/api/messages
 	````
-	TODO: Screenshot (ex2-task3-boturl)
+	![The Bot Url in the Emulator](Images/ex2-task3-boturl.png?raw=true "The Bot Url in the Emulator")
+
+	_The Bot Url in the Emulator_
 
 1. Let's test our scenarios.
 
 	1. Let's type the question: **what is the profit for product: Filter Set**. Ensure that you do not miss the colon(:) and that you only have the product title name after the colon. This will ensure that we can parse the question on the backend correctly. Your output should look as follows:
-		TODO: Screenshot (ex2-task3-q1)
+		
+		![Bot responding to Question #1](Images/ex2-task3-q1.png?raw=true "Bot responding to Question #1")
+
+		_Bot responding to Question #1_
 
 	1. Next Question: **show me products that have made profit less than 20000**. Ensure that you put the threshold number at the very end of the sentence and you either use the phrase _less than_ or use the symbol (<).
-		TODO: Screenshot (ex2-task3-q2)
+		![Bot responding to Question #2](Images/ex2-task3-q2.png?raw=true "Bot responding to Question #2")
+
+		_Bot responding to Question #2_
 
 	1. Last one: **show me the most profitable product**. Ensure that you use the phrase _most profitable_ for the command to work.
-		TODO: Screenshot (ex2-task3-q3)
+		![Bot responding to Question #3](Images/ex2-task3-q3.png?raw=true "Bot responding to Question #3")
+
+		_Bot responding to Question #3_
 
 With this, we have successfully connected our bot to our Data warehouse and created a smart bot, which is always able to answer questions about our profitable products based on the most latest and accurate data.
