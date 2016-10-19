@@ -136,7 +136,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
 
     Child process exit code: 0
      ```
-1. Open a new SSH session to your VM and correct the dependecies in the package json file. Change `'"grunt-node-inspector": "~0.1.3",'` to `'"grunt-node-inspector": ">=0.1.3",'`
+1. Open a new SSH session to your VM and go to the `'~/northwind'` folder and correct the dependecies in the package json file. Change `'"grunt-node-inspector": "~0.1.3",'` to `'"grunt-node-inspector": ">=0.1.3",'`
 
 1. Install the dependencies (one by one)
 
