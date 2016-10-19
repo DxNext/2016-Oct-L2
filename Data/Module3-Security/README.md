@@ -448,14 +448,17 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 	SELECT COUNT(*) from App.FactWebsiteActivity
 	````
-		![Show tables](Images/ex3-show-tables-app-view.png?raw=true "Show tables")
-		
+	
+	![Show tables](Images/ex3-show-tables-app-view.png?raw=true "Show tables")
+	_Show Tables Command_
 
 1. Let's also run a simple select query on the view to ensure we are not seeing data that we aren't supposed to.
 	````
 	SELECT TOP 200 * from App.FactWebsiteActivity
 	````
-		![Select top 200 rows](Images/ex3-select-query.png?raw=true "Select top 200 rows")
+	
+	![Select top 200 rows](Images/ex3-select-query.png?raw=true "Select top 200 rows")
+	_Select top 200 rows_
 
 1. Let's run the steps again for the other user to ensure that we see a different dataset than what was just returned by the SELECT query.
 
