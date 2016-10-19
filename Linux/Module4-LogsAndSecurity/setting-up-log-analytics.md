@@ -46,17 +46,3 @@ $> sha256sum ./omsagent-1.2.0-75.universal.x64.sh
 $> sudo sh ./omsagent-1.2.0-75.universal.x64.sh --upgrade -w <YOUR OMS WORKSPACE ID> -s <YOUR OMS WORKSPACE PRIMARY KEY>
 
 ```
-
-# 3. Connect your Linux VM as a log source
-
-To choose solutions and connect the servers that you want to manage, click the **Settings** tile and follow the steps in this section.  
-
-![get started](./media/oms-onboard-get-started.png)  
-
-1. **Connect a source** - Choose how you would like to connect to your server environment to gather data:
-    - [Connect Linux servers with the OMS Agent for Linux.](./install-oms-agent-for-linux.md)
-    - Use an Azure storage account configured with the Windows or Linux Azure diagnostic VM extension.
-
-2. **Gather data** Configure at least one data source to populate data to your workspace. When done, click **Save**.    
-
-    ![gather data](./media/oms-onboard-logs.png)
