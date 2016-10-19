@@ -545,6 +545,8 @@ We will be connecting to the SQL table **adw.ProfitableProducts** to pull down t
 		_Bot responding to Question #2_
 
 	1. Last one: **show me the most profitable product**. Ensure that you use the phrase _most profitable_ for the command to work.
+	
+
 		![Bot responding to Question #3](Images/ex2-task3-q3.png?raw=true "Bot responding to Question #3")
 
 		_Bot responding to Question #3_
