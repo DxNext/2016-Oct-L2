@@ -180,7 +180,7 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 
 
 	````
-	bcp.exe adw.DimProductCatalog in ...\Module3-Security\Setup\data\product_catalog\000000_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t -E
+	bcp.exe adw.DimProductCatalog in ...\Module3-Security\Setup\data\product_catalog\000000_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 	````
 
 	![Import Data into SQL DW using bcp](Images/setup-bcp.jpg?raw=true "Import Data into SQL DW using bcp")
@@ -191,13 +191,13 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 1. Similarly, let's upload our Fact data. Since our Fact data is made up of multiple files, we'll run the bcp command multiple times.
 
 	````
-	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t -E
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 
-	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_1 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t -E
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000001_1 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 	
-	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t -E
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_0 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 	
-	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_1 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t -E
+	bcp.exe adw.FactWebsiteActivity in C:\Work\Projects\oct16_upskilling\Data\Module3-Security\Setup\data\structuredlogs\000010_1 -S readinesssqlsvr<uniqueSuffix>.database.windows.net -d readinessdw -U labuser -P labP@ssword1 -c -q -t, -E
 	````
 
 1. You can verify that the data has been successfully loaded by switching back to your favorite SQL tool (VS or commandline) and executing the following SQL query.
