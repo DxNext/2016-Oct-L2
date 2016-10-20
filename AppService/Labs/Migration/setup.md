@@ -13,7 +13,7 @@ For all labs, you will need a Git client installed. If you are using Windows, yo
 
 ### Source code
 
-(To be uploaded soon)
+The source code is available on [GitHub](https://github.com/GeekTrainer/Expenses.MVC). You may receive a couple of warnings when opening the solution that can be ignored.
 
 ## Node.js labs
 
