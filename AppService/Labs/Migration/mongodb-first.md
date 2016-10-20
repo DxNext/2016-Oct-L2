@@ -1,8 +1,8 @@
-## Migrating MongoDB to DocumentDB
+# Migrating MongoDB to DocumentDB
 
 When migrating your application, you may decide to take advantage of the cloud for storing data. In particular, with DocumentDB, there are many features you may wish to implement, such as [global distribution](https://azure.microsoft.com/en-us/documentation/articles/documentdb-distribute-data-globally/) of your data and scaling. If you have a database already created in MongoDB, you can migrate it to DocumentDB with [protocol support for MongoDB](https://azure.microsoft.com/en-us/documentation/articles/documentdb-protocol-mongodb/), without rewriting your application. DocumentDB provides a fully managed implementation of NoSQL.
 
-### Scenario and overview
+## Scenario and overview
 
 This lab will walk you through the steps to migrate a MongoDB database, accessed via [mongoose](http://mongoosejs.com/), to DocumentDB. You'll complete the following steps
 
@@ -66,12 +66,12 @@ You will now perform the migration. When building the connection string, you wil
 1. Double click on **dtui.exe**, and click **Run**
 1. Click **Next**
 1. Configure the **Source Information**
-  - Connection String: *mongodb://localhost/invoices*
-  - Collection: *invoices*
+  - Connection String: *mongodb://localhost/invoicing*
+  - Collection: *invoicing*
 1. Click **Next**
 1. Configure the **Target Information**
-  - Connection String: *AccountEndpoint=https://mongo-&lt;your-name&gt;.documents.azure.com:443/;Database=invoices;AccountKey=&lt;PASSWORD&gt;*
-  - Collection: *invoices*
+  - Connection String: *AccountEndpoint=https://mongo-&lt;your-name&gt;.documents.azure.com:443/;Database=invoicing;AccountKey=&lt;PASSWORD&gt;*
+  - Collection: *invoicing*
 1. Click **Next**, **Next**, **Import** to migrate the database
 1. The migration should complete without errors
 
@@ -88,9 +88,15 @@ With the database migrated, you are now ready to update your Node.js application
 
 #### Configure the application to point to the new location
 
-1. Navigate to **C:\inetpub\node**
-1. Double click on **.env** and choose **Visual Studio Code**
-1. Replace **mongodb://localhost/invoices** with the connection string you copied above
+1. Open the folder containing the Node.js application using **Visual Studio Code**
+  - Open **Visual Studio Code**
+  - Click **File** > **Open Folder**
+  - Navigate to the folder containing the Node.js application
+  - Click **Select folder**
+1. Open **.env**
+1. Replace **mongodb://localhost/invoicing** with the connection string you copied above
 1. Click **File** > **Save**
-1. Navigate to **http://locahost:8080**
+1. Click **Ctl-`** to open a console window inside **Visual Studio Code**
+1. Type **node bin/www** in the console window to launch the application
+1. Navigate to **http://locahost:3000**
   - The application should display the list of salespeople
