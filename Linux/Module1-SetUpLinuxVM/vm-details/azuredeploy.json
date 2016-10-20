@@ -11,7 +11,7 @@
     "dnsCustomName": {
       "type": "string",
       "metadata": {
-        "description": "User name for the Virtual Machine."
+        "description": "dns custom name"
       }
     },
     "sshKeyData": {
