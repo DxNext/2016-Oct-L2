@@ -115,6 +115,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     We start the service:
 
     ```bash
+    npm update
     npm start
     ------------------------
     > webhook@1.0.0 start /home/bruno/webhook
