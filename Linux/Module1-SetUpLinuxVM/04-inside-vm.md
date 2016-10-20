@@ -75,10 +75,9 @@ We can also use `'vscode'` to edit our files in our computer.
 
 ![alt text][tunnel]
 
-1. SSH back into your VM and install `'rmate'`.
+1. SSH back into your VM (either with Putty or Bash) and install `'rmate'`. 
 
     ```bash
-    ssh myVM
     wget https://raw.githubusercontent.com/aurora/rmate/master/rmate
     chmod a+x rmate
     sudo mv rmate /usr/local/bin/

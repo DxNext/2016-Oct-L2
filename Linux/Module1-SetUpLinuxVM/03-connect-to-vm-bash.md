@@ -32,6 +32,7 @@ Your life can be easier if you can create a `config` file on `.ssh` folder.
 ```Shell
 touch ~/.ssh/config
 code ~/.ssh/config
+chmod 600 ~/.ssh/config
 ```
 
 You can take the following lines as an example, just make sure to replace the relevant information and save it after you are done:

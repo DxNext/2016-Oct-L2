@@ -12,7 +12,9 @@
 1. Show the initial deployment is triggered in the Azure portal.
 1. Browse to the site to show the site is live.
 1. Fork the repo in GitHub and clone your fork to your local machine.
-1. Change the title in `\views\index.jade` locally and push the change.
+1. Connect the site to the GitHub repo in your org.
+1. Show site has been redeployed from GitHub project.
+1. Change the title in `\views\index.jade` locally (or on GitHub) and push the change.
 1. Switch to the portal and show that a redeployment has been triggered.
 1. Refresh the site to show the change is live.
 
