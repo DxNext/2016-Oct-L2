@@ -8,6 +8,12 @@
         "description": "User name for the Virtual Machine."
       }
     },
+    "dnsCustomName": {
+      "type": "string",
+      "metadata": {
+        "description": "dns custom name"
+      }
+    },
     "sshKeyData": {
       "type": "string",
       "metadata": {
@@ -32,7 +38,7 @@
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "Subnet",
     "subnetPrefix": "10.0.0.0/24",
-    "uniqueDnsLabelPrefix": "[concat('store', uniquestring(resourceGroup().id))]",
+    "uniqueDnsLabelPrefix": "[concat(parameters('dnsCustomName'), uniquestring(resourceGroup().id))]",
     "storageAccountType": "Standard_LRS",
     "publicIPAddressName": "[concat(uniquestring(parameters('vmName')), 'publicip')]",
     "publicIPAddressType": "Dynamic",

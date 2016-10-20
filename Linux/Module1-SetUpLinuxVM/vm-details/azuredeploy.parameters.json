@@ -8,6 +8,9 @@
     "sshKeyData": {
       "value": "GEN-SSH-PUB-KEY"
     },
+    "dnsCustomName": {
+      "value": ""
+    },
     "vmName": {
       "value": ""
     }
