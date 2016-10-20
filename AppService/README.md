@@ -1,7 +1,8 @@
- 1. Selecting the best offering (30 min presentation / 15 minute practical exercise + break)
+1. Selecting the best offering (30 min presentation / 15 minute practical exercise + break)
     1. When to use App Service
-        1. [https://azure.microsoft.com/en-us/documentation/articles/app-service-value-prop-what-is/](https://azure.microsoft.com/en-us/documentation/articles/app-service-value-prop-what-is/)
-        1. [https://azure.microsoft.com/en-us/documentation/articles/cloud-services-choose-me/](https://azure.microsoft.com/en-us/documentation/articles/cloud-services-choose-me/)
+        1. [App Service value prop](https://azure.microsoft.com/en-us/documentation/articles/app-service-value-prop-what-is/)
+        1. [Cloud Service / Virtual Machine / App Service](https://azure.microsoft.com/en-us/documentation/articles/cloud-services-choose-me/)
+        1. [Functions / Web Jobs / Logic Apps / Flow](https://azure.microsoft.com/en-us/documentation/articles/functions-compare-logic-apps-ms-flow-webjobs/)
     1. Which App Service
     1. Practical Exercise (small
       groups)
