@@ -4,7 +4,7 @@ You open a port, or create an endpoint, to a virtual machine (VM) in Azure by cr
 ## Quick commands
 To create a Network Security Group and rules you need the Azure CLI in Resource Manager mode (`azure config mode arm`).
 
-Create your Network Security Group, entering your own names and location appropriately:
+Create your Network Security Group, **entering your own names and location appropriately**:
 
 ```
 azure network nsg create --resource-group TestRG --name TestNSG --location westus
