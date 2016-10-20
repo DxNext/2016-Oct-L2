@@ -16,7 +16,7 @@
       instructor led ([https://blogs.msdn.microsoft.com/appserviceteam/2016/10/04/get-some-hands-on-time-with-serverless-development-right-now-for-free/](https://blogs.msdn.microsoft.com/appserviceteam/2016/10/04/get-some-hands-on-time-with-serverless-development-right-now-for-free/))
 1. Self-Paced Labs (1.5 hours)
     1. Functions
-    1. Migration Labs ([https://github.com/GeekTrainer/app-services-migration](https://github.com/GeekTrainer/app-services-migration))
+    1. Migration Labs ([https://github.com/DxNext/2016-Oct-L2/tree/master/AppService/Labs/Migration](https://github.com/DxNext/2016-Oct-L2/tree/master/AppService/Labs/Migration))
     1. Managing Environments
       (ASP.NET Core) ([https://github.com/Microsoft-Build-2016/CodeLabs-WebDev/tree/master/Module3-DeploymentAndAzure](https://github.com/Microsoft-Build-2016/CodeLabs-WebDev/tree/master/Module3-DeploymentAndAzure))
     1. Web Apps on Linux (Preview) (based on release tutorial Oct 10)
