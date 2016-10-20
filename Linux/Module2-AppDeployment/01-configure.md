@@ -69,12 +69,6 @@ There are many out in the wild but these are some of the most popular ones. The 
     Complete!
     ```
 
-1. Now we must install the a set of basic tools we need:
-
-    ```Shell
-    sudo yum install gcc-c++ make git fontconfig bzip2 libpng-devel ruby ruby-devel
-    ```
-
 ## MongoDB
 
 1. First lets add the MongoDB repository to yum. To do that we need to add a file containing the MongoDB info to the `'/etc/yum.repos.d/'` folder. In this repo we can find that file in `'/materials/mongodb.org-3.2.repo'`.
