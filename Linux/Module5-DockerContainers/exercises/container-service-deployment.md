@@ -179,7 +179,7 @@ ssh -L PORT:localhost:PORT -f -N [USERNAME]@[DNSPREFIX]mgmt.[REGION].cloudapp.az
 ```
 > The SSH connection port is 2200--not the standard port 22.
 
-## Swarm tunnel
+## Create an SSH Tunnel on the Linux VM you have created earlier
 
 To open a tunnel to the Swarm endpoint, execute a command that looks similar to the following:
 
@@ -193,7 +193,10 @@ Now you can set your DOCKER_HOST environment variable as follows. You can contin
 export DOCKER_HOST=:2375
 ```
 
-## Create an SSH tunnel on Windows
+## Optional - Create an SSH tunnel on Windows
+
+NOTE: If you created an SSH tunnel in your Linux VM in the previous step, you don't need to create a tunnel in Windows.
+Continue with the [next exercise](../chapters/votingapp.md).
 
 There are multiple options for creating SSH tunnels on Windows. This document will describe how to use PuTTY to do this.
 
