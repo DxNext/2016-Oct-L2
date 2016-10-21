@@ -121,6 +121,8 @@ $ docker-compose up -d
 
 This tells Compose to start all the containers specified in the `docker-compose.yml` file. The `-d` tells it to run them in daemon mode, in the background. Navigate to `http://localhost:5000` in your browser, and you'll see the voting app, something like this:
 
+NOTE: Since you will be running this example in Azure, you should make sure port 5000 is publicly open and navigate to your DNS name instead of localhost.
+
 <img src="../images/vote.png" title="vote">
 
 Click on one to vote. You can check the results at `http://<YOUR_IP_ADDRESS:5001>`
