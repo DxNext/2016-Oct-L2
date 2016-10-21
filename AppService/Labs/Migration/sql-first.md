@@ -1,19 +1,32 @@
-## Migrate SQL Server with local ASP.NET site
+# Migrate SQL Server with local ASP.NET site
 
 When migrating an application to Azure App Service, you have several options available to you for your migration plan. You can migrate the site first, keeping your database local. Or, you can migrate your database first, and then your application later. That is what this lab will examine.
 
-### The Scenario
+## The Scenario
 
 You have an Expense management application written in ASP.NET that uses SQL Server. You have decided to migrate the database to take advantage of features such as geo-replication and automatic backups in SQL Azure, while keeping the application on your local servers.
 
-### Performing the migration
+## Performing the migration
 
 The overall steps are as follows:
 
-  1. Create a new SQL database in Azure
-  1. Configure the firewall to allow your VM to connect to SQL
-  1. Migrate the database to Azure
-  1. Update your application to use the database on Azure
+1. Create the database locally by using the Expenses web application
+1. Create a new SQL database in Azure
+1. Configure the firewall to allow your VM to connect to SQL
+1. Migrate the database to Azure
+1. Update your application to use the database on Azure
+
+### Create the database locally by using the Expenses web application
+
+The Expenses web application is configured to automatically create the database if it detects that one is not already there. Obviously, this is perfect for demo applications, but not really good for real world. But, we're trying to sample things, so this is perfecdt.
+
+#### Open the application and launch it in Visual Studio
+
+1. Open **Expenses.MVC.sln** in **Visual Studio**
+1. Launch the application without debugging by clicking **Ctl-F5**
+  - The application starts in your default browser
+  - The database is automatically created
+  - Modify the data if you like through the application
 
 ### Creating a new SQL Server database in Azure
 
@@ -115,14 +128,14 @@ If you want more information about performing migrations, testing your databsae,
 
 After migrating the database, you need to update your application to point at the new database. You will do this just as you would a normal ASP.NET application, by updating the web.config file.
 
-1. Open **File Explorer** and navigate to **C:\inetpub\wwwroot**
-1. Double click on **Web.config**, which will open in Visual Studio Code
+1. Return to **Visual Studio** and open **Web.config**
 1. Find the line that starts with **<add name="DefaultConnection"** inside the **<connectionStrings>** section (this should be line 13)
 1. Set the **connectionString** attribute to the following:
   - *Data Source=expenses-&lt;your-name&gt;.database.windows.net;Initial Catalog=Expenses.Mvc;User ID=expenses;Password=P@ssw0rd*
 1. Click **File**, **Save**
-1. Open **Internet Explorer** and navigate to **localhost**
-1. The application should build, and display the same data we saw previously. You could modify the data via SSMS to confirm the updates.
+1. Start the application without debugging by clicking **Ctl-F5**
+  - The application launches in your default browser
+  - The same data should be displayed
 
 ### Sumary
 
