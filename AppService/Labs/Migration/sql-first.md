@@ -18,7 +18,7 @@ The overall steps are as follows:
 
 ### Create the database locally by using the Expenses web application
 
-The Expenses web application is configured to automatically create the database if it detects that one is not already there. Obviously, this is perfect for demo applications, but not really good for real world. But, we're trying to sample things, so this is perfecdt.
+The Expenses web application is configured to automatically create the database if it detects that one is not already there. Obviously, this is perfect for demo applications, but not really good for real world. But, we're trying to sample things, so this is perfect.
 
 #### Open the application and launch it in Visual Studio
 
