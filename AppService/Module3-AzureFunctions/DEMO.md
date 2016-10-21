@@ -53,4 +53,59 @@ Since the Azure Functions quickstarts contain functional code, you can immediate
 
 1. Click back to the **Develop** tab and check the **Logs**, which should show that the timer trigger is now executing every 5 seconds.
 
+	![](images/function-app-timer-logs.png)
 
+---
+
+## Adding an Azure Storage Queue output
+
+1. Click back to the **Integrate** tab, then click the **New Output** button.
+
+	![](images/function-app-add-output.png)
+
+1. Select Azure Storage Queue on the list, then click the **Select** button.
+
+	![](images/function-app-add-storage-queue.png)
+
+1. Rename the **Message parameter name** to `output`, change the **Queue name** to `outqueue` if it's not already that, and click the **Save** button (don't click the Go button, which will create a new function).
+ 
+	![](images/function-app-queue-settings.png)
+
+> Note: The **Message parameter name** is important, since this will also be the name of the variable in the function code.
+
+1. Click the **Develop** tab and change your function to take an `out stringoutput` parameter and write to this value, as shown below. Click the **Save** button to save your changes.
+
+   ```csharp
+   using System;
+
+   public static void Run(TimerInfo myTimer, out string output, TraceWriter log)
+   {
+       log.Info($"C# Timer trigger function executed at: {DateTime.Now}");    
+       output = "hello there";
+   }
+   ```
+
+---
+
+## Adding a Node Function Which Is Triggered By The Queue
+
+1. Click the **+ New Function** button on the left side. Filter the Language to JavaScript and select `QueueTrigger - Node` from the list.
+
+	![](images/function-app-add-queue-trigger.png)
+
+1. Set the **Queue name** to `outqueue`, ensure that the **Storage account connection** is set to `AzureWebJobsStorage`, and click **Create**.
+
+	![](images/function-app-queue-trigger-settings.png)
+
+1. You'll see that this Function template is already set up to read an item from the queue and log the value:
+
+   ```JavaScript
+      module.exports = function (context, myQueueItem) {
+       context.log('Node.js queue trigger function processed work item', myQueueItem);
+       context.done();
+   };
+   ```
+
+1. When the function starts up, you should see several entries written to the logs with the message your previous timer based function was writing to the storage queue.
+
+	![](images/function-app-input-trigger-logs.png)
