@@ -1,5 +1,5 @@
 ## Docker Containers
-Here's the exercises:
+These exercised are based on [Docker self-paced trainings](https://training.docker.com/self-paced-training) that cover all the topics in the exercised and more. Watching to the training videos are highly recommended.
 
 1. [Install Docker](exercises/install-docker.md)
 2. [Create a Docker Hub Account](exercises/create-a-docker-hub-account.md)
