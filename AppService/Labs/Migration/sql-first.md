@@ -6,6 +6,26 @@ When migrating an application to Azure App Service, you have several options ava
 
 You have an Expense management application written in ASP.NET that uses SQL Server. You have decided to migrate the database to take advantage of features such as geo-replication and automatic backups in SQL Azure, while keeping the application on your local servers.
 
+> ## Additional Setup Notes
+> Before starting this lab, please note that a local installation of **SQL Server Developer Edition** is required for this lab. This same setup is used for Hybrid Connections, which requires SQL Server Authentication.
+>
+> To enable SQL Authentication:
+> 1. Open **SQL Server Management Studio**
+> 1. Enter **(local)** for the *Server name* and click **OK**
+> 1. In **Object Explorer**, right click on **(local)** and choose **Properties**
+> 1. Put a dot next to **SQL Server and Windows Authentication mode** and click **OK**
+> 1. Restart the server by right-clicking on **(local)** in **Object Explorer** and choosing **Restart**
+>
+> To create the account:
+> 1. In **Object Explorer**, right click on **Security** and choose **New Login**
+> 1. Enter the following information for the login
+>     - General: 
+>       - Login name: **expenses**
+>       - Password: **P@ssw0rd**
+>       - **Clear all checkboxes**
+>     - Server Roles: Choose **dbcreator** and **securityadmin**
+> 1. Click **OK**
+
 ## Performing the migration
 
 The overall steps are as follows:
