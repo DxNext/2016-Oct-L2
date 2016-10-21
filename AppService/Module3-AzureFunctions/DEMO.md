@@ -28,3 +28,29 @@ Since the Azure Functions quickstarts contain functional code, you can immediate
 
 3. To trigger execution of the same function from another browser window or tab, copy the **Function URL** value from the **Develop** tab and paste it in a browser address bar, then append the query string value `&name=yourname` and press enter. The same information is written to the logs and the browser displays the "hello" response as before.
 
+---
+
+## Create a new Timer Based Function in the Azure portal
+1. In the Azure portal, create a new Azure Function (New / Virtual Machines / Function App).
+
+	![](images/function-app-create-in-portal.png)
+
+1. Create a new function using a resource group and dynamic plan.
+
+	![](images/function-app-portal-create-settings.png)
+
+1. The function app should be deployed in a minute or less. Select **Timer** and **C#** and click the **Create this function** button.
+
+	![](images/function-app-timer-csharp.png)
+
+1. Click on the ##Integrate## tab on the left to view the Timer settings. The default timer schedule is set to run the function once a minute, since the cron expression will match whenever the current second value is equal to zero
+ 
+	![](images/function-app-timer-cron-default.png)
+
+1. Change this *cron expression* value to run every 5 seconds by changing the first value from `0` to `*/5` (as shown below) and clicking the **Save** button.
+
+	![](images/function-app-timer-cron-updated.png)
+
+1. Click back to the **Develop** tab and check the **Logs**, which should show that the timer trigger is now executing every 5 seconds.
+
+
