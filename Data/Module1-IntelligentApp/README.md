@@ -46,7 +46,7 @@ In this exercise, you will use Azure IoT Hubs to track the user behavior in your
 
 There is a fantastic online resource already written that details exactly how to create your IoT hub and you can find it here [Getting Started](https://azure.microsoft.com/en-gb/documentation/articles/iot-hub-csharp-csharp-getstarted/).  The article then goes on to cover how you can register your device with the IoT Hub using C#.  We have already done this part for you.  From your IoT Hub though you will need to grab a few details and these are;
 
-- The hub connection string (Settings | Shared access policies | iothubowner
+- The hub connection string (Settings | Shared access policies | iothubowner)
 - The hub host name
 
 Now we have an IoT hub ready to receive events from our device/s
@@ -147,7 +147,7 @@ Settings for PartsUnlimitedDataGen
 - Connect to IoT hub and start sending messages
 
 
-You should now have events streaming to your IoT Hub.  We have always found it useful to actually look at the events as they land on the IoT hub because even though they may be getting there, they may not be in the format you think they are.  This is where you can use something like Device Explorer.
+You should now have events streaming to your IoT Hub.  We have always found it useful to actually look at the events as they land on the IoT hub because even though they may be getting there, they may not be in the format you think they are.  This is where you can use something like [Device Explorer](https://github.com/Azure/azure-iot-sdks/tree/master/tools/DeviceExplorer).
 
 Paste in your IoT Hub Connection String --> Hit **Update** --> Now move to the **Data** tab and push the **monitor** button
 
@@ -221,7 +221,7 @@ In this task, you'll create an output that will store the query results in Blob 
 
 1. Create a Container such as eventhubanalytics and set its access to Blob.
 
-	1. Open the **Azure Storage Explorer** or the tool of your preference and configure a new storage account using the account name and key from the storage account you created. In _Azure Storage Explorer_, right-click on **Storage Accounts**, select **Attach External Storage...** and enter the account name and key in the dialog, then click **OK**.
+	1. Open the [**Azure Storage Explorer**](http://azurestorageexplorer.codeplex.com/) or the tool of your preference and configure a new storage account using the account name and key from the storage account you created. In _Azure Storage Explorer_, right-click on **Storage Accounts**, select **Attach External Storage...** and enter the account name and key in the dialog, then click **OK**.
 
 	1. Create a new Blob Container with the name "**eventhubanalytics**" and "Container" access level. In _Azure Storage Explorer_ expand your account and right-click on **Blob Containers**, select **Create Blob Container** and enter "eventhubanalytics". Press enter to create the container. Then right-click on the new container and select **Set Public Access Level..** and choose **Public read access for blobs**.
 
@@ -235,7 +235,7 @@ In this task, you'll create an output that will store the query results in Blob 
 	- **Path pattern**: Type in a file prefix to use when writing blob output. E.g. analyticsoutput-{date}
 	- **Event Serializer Format**: JSON.
 	- **Encoding**: UTF8.
-	- **Format**: Line Separated
+	- **Format**: Array
 
 1. Click **Create**.
 
@@ -254,10 +254,9 @@ In this task you'll run the Stream Analytics job and view the output in Visual S
 
 
 
-### Exercise 3: Visualizing your data with Power BI (optional - requires Organizational account ###
+### Exercise 3: Visualizing your data with Power BI (optional - requires Organizational account) ###
 
-In this exercise, you'll use Azure Stream Analytics with Microsoft Power BI. You will learn how to build a live dashboard quickly. You will also learn how to perform a JOIN operation in Azure Steam Analytics.
-
+In this exercise, you'll use Azure Stream Analytics with Microsoft Power BI. You will learn how to build a live dashboard quickly. You will also learn how to perform a JOIN operation in Azure Steam Analytics. We do this to show abandoned items in a Dashboard. Abandoned items are those that have been added to the cart but removed again within 5 minutes.
 
 #### Task 1 - Adding an input for Reference Data ####
 Since our streaming data only contains productId, we need to Join our input stream to our product catalog data in order to get meaningful results. In order to do that, we will first add the product catalog data as a reference dataset to the stream analytics query
@@ -306,7 +305,7 @@ In this task, you'll add a new output to your Stream Analytics job.
 
 1. Next, provide the values for:
 
-	- **Output Alias** – You can put any output alias that is easy for you to refer to. This output alias is particularly helpful if you decide to have multiple outputs for your job. In that case, you have to refer to this output in your query. For example, let’s use the output alias value “AbandonedCartsPowerBI”.
+	- **Output Alias** – You can put any output alias that is easy for you to refer to. This output alias is particularly helpful if you decide to have multiple outputs for your job. In that case, you have to refer to this output in your query. For example, let’s use the output alias value “AbandonedItemsPowerBI”.
 	- **Dataset Name** - Provide a dataset name that you want your Power BI output to have. For example, let’s use “datamodulepbi”.
 	- **Table Name** - Provide a table name under the dataset of your Power BI output. Let’s say we call it “datamodulepbi”. Currently, Power BI output from Stream Analytics jobs may only have one table in a dataset.
 	- **Workspace** - You can use the default, My Workspace.
@@ -316,26 +315,40 @@ In this task, you'll add a new output to your Stream Analytics job.
 1. Lastly, you should update your **Query** to use this output and **start** the job.
 
 	```sql
-	WITH AbandonedCarts as (
-    SELECT 
-        a.userId, a.productId, a.EventDate 
-    FROM 
-        IoTHubInput as A TIMESTAMP BY EventDate
-    LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
-    ON a.userId=b.userId AND a.productId = b.productId and b.type='checkout'
-    AND DATEDIFF(minute, A, B) BETWEEN 0 AND 5
-    WHERE a.type = 'add'
-    AND b.type IS NULL
+	-- Get items that have been added to the cart but removed again within 5 minutes
+	WITH AbandonedItems AS (
+	    SELECT 
+	        A.userId, A.productId, A.EventDate 
+	    FROM 
+	        IoTHubInput AS A TIMESTAMP BY EventDate
+		    LEFT OUTER JOIN 
+		        IoTHubInput as B TIMESTAMP BY EventDate 
+		        ON A.userId = B.userId 
+		        AND A.productId = B.productId 
+		        AND B.type = 'checkout' 
+		        AND DATEDIFF(minute, A, B) BETWEEN 0 AND 5
+	    WHERE 
+	        A.type = 'add'
+	        AND B.type IS NULL
 	)
 
-	SELECT a.productId, b.title, b.category.name, MIN(a.EventDate) as eventStartTime, count(a.productId)
-	INTO AbandonedCartsPowerBI
-	FROM AbandonedCarts AS a
-	JOIN RefData as B
-	ON a.productId = b.productId
-	GROUP BY a.productId, b.title, b.category.name, TUMBLINGWINDOW(minute, 5)
+	-- Send abandoned items to Power BI after joining the abandoned items' Id with the Id of full item list (RefData)
+	SELECT 
+	    A.productId, B.title, B.category.name, MIN(A.EventDate) as eventStartTime, count(A.productId)
+	INTO 
+	    AbandonedItemsPowerBI
+	FROM 
+	    AbandonedItems AS A
+	    JOIN 
+	        RefData as B
+	        ON A.productId = B.productId
+	    GROUP BY A.productId, B.title, B.category.name, TUMBLINGWINDOW(minute, 5)
 
-	SELECT * INTO RawBlobOutput FROM IoTHubInput TIMESTAMP BY EventDate
+	-- Send raw data to Blob Storage
+	SELECT * 
+	INTO RawBlobOutput 
+	FROM IoTHubInput 
+	TIMESTAMP BY EventDate
 	```
 
 	>**Note:** As we are grouping the results, a window type is required. See [GROUP BY](https://msdn.microsoft.com/library/azure/dn835023.aspx). The query uses a 10-minute tumbling window. The INTO clause tells Stream Analytics which of the outputs to write the data from this statement. The WITH statement is to reuse the results for different statements; in this case we could used it for both outputs but we'll keep storing all fields into the blob.
@@ -370,7 +383,7 @@ Overall, your query should look as follows:
 	GROUP BY
 	    productId, type, TumblingWindow(minute, 5)
 	),
-	AbandonedCarts as (
+	AbandonedItems as (
     SELECT 
         a.userId, a.productId, a.EventDate 
     FROM 
@@ -383,8 +396,8 @@ Overall, your query should look as follows:
 	)
 
 	SELECT a.productId, b.title, b.category.name, MIN(a.EventDate) as eventStartTime, count(a.productId)
-	INTO AbandonedCartsPowerBI
-	FROM AbandonedCarts AS a
+	INTO AbandonedItemsPowerBI
+	FROM AbandonedItems AS a
 	JOIN RefData as B
 	ON a.productId = b.productId
 	GROUP BY a.productId, b.title, b.category.name, TUMBLINGWINDOW(minute, 5)
