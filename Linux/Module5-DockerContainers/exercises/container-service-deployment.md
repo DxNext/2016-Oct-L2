@@ -164,7 +164,7 @@ The Docker Swarm clusters that are deployed by Azure Container Service expose RE
 The first thing that you do when you create an SSH tunnel on Linux or OS X is to locate the public DNS name of load-balanced masters. To do this, expand the resource group so that each resource is being displayed. Locate and select the public IP address of the master. This will open up a blade that contains information about the public IP address, which includes the DNS name. Save this name for later use. <br />
 
 
-![Public DNS name](../images/pubdns.png)
+![Public DNS name](../images/swarm-ip.png)
 
 Now open a shell and run the following command where:
 
