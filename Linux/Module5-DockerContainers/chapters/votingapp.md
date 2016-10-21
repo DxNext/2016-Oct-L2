@@ -133,9 +133,9 @@ In order to build the images, make sure to replace `<YOUR_DOCKER_ID>` with your 
 
 ```
 $ docker build --no-cache -t <YOUR_DOCKER_ID>/votingapp_voting-app .
-...
+
 $ docker build --no-cache -t <YOUR_DOCKER_ID>/votingapp_result-app .
-...
+
 $ docker build --no-cache -t <YOUR_DOCKER_ID>/votingapp_worker .
 ```
 
@@ -145,9 +145,9 @@ Push the images to Docker hub. Remember, you must have run `docker login` before
 
 ```
 $ docker push <YOUR_DOCKER_ID>/votingapp_voting-app
-...
+
 $ docker push <YOUR_DOCKER_ID>/votingapp_result-app
-...
+
 $ docker push <YOUR_DOCKER_ID>/votingapp_worker
 ```
 
