@@ -439,7 +439,6 @@ In this task, we'll create our hive scripts to process out data. This is used to
 	````
 	
 	![WebSite Activity Select Query output](Images/ex2task2-ambari-select-query-output.png?raw=true "WebSite Activity Select Query output")
-
 		_WebSite Activity Select Query output_
 
 	
@@ -490,7 +489,6 @@ In this task, we'll create our hive scripts to process out data. This is used to
 	````
 
 	![Product Catalog Select Query output](Images/ex2task3-product-catalog-select-query-output.png?raw=true "Product Catalog Select Query output")
-
 		_Product Catalog Select Query output_
 
 
@@ -521,7 +519,6 @@ In this task, we'll create our hive scripts to process out data. This is used to
 	````
 
 	![Join Query output](Images/ex2task3-ambari-join-query-output.png?raw=true "Join Query output")
-
 		_Join Query output_
 
 
@@ -571,7 +568,6 @@ In this task, we'll create our hive scripts to process out data. This is used to
 1. As you can see in the output below, we get a list of related products per product sorted in the descending order of popularity.
 
 	![Related Products Query output](Images/ex2task3-related-products-output.png?raw=true "Related Products Query output")
-
 		_Related Products Query output_
 
 	
