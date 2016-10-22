@@ -347,7 +347,6 @@ In this task, you'll write a Hive query to generate product stats (views and car
 
 		> **Note**: The CREATE EXTERNAL TABLE command that we used here, creates an external table, the data file can be located outside the default container and does not move the data file. This is very helpful when you're trying to re-use the data in another process or save it for later use as well.
 
-			TODO: Update Screenshot (with the latest query)
 		![Hive editor](Images/ex2task1-ambari-hive-editor2.png?raw=true "Hive editor")
 
 		_Hive editor_
@@ -857,7 +856,6 @@ Before we move to the next exercise, create a stored procedure to understand our
 	````
 
 1. Click execute button (**Ctrl+Shift+E**) to run the statement and create the stored procedure.
-		TODO: Update Screenshot to display the latest query
 	![Creating schema for Data Warehouse](Images/ex2task5-create_proc.png?raw=true "Creating schema for Data Warehouse")
 
 	_Creating schema for Data Warehouse_
