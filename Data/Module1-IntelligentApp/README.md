@@ -2,7 +2,7 @@
 
 ## Overview ##
 
-In this module you will build the Azure backend for an automotive parts supplier called "Parts Unlimited".
+In this module you will build the Azure back-end for an automotive parts supplier called "Parts Unlimited".
 The challenge here is to process millions of events from concurrent users connected from different devices across the globe. With **Azure Event Hubs** or **Azure IoT Hub** you can process large amounts of event data from connected devices and applications. These are managed services that ingest events with elastic scale to accommodate variable load profiles and the spikes caused by intermittent connectivity.
 In this module we are going to be using IoT hubs to ingest our device data.  After you collect data into IoT Hubs, you can store the data using a storage cluster or transform it using a real-time analytics provider. **Azure Stream Analytics** is integrated out-of-the-box with Azure IoT Hubs to ingest millions of events per second. Stream Analytics processes ingested events in real-time, comparing multiple streams or comparing streams with historical values and models. It detects anomalies, transforms incoming data, triggers an alert when a specific error or condition appears in the stream, and displays this real-time data in your dashboard. For this scenario, you will use **Stream Analytics** to process and spool data to Blob Storage and Power BI.
 
@@ -11,7 +11,7 @@ In this module, you'll:
 - Create an **IoT Hub**
 - Register your device with the **IoT Hub**
 - Use a device simulator to generate data
-- Use **Stream Analytics** to process data in near-realtime and spool data to **Blob Storage** and **Power BI**
+- Use **Stream Analytics** to process data in near-real time and spool data to **Blob Storage** and **Power BI**
 - Create a sample **Power BI** dashboard
 
 ### Prerequisites ###
@@ -21,12 +21,14 @@ The following is required to complete this module:
 - [ASP.NET Core 1.0][2]
 - [Microsoft Azure Storage Explorer][3] or any other tool to manage Azure Storage
 - [Service Bus Explorer][4]
+- [PowerBI.com Account][5]
 - An active Azure subscription
 
 [1]: https://www.visualstudio.com/products/visual-studio-community-vs
 [2]: https://docs.asp.net/en/latest/getting-started/installing-on-windows.html#install-asp-net-5-with-visual-studio
 [3]: http://storageexplorer.com/
 [4]: https://github.com/paolosalvatori/ServiceBusExplorer
+[5]: https://app.powerbi.com/signupredirect?pbi_source=web
 
 ## Exercises ##
 This module includes the following exercises:
@@ -39,7 +41,7 @@ Estimated time to complete this module: **75 minutes**
 
 ### Exercise 1: Creating and integrating IoT Hubs ###
 
-Azure IoT Hubs is an event processing service that provides event and telemetry ingress to the cloud at massive scale, with low latency and high reliability. This service, used with other downstream services, is particularly useful in application instrumentation, user experience or workflow processing, and Internet of Things (IoT) scenarios.
+Azure IoT Hubs is an event processing service that provides event and telemetry ingress to the cloud at massive scale, with low latency and high reliability. This service, used with other downstream services, is particularly useful in application instrumentation, user experience or work flow processing, and Internet of Things (IoT) scenarios.
 In this exercise, you will use Azure IoT Hubs to track the user behavior in your retail website when viewing a product and also when adding it to the cart.
 
 #### Task 1 - Creating the IoT Hub ####
@@ -51,11 +53,14 @@ There is a fantastic online resource already written that details exactly how to
 
 Now we have an IoT hub ready to receive events from our device/s
 
-#### Task 2 - Creating a DocDB account
+#### Task 2 - Creating a DocumentDB account
 
 When you register your device (you will see how to do this in the next section), the application routine returns to you a key from the IoT Hub registry.  You use this key to authenticate yourself against IoT hub along with your device name.  You could retrieve this key from the device registry when you want to send data to the IoT hub but best practice says that you store the key in a durable store.  That durable store in this instance is DocumentDB.
 
-To create your first DocumentDB account follow this article [Getting Started](https://azure.microsoft.com/en-gb/documentation/articles/documentdb-create-account/).  Now you need to do two more things
+>**Note:**: It is always a good practice to create resources in the same resource group for the same project/exercise. The recommendation here is to create the DocumentDB account in the same resource group as your IoTHub.
+
+
+To create your first DocumentDB account follow this article [Getting Started](https://azure.microsoft.com/en-gb/documentation/articles/documentdb-create-account/). Now you need to do two more things
 -  Create a DocumentDB database
 -  Create a DocumentDB collection.  This will hold your IoT hub registration document.
 
@@ -71,8 +76,12 @@ OK so now we have an IoT hub and a DocumentDB account setup.  We are almost ther
 #### Task 3 - Create a Storage account ####
 
 One of the data repositories for our **Azure Streaming Analytics** jobs is blob storage.  We are going to need to setup and account now.
-You can see exactly how to setup a storage acccount [here](https://azure.microsoft.com/en-gb/documentation/articles/storage-create-storage-account/).  We are going to create a **General Purpose Storage Account**  The article we just mentioned has a good discussion on the differences between the different types of account as well as the difference between hot and cold storage.
-We won't need the details from this storage account until we start to use **Azure Streaming Analaytics**
+You can see exactly how to setup a storage account [here](https://azure.microsoft.com/en-gb/documentation/articles/storage-create-storage-account/).  We are going to create a **General Purpose Storage Account**  The article we just mentioned has a good discussion on the differences between the different types of account as well as the difference between hot and cold storage.
+We won't need the details from this storage account until we start to use **Azure Streaming Analytics**
+
+Suggested Storage Account Name: labstr`<uniqueSuffix>`
+
+>**Note:** Please try and use the same resource group created during the first resource creation for this resource. 
 
 Now we have things setup we can go ahead and register our device as well as start sending data to our IoT Hub.
 
@@ -166,8 +175,10 @@ In this task, you'll set up a Stream Analytics job to analyze the events in real
 Specify the following values, and then click **Create**:
 
 	- **Job Name**: Enter a job name.
-	- **Region**: Select the region where you want to run the job. Consider placing the job and the event hub in the same region to ensure better performance and to ensure that you won't be paying to transfer data between regions.
-	- **Storage Account**: Choose the Azure storage account that you'd like to use to store monitoring data for all Stream Analytics jobs running within this region. You have the option to choose an existing storage account or to create a new one.
+	- **Resource Group**:
+		- *"Use Existing"*
+		- Please use the same resource group as the previous resources.
+	- **Location**: Select the region where you want to run the job. Consider placing the job and the event hub in the same region to ensure better performance and to ensure that you won't be paying to transfer data between regions.
 	
 1. The new job will be shown with a status of Created. Notice that the Start button is disabled. You must configure the job **Input**, **Output**, and **Query** before you can start the job.
 
@@ -203,7 +214,7 @@ In this task, you'll create a query that extracts events from your input stream.
 
 	```sql
 	SELECT
-	    *
+	    eventDate, userId, type, productId, quantity, price
 	INTO
 	    RawBlobOutput
 	FROM
@@ -212,18 +223,18 @@ In this task, you'll create a query that extracts events from your input stream.
 
 1. Click **Save**.
 
-	>**Note:** In this query you're projecting all fields in the payload of the event to the output, you could read some of them of them by using _SELECT [field name]_.
+	>**Note:** In this query you're only projecting the fields in the payload of the event to the output. However, if you needed, you could also output some of the header fields that are added by IoTHub and Stream Analytics such as "_EventProcessedUtcTime_", "_EventEnqueuedUtcTime_" & "_EnqueuedTime_" by using _SELECT *_.
 
 
 #### Task 4 - Specifying job Output ####
 
 In this task, you'll create an output that will store the query results in Blob storage.  We created a storage account earlier
 
-1. Create a Container such as eventhubanalytics and set its access to Blob.
+1. Create a Container such as partsunlimited and set its access to Blob.
 
 	1. Open the **Azure Storage Explorer** or the tool of your preference and configure a new storage account using the account name and key from the storage account you created. In _Azure Storage Explorer_, right-click on **Storage Accounts**, select **Attach External Storage...** and enter the account name and key in the dialog, then click **OK**.
 
-	1. Create a new Blob Container with the name "**eventhubanalytics**" and "Container" access level. In _Azure Storage Explorer_ expand your account and right-click on **Blob Containers**, select **Create Blob Container** and enter "eventhubanalytics". Press enter to create the container. Then right-click on the new container and select **Set Public Access Level..** and choose **Public read access for blobs**.
+	1. Create a new Blob Container with the name "**partsunlimited**" and "Container" access level. In _Azure Storage Explorer_ expand your account and right-click on **Blob Containers**, select **Create Blob Container** and enter "partsunlimited". Press enter to create the container. Then right-click on the new container and select **Set Public Access Level..** and choose **Public read access for blobs**.
 
 1. Now, in your Stream Analytics job, click **Outputs** from the main page, and then click **Add**. The options blade requires the following information:
 
@@ -231,11 +242,13 @@ In this task, you'll create an output that will store the query results in Blob 
 	- **Sink**: Blob storage.
 	- **Storage account**: Select the name of the storage account.
 	- **Storage account key**: Set the account key.
-	- **Container**: Select the name of the container.
-	- **Path pattern**: Type in a file prefix to use when writing blob output. E.g. analyticsoutput-{date}
-	- **Event Serializer Format**: JSON.
+	- **Container**: Select the name of the container (eg: _partsunlimited_).
+	- **Path pattern**: Type in a file prefix to use when writing blob output. E.g. logs/{date}
+	- **Event Serialization Format**: JSON.
 	- **Encoding**: UTF8.
 	- **Format**: Line Separated
+
+>**Note:** We will be using Line Separated JSON files since it can easily be parsed by the Hadoop engine.
 
 1. Click **Create**.
 
@@ -266,9 +279,11 @@ Since our streaming data only contains productId, we need to Join our input stre
 
 	1. Return to **Azure Storage Explorer** or the tool of your preference.
 
-	1. Create a new Blob Container with the name "**processeddata**" and "Container" access level. In _Azure Storage Explorer_ expand your account and right-click on **Blob Containers**, select **Create Blob Container** and enter "processeddata". Press enter to create the container. Then right-click on the new container and select **Set Public Access Level..** and choose **Public read access for blobs**.
-
-	1. In the **Assets** folder, locate the **productcatalog.json** file and upload it to your **processeddata** container.
+	1. In _Azure Storage Explorer_ expand your account and click on the **partsunlimited** container.
+	 
+	1. In the **Assets** folder, locate the **productcatalog** folder and upload it to your **partsunlimited** container.
+	
+	1. This should create a folder path in your storage account as: **partsunlimited/productcatalog/productcatalog.json**.
 
 1. From the [Azure portal](https://portal.azure.com/), go to Stream Analytics and click the one you created.
 
@@ -282,8 +297,8 @@ Since our streaming data only contains productId, we need to Join our input stre
 	- **Source Type**: Select *Reference Data*.
 	- **Source**: Select *Use blob storage from current subscription*.
 	- **Storage Account**: Select the storage account that contains your product catalog file.
-	- **Container**: Select the container that contains your product catalog file (eg: processeddata).
-	- **path pattern**: Enter the path that contains your product catalog file (eg: productcatalog.json). 
+	- **Container**: Select the container that contains your product catalog file (eg: partsunlimited).
+	- **path pattern**: Enter the path that contains your product catalog file (eg: productcatalog/productcatalog.json). 
 	- **Date Format**: Needs to be non-editable
 	- **Time Format**: Needs to be non-editable
 	- **Event Serialization Format**: JSON.
@@ -306,14 +321,43 @@ In this task, you'll add a new output to your Stream Analytics job.
 
 1. Next, provide the values for:
 
-	- **Output Alias** – You can put any output alias that is easy for you to refer to. This output alias is particularly helpful if you decide to have multiple outputs for your job. In that case, you have to refer to this output in your query. For example, let’s use the output alias value “AbandonedCartsPowerBI”.
-	- **Dataset Name** - Provide a dataset name that you want your Power BI output to have. For example, let’s use “datamodulepbi”.
-	- **Table Name** - Provide a table name under the dataset of your Power BI output. Let’s say we call it “datamodulepbi”. Currently, Power BI output from Stream Analytics jobs may only have one table in a dataset.
+	- **Output Alias** – You can put any output alias that is easy for you to refer to. This output alias is particularly helpful if you decide to have multiple outputs for your job. In that case, you have to refer to this output in your query. For example, let’s use the output alias value “**TopSellingPowerBI**”.
+	- **Dataset Name** - Provide a dataset name that you want your Power BI output to have. For example, let’s use “**datamodulepbi**”.
+	- **Table Name** - Provide a table name under the dataset of your Power BI output. Let’s say we call it “**datamodulepbitable**”. Currently, Power BI output from Stream Analytics jobs may only have one table in a dataset.
 	- **Workspace** - You can use the default, My Workspace.
 
 1. Click **OK, Test Connection** and now your Power BI connection is completed.
 
-1. Lastly, you should update your **Query** to use this output and **start** the job.
+1. Lastly, you should update your **Query** to use this output and **start** the job. 
+ 
+1. _Explanation_: This query will help us get the product sales for each 5 minute intervals, which we can then aggregate in PowerBI.
+
+	```sql
+
+	WITH AllEvents AS (
+	SELECT
+	    productId, type, Count(productId) AS [totalSold]
+	FROM
+	    IoTHubInput TIMESTAMP BY EventDate
+	WHERE type = 'checkout'
+	GROUP BY
+	    productId, type, TumblingWindow(minute, 5)
+	)
+
+	SELECT a.productId, a.type, b.title, b.category.name as CategoryName, a.totalSold INTO TopSellingPowerBI FROM AllEvents a JOIN RefData as b on a.productId = b.productId
+
+	```
+
+
+1. You can also add another PowerBI Output for tracking the overall activity of your e-commerce store. You can do this by repeating steps of **Task 2** and changing the alias and the dataset name. You can use the query below to perform the aggregations. We have used **AbandonedCartsPowerBI** as our PowerBI Output alias. 
+
+1. Sample values:
+	- **Output Alias** – You can put any output alias that is easy for you to refer to. This output alias is particularly helpful if you decide to have multiple outputs for your job. In that case, you have to refer to this output in your query. For example, let’s use the output alias value “**AbandonedCartsPowerBI**”.
+	- **Dataset Name** - Provide a dataset name that you want your Power BI output to have. For example, let’s use “**abdandonedcartspbi**”.
+	- **Table Name** - Provide a table name under the dataset of your Power BI output. Let’s say we call it “**abdandonedcartspbitable**”. Currently, Power BI output from Stream Analytics jobs may only have one table in a dataset.
+	- **Workspace** - You can use the default, My Workspace.
+ 
+1. _Explanation_: This query will help us understand whether a particular product has a higher tendency of getting abandoned i.e. a product that is added to cart but not bought. This can help us make valuable business decisions, such as offering a discount on that product, etc.
 
 	```sql
 	WITH AbandonedCarts as (
@@ -323,7 +367,7 @@ In this task, you'll add a new output to your Stream Analytics job.
         IoTHubInput as A TIMESTAMP BY EventDate
     LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
     ON a.userId=b.userId AND a.productId = b.productId and b.type='checkout'
-    AND DATEDIFF(minute, A, B) BETWEEN 0 AND 5
+    AND DATEDIFF(minute, A, B) BETWEEN 0 AND 2
     WHERE a.type = 'add'
     AND b.type IS NULL
 	)
@@ -333,40 +377,23 @@ In this task, you'll add a new output to your Stream Analytics job.
 	FROM AbandonedCarts AS a
 	JOIN RefData as B
 	ON a.productId = b.productId
-	GROUP BY a.productId, b.title, b.category.name, TUMBLINGWINDOW(minute, 5)
-
-	SELECT * INTO RawBlobOutput FROM IoTHubInput TIMESTAMP BY EventDate
-	```
-
-	>**Note:** As we are grouping the results, a window type is required. See [GROUP BY](https://msdn.microsoft.com/library/azure/dn835023.aspx). The query uses a 10-minute tumbling window. The INTO clause tells Stream Analytics which of the outputs to write the data from this statement. The WITH statement is to reuse the results for different statements; in this case we could used it for both outputs but we'll keep storing all fields into the blob.
-
-
-1. (Optional): You can also add another PowerBI Output for tracking the overall activity of your e-commerce store. You can do this by repeating steps 4-7 of **Task 2** and changing the alias and the dataset name. You can use the query below to perform the aggregations. We have used **AllProductsPowerBI** as our PowerBI Output alias.
-
-	```sql
-
-	WITH AllEvents AS (
-	SELECT
-	    productId, type, Count(CAST(productId as String)) AS [total]
-	FROM
-	    IoTHubInput TIMESTAMP BY EventDate
-	GROUP BY
-	    productId, type, TumblingWindow(minute, 5)
-	)
-
-	SELECT a.productId, a.type, b.title, b.category.name, a.total INTO AllProductsPowerBI FROM AllEvents a JOIN RefData as b on a.productId = b.productId
+	GROUP BY a.productId, b.title, b.category.name, TUMBLINGWINDOW(minute, 2)
 
 	```
+
+	>**Note:** As we are grouping the results, a window type is required. See [GROUP BY](https://msdn.microsoft.com/library/azure/dn835023.aspx). The query uses a 2-minute tumbling window. The INTO clause tells Stream Analytics which of the outputs to write the data from this statement. The WITH statement is to reuse the results for different statements; in this case we could used it for both outputs but we'll keep storing all fields into the blob.
+
 	
-Overall, your query should look as follows:
+1. Overall, your query should look as follows:
 
 	```sql
 
 	WITH AllEvents AS (
 	SELECT
-	    productId, type, Count(CAST(productId as String)) AS [total]
+	    productId, type, Count(productId) AS [totalSold]
 	FROM
 	    IoTHubInput TIMESTAMP BY EventDate
+	WHERE type = 'checkout'
 	GROUP BY
 	    productId, type, TumblingWindow(minute, 5)
 	),
@@ -377,52 +404,72 @@ Overall, your query should look as follows:
         IoTHubInput as A TIMESTAMP BY EventDate
     LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
     ON a.userId=b.userId AND a.productId = b.productId and b.type='checkout'
-    AND DATEDIFF(minute, A, B) BETWEEN 0 AND 5
+    AND DATEDIFF(minute, A, B) BETWEEN 0 AND 2
     WHERE a.type = 'add'
     AND b.type IS NULL
 	)
+
+	SELECT a.productId, a.type, b.title, b.category.name as CategoryName, a.totalSold INTO TopSellingPowerBI FROM AllEvents a JOIN RefData as b on a.productId = b.productId
+	
 
 	SELECT a.productId, b.title, b.category.name, MIN(a.EventDate) as eventStartTime, count(a.productId)
 	INTO AbandonedCartsPowerBI
 	FROM AbandonedCarts AS a
 	JOIN RefData as B
 	ON a.productId = b.productId
-	GROUP BY a.productId, b.title, b.category.name, TUMBLINGWINDOW(minute, 5)
+	GROUP BY a.productId, b.title, b.category.name, TUMBLINGWINDOW(minute, 2)
 	     
-	SELECT a.productId, a.type, b.title, b.category.name, a.total INTO AllProductsPowerBI FROM AllEvents a JOIN RefData as b
-	on a.productId = b.productId
 	
-	SELECT * INTO RawBlobOutput FROM IoTHubInput TIMESTAMP BY EventDate
+	SELECT eventDate, userId, type, productId, quantity, price INTO RawBlobOutput FROM IoTHubInput TIMESTAMP BY EventDate
 	```
+
 
 #### Task 3 - Creating the dashboard in Power BI ####
 
 1. Go to [PowerBI.com](https://powerbi.microsoft.com/) and login with your work or school account. If the Stream Analytics job query outputs results, you'll see your dataset is already created:
 
-1. For creating the dashboard, go to the **Dashboards** option and create a new Dashboard, e.g. My Dashboard.
+1. For creating the dashboard, go to the **Dashboards** option and create a new Dashboard, e.g. **DataLab1Dashboard**.
 
-1. Now click the dataset created by your Stream Analytics job (“datamodulepbi” in our current example). You will be taken to a page to create a chart on top of this dataset.
+1. Scroll down to the **Datasets** section. You will notice the two datasets (“datamodulepbi” & "abdandonedcartspbi" in our current example) that we created in Stream Analytics.
+	TODO: Screenshot (ex3-task3-datasets.png)
 
+1. Now click on the **datamodulepbi** dataset created by your Stream Analytics job. You will be taken to a page to create a chart on top of this dataset.
 
+1. You should see our table (datamodulepbitable) show up, along with all the fields associated with it. Select the **Stacked Column Chart** icon from the **Visualizations** menu on the right. 
 
-1. Select the **Table visualization** icon from the **Visualizations** menu on the right, then check all fields but productId from the **Fields** list.
+1. Drag the **title** column in the **Axis** field and the **totalsold** column into the **Value** field
+	TODO: Screenshot (ex3-task3-chart1.png)
 
-1. Within the **Filters** section, click **category** Advanced filtering and select the option to show items when the value _is not blank_.
+1. You should see your stacked column chart appear. Next, Click on the **...** in the top right corner of the visual and select **Sort by totalsold**.
+	TODO: Screenshot (ex3-task3-chart1_sort.png)
 
-1. Apply the filter and click **Save** on the top right. You can name it "Events report".
+1. You should now see your report sorted by Top Selling Products
+	TODO: Screnshot (ex3-task3-chart1_sort_final.png)
 
-1. You will see the new report within the **Reports** section, click on it, select **Pin Live Page** to your existing dashboard.
+1. Now click on the **Format** section under the **Visualization** tab and expand the **Title** menu. Change the Title Text to **Current Top-Selling Products**.
+	TODO: TODO: Screenshot (ex3-task3-chart1-title.png)
 
-1. Go to your dashboard, click on the **ellipsis** button at the top-right corner of the tile and click the **pen** button to edit the _Tile details_, select the **Display last refresh time** functionality and apply the changes.
+1. Click **Save** found in the top right of the canvas. You can name it "Top Selling report".
 
+1. On the chart, click on the **pin-looking icon** found in the top-right corner of the visual. It will ask you whether you want to create a new dashboard or pin it to an existing one. Select **Existing Dashboard** and select the dashboard we created in the earlier step (eg: **DataLab1Dashboard**).
 
+1. Go to your dashboard, click on the **ellipsis (...)**  button at the top-right corner of the tile and click the **pen** button to edit the _Tile details_, select the **Display last refresh time** functionality and apply the changes.
 
-1. Go back to the "datamodulepbi" dataset, click the **Funnel** icon from the **Visualization** menu and check _type_ and _total_ from the **Fields** list.
+	TODO: Screenshot: ex3-task3-dashboard-refreshtime.png
 
-1. Click **Save** on the top right, enter a name like Events Summary and save it.
+1. Let's create a visual for our Abandoned Carts as well.
+
+1. Go to the "abandonedcartspbi" dataset, click the **Funnel** icon from the **Visualization** menu and check _title_ and _count_ from the **Fields** list.
+	TODO: Screenshot (ex3-task3-chart2-columns.png)
+
+1. On the chart, click on the **ellipses (...)** button and select **Sort by count**
+
+1. Click **Save** on the top right, enter a name like *Abandoned Products* and save it.
 
 1. Lets add it to your dashboard by clicking **Pin Live Page** on the top right, select your dashboard and hit **Pin Live**.
 
+1. This is what your dashboard should look like:
+	TODO: Screenshot: ex3-task3-final.png
 
 
 ---
@@ -433,6 +480,6 @@ By completing this module, you should have:
 
 - Created an **IoT Hub**
 - Walked through **DocumentDB** integration
-- Used **Stream Analytics** to process data in near-realtime and spool data to **Blob Storage** and **Power BI**
+- Used **Stream Analytics** to process data in near-real time and spool data to **Blob Storage** and **Power BI**
 - Created sample **Power BI** charts & graphs
 

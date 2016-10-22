@@ -30,7 +30,7 @@
         "value": 2
     },
     "storageAccountSubName":{
-        "value":"hdistr"
+        "value":"labstr"
     },
     "sqlServerSubName":{
         "value":"readinesssqlsvr"

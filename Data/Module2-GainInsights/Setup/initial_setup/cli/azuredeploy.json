@@ -84,7 +84,7 @@
     },
     "storageAccountSubName":{
         "type":"string",
-        "defaultValue":"hdistr"
+        "defaultValue":"labstr"
     },
     "sqlServerSubName":{
         "type":"string",
