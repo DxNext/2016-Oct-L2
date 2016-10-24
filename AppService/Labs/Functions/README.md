@@ -19,7 +19,7 @@ You can copy the Azure Function URL (highlighted below) and paste it into your b
 While this was is an impressive example of how easy it is to create an HTTP endpoint in the cloud, it turns out you can do quite a lot more!  Let’s put together the following scenario. Upload an image that includes some text in it, run an OCR on the image to extract the text, store the text, and finally retrieve both image and text. For small images or for a low volume of image uploads, you can probably do it all in a single Function. However, we want to leverage the Serverless nature of Azure Functions to create a scalable and highly performant design. To do so, we will create three functions:
 
 - An HTTP trigger function exposing simple REST API to upload an image.
-- A blob trigger function that will extract the text from the image when it id uploaded to the blob storage.
+- A blob trigger function that will extract the text from the image when it is uploaded to the blob storage.
 - Another HTTP trigger function exposing simple REST API to query the results of the text extraction.
 
 ![](images/scenario_description.png)
