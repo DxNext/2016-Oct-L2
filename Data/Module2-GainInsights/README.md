@@ -451,7 +451,7 @@ In this task, we'll create our hive scripts to process out data. This is used to
 	````
 
 
-1. Open the file located in **Setup\Assets\HDInsight\Scripts\4_productcatalog.hql**,  Review the content and execute in the Ambari query tool. Before executing this query, do not forget to update your **<StorageAccountName>** in the query.
+1. Open the file located in **Setup\Assets\HDInsight\Scripts\4_productcatalog.hql**,  Review the content and execute in the Ambari query tool. Before executing this query, do not forget to update your **<****StorageAccountName****>** in the query.
 
 	*Explanation*: This query parses the raw JSON Product Catalog file and extracts the information we need to perform our aggregations. Notice how the function **get_json_object** is used and how it can very easily parse multiple levels of a JSON.
 
