@@ -301,7 +301,6 @@ This module includes the following exercises:
 1. [Orchestrating Azure Data Factory workflow](#Exercise4)
 1. [Using the data in the warehouse to generate Power BI visualizations](#Exercise5)
 
-Estimated time to complete this module: **60 minutes**
 
 <a name="Exercise1"></a>
 ### Exercise 1: Creating Hive code to do analytics on your data ###
@@ -365,7 +364,7 @@ In this task, you'll write a Hive query to generate product stats (views and car
 
 	````SQL
 	CREATE TABLE IF NOT EXISTS websiteActivity (
-		eventdate string,
+		eventdate timestamp,
 		userid string,
 		type string,
 		productid string,
@@ -519,7 +518,8 @@ In this task, we'll create our hive scripts to process out data. This is used to
 	````
 
 	![Join Query output](Images/ex2task3-ambari-join-query-output.png?raw=true "Join Query output")
-		_Join Query output_
+	
+	_Join Query output_
 
 
 1. Now that we've become familiar with the HiveQL language, let's make the most of it's power. Here, we'll be processing some data using HiveQL. In this scenario, we will process our log data and understand which products get bought together. This will help us understand our audience a little better and come up with better marketing strategies for our e-commerce store. This is used to highlight the ease and ability of a NoSQL ETL engine like Hadoop to work with Arrays within tabular formatted data.  The code can be found in **Setup\Assets\HDInsight\Scripts\5_relatedproducts.hql**. Before executing this query, do not forget to update your **<StorageAccountName>** in the query. 
@@ -568,7 +568,8 @@ In this task, we'll create our hive scripts to process out data. This is used to
 1. As you can see in the output below, we get a list of related products per product sorted in the descending order of popularity.
 
 	![Related Products Query output](Images/ex2task3-related-products-output.png?raw=true "Related Products Query output")
-		_Related Products Query output_
+		
+	_Related Products Query output_
 
 	
 1. Now that we have the related purchases, we can use this information to power recommendations on our e-commerce website. We can move the output of this table to a transactional data store, where our web app can pick up the latest data to power the recommendations.
@@ -1213,7 +1214,7 @@ In this task, you'll create the input and output tables corresponding to the lin
 		"structure": [
 			{
 				"name": "EventDate",
-				"type": "Int32"
+				"type": "DateTime"
 			},
 			{
 				"name": "UserId",
@@ -1256,6 +1257,8 @@ In this task, you'll create the input and output tables corresponding to the lin
 		````
 
  1. Make sure the final _WebsiteActivitySQL_ dataset looks like the following snippet:
+ 
+	>**NOTE**: Using the 'Clone' option for the ADF JSON helps speed up the process.
  
 		````JavaScript
 		{
@@ -1303,68 +1306,6 @@ In this task, you'll create the input and output tables corresponding to the lin
  1. Click **Deploy** on the toolbar to deploy the dataset.
 
 
- 1. Let's also create a SQL DW dataset for the Product Catalog table. Following the steps from the previous datasets, the JSON should look as follows. You'll notice that we've marked this dataset as **external**. For the purposes of this lab, the data is already loaded into SQL DW in the previous exercise and hence this dataset needs to be marked as external.
-
->**NOTE**: Using the 'Clone' option for the ADF JSON helps speed up the process.
- 
-	````JavaScript
-	{
-		"name": "StructuredProductCatalogSQL",
-		"properties": {
-			"type": "AzureSqlDWTable",
-			"linkedServiceName": "AzureSqlDWLinkedService",
-			"structure": [
-				{
-					"name": "skuNumber",
-					"type": "String"
-				},
-				{
-					"name": "id",
-					"type": "Int32"
-				},
-				{
-					"name": "productId",
-					"type": "String"
-				},
-				{
-					"name": "categoryId",
-					"type": "String"
-				},
-				{
-					"name": "categoryName",
-					"type": "String"
-				},
-				{
-					"name": "title",
-					"type": "String"
-				},
-				{
-					"name": "price",
-					"type": "Double"
-				},
-				{
-					"name": "salePrice",
-					"type": "Double"
-				},
-				{
-					"name": "costPrice",
-					"type": "Double"
-				}			
-			],
-			"typeProperties": {
-				"tableName": "adw.DimProductCatalog"
-			},
-			"external":true,
-			"availability": {
-				"frequency": "Day",
-				"interval": 1
-			}
-		}
-	}
-	```` 
-
- 1. Click **Deploy** on the toolbar to deploy the dataset.
- 
  	![Data sets created](Images/ex1task3-datasets-created.png?raw=true "Data sets created")
 
 	_Data sets created_
@@ -1415,7 +1356,7 @@ An _HDInsight Hive activity_ executes Hive queries on a _HDInsight_ cluster.
 
 1. In the **Author and Deploy** blade of the Data Factory, click **New pipeline** button on the toolbar (click ellipsis button if you don't see the New pipeline button).
 
-1. Change the **name** to "JsonLogsToTabularPipeline" and set the description to "Create tabular data using Hive".
+1. Change the **name** to "HadoopPipeline" and set the description to "Create tabular data using Hive".
 
 1. Set the **start** date to be 3 days before the current date (for instance: "2016-10-16T00:00:00Z").
 
@@ -1583,7 +1524,7 @@ In this task, you'll create a new pipeline to move the Hive activity output (sto
 
 1. In the **Author and Deploy** blade of the Data Factory, click **New pipeline** button on the toolbar (click ellipsis button if you don't see the New pipeline button).
 
-1. Change the **name** to "LogsToDWPipeline" and set the description to "Move blob data to SQL Data Warehouse".
+1. Change the **name** to "BlobToDWPipeline" and set the description to "Move blob data to SQL Data Warehouse".
 
 1. Set the **start** date to be 2 days before the current date.
 
@@ -1617,6 +1558,11 @@ In this task, you'll create a new pipeline to move the Hive activity output (sto
 					"name": "WebsiteActivitySQL"
 				}
 			],
+            "policy": {
+                "timeout": "1.00:00:00",
+                "concurrency": 1,
+                "retry": 3
+            }
 			"scheduler": {
 				"frequency": "Day",
 				"interval": 1
@@ -1625,46 +1571,46 @@ In this task, you'll create a new pipeline to move the Hive activity output (sto
 	]
 	````
 
-1. Here's what the final JSON of the _LogsToDWPipeline_ pipeline looks like:
+1. Here's what the final JSON of the _BlobToDWPipeline_ pipeline looks like:
 	````JavaScript
 	{
-    "name": "LogsToDWPipeline",
+    "name": "BlobDWPipeline",
     "properties": {
         "description": "Enter the pipeline description here",
         "activities": [
             {
                 "type": "Copy",
-                "typeProperties": {
-                    "source": {
-                        "type": "BlobSource"
-                    },
-                    "sink": {
-                        "type": "SqlDWSink",
-                        "sqlWriterCleanupScript": "$$Text.Format('DELETE FROM adw.FactWebsiteActivity WHERE EventDate >= \\'{0:yyyy-MM-dd HH:mm}\\' AND EventDate < \\'{1:yyyy-MM-dd HH:mm}\\'', WindowStart, WindowEnd)",
-                        "writeBatchSize": 0,
-                        "writeBatchTimeout": "00:00:00"
-                    }
-                },
-                "inputs": [
-                    {
-                        "name": "WebsiteActivityBlob"
-                    }
-                ],
-                "outputs": [
-                    {
-                        "name": "WebsiteActivitySQL"
-                    }
-                ],
-                "policy": {
-                    "timeout": "1.00:00:00",
-                    "concurrency": 1,
-                    "retry": 3
-                },
-                "scheduler": {
-                    "frequency": "Day",
-                    "interval": 1
-                },
-                "name": "LogsToDWPipeline"
+				"name": "HiveToDWActivity",
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+	                    "sqlWriterCleanupScript": "$$Text.Format('DELETE FROM adw.FactWebsiteActivity WHERE EventDate >= \\'{0:yyyy-MM-dd HH:mm}\\' AND EventDate < \\'{1:yyyy-MM-dd HH:mm}\\'', WindowStart, WindowEnd)",
+	                    "writeBatchSize": 0,
+	                    "writeBatchTimeout": "00:00:00"
+					    }
+					},
+				"inputs": [
+					{
+						"name": "WebsiteActivityBlob"
+					}
+				],
+				"outputs": [
+					{
+						"name": "WebsiteActivitySQL"
+					}
+				],
+	            "policy": {
+	                "timeout": "1.00:00:00",
+	                "concurrency": 1,
+	                "retry": 3
+	            }
+				"scheduler": {
+					"frequency": "Day",
+					"interval": 1
+				}
             }
         ],
         "start": "2016-10-06T00:00:00Z",
@@ -1716,11 +1662,18 @@ In this task, you'll explore the features of the Monitoring App using the data f
 
 	This section enables pre-canned list of views for the data factories with the Diagram view as the center of the universe viz. recent activity windows, failed activity windows, in-progress activity windows.
 
-1. Double-click on the top margin of the **LogCsvFromBlob** dataset. Notice a calendar shows up with the activity windows highlighted. Click on the calendar' dates to see how it highlights the corresponding activity windows.
+1. Double-click on the top margin of the **WebsiteActivityBlob** dataset. Notice a calendar shows up with the activity windows highlighted. Click on the calendar' dates to see how it highlights the corresponding activity windows.
 
 	![Activity Calendar](Images/ex3task3-activity-calendar.png?raw=true "Activity Calendar")
 
 	_Activity Calendar_
+
+	The Colors represent the following status of your job:
+	- <font color='#DAA520'>Yellow </font>: Pending on data slice
+	- <font color='#ADFF2F'>Light Green</font>: In Progress
+	- <font color='#008000'>Green</font>: Completed Successfully
+	- <font color='#FF0000'>Red</font>: Unsuccessful run
+	- <font color='#696969'>Grey</font>: Not scheduled for those dates.
 
 	You have the ability to view the data factory in terms of activity windows in pipelines. Makes it easier to monitor, browse activity windows with fewer clicks. Showcases activity run details with all the attempts corresponding to each activity window. Allows you to view activity executions in calendar view, or a hover over a dataset.
 
@@ -1747,6 +1700,67 @@ In this task you will add a new pipeline to run the stored procedure that popula
 
 Instead of invoking the Stored Procedure along with the copy activity, you can use the SQL Server Stored Procedure activity in a Data Factory pipeline to invoke a stored procedure.
 
+1. Let's create a SQL DW dataset for the Product Catalog table since we will use this Product Catalog table in the Stored Procedure. Following are the steps from the previous datasets, the JSON should look as follows. You'll notice that we've marked this dataset as **external**. For the purposes of this lab, the data is already loaded into SQL DW in the previous exercise and hence this dataset needs to be marked as external.
+ 
+	````
+	{
+		"name": "StructuredProductCatalogSQL",
+		"properties": {
+			"type": "AzureSqlDWTable",
+			"linkedServiceName": "AzureSqlDWLinkedService",
+			"structure": [
+				{
+					"name": "skuNumber",
+					"type": "String"
+				},
+				{
+					"name": "id",
+					"type": "Int32"
+				},
+				{
+					"name": "productId",
+					"type": "String"
+				},
+				{
+					"name": "categoryId",
+					"type": "String"
+				},
+				{
+					"name": "categoryName",
+					"type": "String"
+				},
+				{
+					"name": "title",
+					"type": "String"
+				},
+				{
+					"name": "price",
+					"type": "Double"
+				},
+				{
+					"name": "salePrice",
+					"type": "Double"
+				},
+				{
+					"name": "costPrice",
+					"type": "Double"
+				}			
+			],
+			"typeProperties": {
+				"tableName": "adw.DimProductCatalog"
+			},
+			"external":true,
+			"availability": {
+				"frequency": "Day",
+				"interval": 1
+			}
+		}
+	}
+	```` 
+
+ 1. Click **Deploy** on the toolbar to deploy the dataset.
+ 
+
 1. Create a new dataset for the ProfitableProducts table that will be the output of the new pipeline.
  1. In the Editor for the Data Factory, click **New dataset** button on the toolbar and click **Azure SQL Data Warehouse** from the drop down menu.
  1. Set the **name** to "ProfitableProductsSQL" and the **linkedServiceName** to "AzureSqlDWLinkedService"
@@ -1767,7 +1781,7 @@ Instead of invoking the Stored Procedure along with the copy activity, you can u
 		}
 		````
 
- 1. Make sure the final _ProfitableProductSP_ dataset looks like the following snippet:
+ 1. Make sure the final _ProfitableProductsSQL_ dataset looks like the following snippet:
  
 		````JavaScript
 		{
@@ -1787,13 +1801,11 @@ Instead of invoking the Stored Procedure along with the copy activity, you can u
 		}
 		````
 
-1. Here's what the final pipeline woud
-
  1. Click **Deploy** on the toolbar to create and deploy the new dataset.
 
 1. Now, create the pipeline to run the **adw.asp_populate_ProfitableProducts** stored procedure.
  1. In the **Author and Deploy** blade of the Data Factory, click **New pipeline** button on the toolbar (click ellipsis button if you don't see the New pipeline button).
- 1. Change the **name** to "SqlDWSprocActivity" and set the description to "Run stored procedure to populate product stats".
+ 1. Change the **name** to "SqlDWSprocActivity" and set the description to "Run stored procedure to understand the most profitable products".
  1. Set the **start** date to be 4 days before the current date.
  1. Set the **end** date to be tomorrow.
  1. Add a _SqlServerStoredProcedure_ activity to to run the **adw.asp_populate_ProfitableProduct** stored procedure from the SQL Data Warehouse. Make sure to replace the **<****StorageAccountName****>** placeholder with the storage account name:
@@ -1833,7 +1845,7 @@ Instead of invoking the Stored Procedure along with the copy activity, you can u
 	{
     "name": "ProfitableProductsSQL",
     "properties": {
-        "description": "Enter the pipeline description here",
+        "description": "Run stored procedure to understand the most profitable products",
         "activities": [
             {
                 "type": "SqlServerStoredProcedure",
@@ -1869,13 +1881,13 @@ Instead of invoking the Stored Procedure along with the copy activity, you can u
 
  1. Click **Deploy** on the toolbar to create and deploy the pipeline.
 
- 1. In the Data Factory blade, click **Diagram**, you'll see the new pipeline.
+ 1. In the Data Factory blade, click **Diagram**, you'll see the new pipeline as well.
 
 	![New pipeline to run stored procedure](Images/ex3task4-sp-pipeline.png?raw=true "New pipeline to run stored procedure")
 
 	_New pipeline to run stored procedure_
 
-1. Make sure the output dataset slices have completed with success so the adw.ProfitableProducts table is populated.  Once the summary table is populated you can proceed with the next exercise to consume the just populated table.
+1. Make sure the output dataset slices have completed with success so the adw.ProfitableProducts table is populated.  Once the adw.ProfitableProducts table is populated you can proceed with the next exercise to consume the just populated table.
 
 	![New pipeline output slices](Images/ex3task4-sp-pipeline-slices.png?raw=true "New pipeline output slices")
 
@@ -1908,7 +1920,7 @@ In this task, you'll open Power BI and connect to the SQL Data Warehouse from th
 
 	_Connect to Azure SQL Data Warehouse_
 
-1. Click **Next** and enter your SQL Data Warehouse username and password (it should be **P@ssword123** if you did not change the script), then click **Sign in**.
+1. Click **Next** and enter your SQL Data Warehouse username and password (it should be *lab*P@ssword1** if you did not change the script), then click **Sign in**.
 
 	![Server credentials](Images/ex4task1-server-credentials.png?raw=true "Server credentials")
 
@@ -1928,9 +1940,10 @@ In this task, you'll create a report based on the SQL Data Warehouse dataset you
 
 	_Azure SQL Data Warehouse tile_
 
-	In the navigation pane, your reports are listed under the **Reports** heading. Each listed report represents one or more pages of visualizations based on one or more of the underlying datasets.
 
-1. In the _Fields_ pane, check **category** and **views** from the **adw.ProfitableProducts** table.
+1. Alternatively, you can scroll down the left pane and in the **Datasets** section, you'll see the **readinessdw** dataset as well. Click on it.
+
+1. You'll see all your tables in the right pane, under the **fields** table. In the _Fields_ pane, check **CategoryName** and **Profit** from the **ProfitableProducts** table.
 
 	![Product fields](Images/ex4task2-fields.png?raw=true "Product fields")
 
@@ -1954,13 +1967,13 @@ In this task, you'll create a report based on the SQL Data Warehouse dataset you
 
 	> **Note:** Chart values will differ since the values are randomly generated when creating the input data files in the setup script.
 
-1. Now lets create a new chart, click the canvas, outside the table, and check the fields **title** and **views**.
+1. Now lets create a new chart, click the canvas, outside the table, and check the fields **CategoryName** and **Profit**.
 
-1. Select the **Pie chart** visualization.
+1. Select the **TreeMap** visualization.
 
-	![Products pie chart](Images/ex4task2-categories-pie.png?raw=true "Products pie chart")
+	![Profits by Category - TreeMap](Images/ex4task2-categories-pie.png?raw=true "Profits by Category - TreeMap")
 
-	_Products pie chart_
+	_Profits by Category - TreeMap_
 
     You can continue creating charts using any combination of fields and also apply filters and other operations. Then, you can change the report layout, add labels, shapes and other visual objects. To learn more about Power BI reports visit [Reports in Power BI](https://powerbi.microsoft.com/en-us/documentation/powerbi-service-reports/)
 
