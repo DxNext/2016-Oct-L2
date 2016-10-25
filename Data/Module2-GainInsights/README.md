@@ -352,7 +352,7 @@ In this task, you'll write a Hive query to generate product stats (views and car
 
 	1. Click **Execute** to run the query.
 
-	1. Wait for the status to be Succeeded, select the results tab in the "Query Process Results" panel to show the values. Notice how you get the first json event in return as 1 row. In the next few steps, we will parse this JSON data and give it a structure so that we can perform our aggregations on it.
+	1. Wait for the status to be Succeeded, select the results tab in the "Query Process Results" panel to show the values. Notice how you get the first json event in return as 1 row. Also notice how it even adds **year**, **month** and **day** as rows to the data as well. This is Hadoop's way of partitioning the data. In the next few steps, we will parse this JSON data and give it a structure so that we can perform our aggregations on it.
 	
 		![Query output](Images/ex2task1-ambari-query-output.png?raw=true "Query output")
 
@@ -380,12 +380,12 @@ In this task, you'll write a Hive query to generate product stats (views and car
 
 You'll notice that we're also creating a partition for a specific date. This will later be made dynamic using **hiveconf** variable. Paste the snippet below and replace the **StorageAccountName** placeholder. 
 
-	````
-	ALTER TABLE websiteActivity ADD IF NOT EXISTS PARTITION (year=2016, month=10, day=06) LOCATION 'wasb://processeddata@<StorageAccountName>.blob.core.windows.net/structuredlogs/2016/10/06';
-	ALTER TABLE websiteActivity ADD IF NOT EXISTS PARTITION (year=2016, month=10, day=07) LOCATION 'wasb://processeddata@<StorageAccountName>.blob.core.windows.net/structuredlogs/2016/10/07';
-	ALTER TABLE websiteActivity ADD IF NOT EXISTS PARTITION (year=2016, month=10, day=08) LOCATION 'wasb://processeddata@<StorageAccountName>.blob.core.windows.net/structuredlogs/2016/10/08';
-	ALTER TABLE websiteActivity ADD IF NOT EXISTS PARTITION (year=2016, month=10, day=09) LOCATION 'wasb://processeddata@<StorageAccountName>.blob.core.windows.net/structuredlogs/2016/10/09';
-	````
+		````SQL
+		ALTER TABLE websiteActivity ADD IF NOT EXISTS PARTITION (year=2016, month=10, day=06) LOCATION 'wasb://processeddata@<StorageAccountName>.blob.core.windows.net/structuredlogs/2016/10/06';
+		ALTER TABLE websiteActivity ADD IF NOT EXISTS PARTITION (year=2016, month=10, day=07) LOCATION 'wasb://processeddata@<StorageAccountName>.blob.core.windows.net/structuredlogs/2016/10/07';
+		ALTER TABLE websiteActivity ADD IF NOT EXISTS PARTITION (year=2016, month=10, day=08) LOCATION 'wasb://processeddata@<StorageAccountName>.blob.core.windows.net/structuredlogs/2016/10/08';
+		ALTER TABLE websiteActivity ADD IF NOT EXISTS PARTITION (year=2016, month=10, day=09) LOCATION 'wasb://processeddata@<StorageAccountName>.blob.core.windows.net/structuredlogs/2016/10/09';
+		````
 
 1. **Submit** or **execute** the Hive query to create the output table.
 
@@ -428,7 +428,7 @@ In this task, we'll create our hive scripts to process out data. This is used to
 	FROM LogsRaw;
 	````
 
-1. Let's start by creating a simple query to understand how easy it is to perform a HiveQL query.
+1. Let's start by creating a simple query to understand how easy it is to perform a HiveQL query. Let's also perform a **describe** command on the table to understand what columns and the data types the table contains.
 
 	````
 	SELECT * from websiteActivity LIMIT 20;
@@ -441,6 +441,16 @@ In this task, we'll create our hive scripts to process out data. This is used to
 		_WebSite Activity Select Query output_
 
 	
+
+	````
+	describe websiteActivity;
+	````
+	
+	![Describe table output](Images/ex2task2-describe-table.png?raw=true "Describe table output")
+		_Describe table output_
+
+
+
 1. Open the file located in **Setup\Assets\HDInsight\Scripts\3_addpartitions.hql** and review its content. This script adds the partitions by date to the input and output tables. We will be using this script while automating the creation of Hadoop partitions via **Azure Data Factory**. The storage account name and all the required date components for the partitions will be passed as parameters by the Hive action running in the Data Factory.
 
 	````SQL
@@ -493,7 +503,7 @@ In this task, we'll create our hive scripts to process out data. This is used to
 
 1. Next, let's run a query to count all the rows in the WebsiteActivity table followed by a query to compute the top-selling products for a particular day.
 
->**Note:** Our query will be optimized since we specify a particular partition. In this case, Hadoop will not scan other partitions, thus the overhead of running the job will be low.
+	>**Note:** Our query will be optimized since we specify a particular partition. In this case, Hadoop will not scan other partitions, thus the overhead of running the job will be low.
 
 	````
 	select count(*) from websiteActivity;
@@ -565,7 +575,7 @@ In this task, we'll create our hive scripts to process out data. This is used to
 	SELECT * from related_products;
 	````
 
-1. As you can see in the output below, we get a list of related products per product sorted in the descending order of popularity.
+1. As you can see in the output below, we get a list of related products per product sorted in the descending order of popularity. We can easily join this data to our ProductCatalog table to pull in our product titles as well.
 
 	![Related Products Query output](Images/ex2task3-related-products-output.png?raw=true "Related Products Query output")
 		
@@ -577,23 +587,28 @@ In this task, we'll create our hive scripts to process out data. This is used to
 
 1. (Optional) For the purposes of this lab series, we will be working through a lab on consuming data via Machine Learning and creating an API to power Recommendations on your e-commerce website. We'll create another query that would store the data in the format that is consumable by the [Machine Learning Recommendations API](https://azure.microsoft.com/en-us/documentation/articles/machine-learning-recommendation-api-documentation/). *Notice how we curate the data to fit the requirements of our end application.* This query can be found in **Setup\Assets\HDInsight\Scripts\6_recapi_helper.hql**. Before executing this query, do not forget to update your **<****StorageAccountName****>** in the query.
  
->**Note:** Information on the format and the schema of the usage and product catalog data can be found by clicking on this [link](https://westus.dev.cognitive.microsoft.com/docs/services/Recommendations.V4.0/operations/56f316efeda5650db055a3e2) and looking up the methods **Upload a catalog file to a model** & **Upload usage file**.
+	>**Note:** Information on the format and the schema of the usage and product catalog data can be found by clicking on this [link](https://westus.dev.cognitive.microsoft.com/docs/services/Recommendations.V4.0/operations/56f316efeda5650db055a3e2) and looking up the methods **Upload a catalog file to a model** & **Upload usage file**.
 
->**Note:** For the sake of simplicity, we will be leaving out 'quantity' from our machine learning usage table. Since the ML API does not accept quantity as an attribute, the rows can be broken down (1 for each quantity purchased) creating and using an User-Defined Table Function (UDTF).
+	>**Note:** For the sake of simplicity, we will be leaving out 'quantity' from our machine learning usage table. Since the ML API does not accept quantity as an attribute, the rows can be broken down (1 for each quantity purchased) creating and using an User-Defined Table Function (UDTF).
+
+	*Explanation*: This query uses the **regexp_replace** UDF which helps us replace the slashes (/) to colons (:). Additionally, this query makes use of the **CASE** statement that helps conform to the data format expected by the Recommendations API.
 
 	````
+	DROP TABLE IF EXISTS RecUsageData;
 	CREATE TABLE RecUsageData ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' LOCATION 'wasbs://processeddata@<StorageAccountName>.blob.core.windows.net/recommendations_usage_data/' AS 
-	SELECT userId, productId, eventDate, CASE 
+	SELECT userId, productId, regexp_replace(CONCAT(SPLIT(CAST(eventDate as String),' ')[0],'T',SPLIT(CAST(eventDate as String),' ')[1]), "-","/") as eventdt, CASE 
 		WHEN type='checkout' THEN 'Purchase'
 		WHEN type='view' THEN 'Click'
 		WHEN type='add' THEN 'AddShopCart'
 		WHEN type='remove' THEN 'RemoveShopCart'
-	FROM WebsiteActivity
+		END as eventtype
+	FROM WebsiteActivity;
 
-
-	CREATE TABLE RecProductCatalog ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' LOCATION 'wasbs://processeddata@<StorageAccountName>.blob.core.windows.net/recommendations_usage_data/' AS 
-	SELECT productId, title, categoryId
-	FROM ProductCatalog
+	
+	DROP TABLE IF EXISTS RecProductCatalog;
+	CREATE TABLE RecProductCatalog ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' LOCATION 'wasbs://processeddata@<StorageAccountName>.blob.core.windows.net/recommendations_product_catalog/' AS 
+	SELECT productId, title, categoryName
+	FROM ProductCatalog;
 	````
 
 1. We will use the output of this job in the Machine Learning Recommendations API lab found in a later module.
@@ -681,7 +696,7 @@ Now let's create the external tables. All we are doing here is defining column n
 	GO
 	````
 
-1. Open a query window and execute the following SQL to create the external table.  Notice the WITH clause is using the data source and file format created in the previous task.
+1. Open a query window and execute the following SQL to create the external table.  Notice the WITH clause is using the data source and file format created in the previous task. You can see how it traverses through the year, month & day folders to pull the right set of data.
 
 	````SQL
 	CREATE EXTERNAL TABLE asb.WebsiteActivityExternal
@@ -694,7 +709,7 @@ Now let's create the external tables. All we are doing here is defining column n
 		Price float
 	)
 	WITH (
-	    LOCATION='/structuredlogs/2016/10/',
+	    LOCATION='/structuredlogs/',
 	    DATA_SOURCE=AzureStorage,
 	    FILE_FORMAT=TextFile
 	);
