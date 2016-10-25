@@ -32,12 +32,16 @@ The following is required to complete this module:
 - [Microsoft Visual Studio Community 2015][1] or greater
 - [Node JS][2]
 - [MS SQL commandline utility for NodeJS][3] 
+- Microsoft ODBC Driver for SQL Server - [Windows](4)
+- Microsoft Command Line Utilities for SQL Server - [Windows](6) or [Linux](5)
 
 
 [1]: https://www.visualstudio.com/products/visual-studio-community-vs
 [2]: https://nodejs.org/en/download/
 [3]: https://www.npmjs.com/package/sql-cli
-
+[4]: https://www.microsoft.com/en-us/download/details.aspx?id=53339
+[5]: https://blogs.msdn.microsoft.com/joseph_idzioreks_blog/2015/09/13/azure-sql-database-sqlcmd-and-bcp-on-ubuntu-linux/
+[6]: https://www.microsoft.com/en-us/download/details.aspx?id=52680
 
 
 <a name="Setup"></a>
@@ -87,7 +91,7 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 
 1. Next, let's load up the data into our Data Warehouse. We will be using the 'bcp' tool to achieve this. You can find the data files under the folder 'Module3-Security\Setup\data'.
 
->**Note:** (For Mac Users) You will need to create a  blob storage account and a container within the account named 'processeddata'. Then, upload the data found in the data folder to the 'processeddata' container and follow the Exercise 2 - Tasks 1-4 in module 2 to load your data into SQL DW.
+>**Note:** (For Mac Users) You will need to create a  blob storage account and a container within the account named 'processeddata'. Then, upload the data found in the data folder to the 'processeddata' container and follow the Exercise 2 - Tasks 1-4 in Module 2 to load your data into SQL DW.
 
 >**Note:** (For Ubuntu Users) Please follow [this][1] blog to install bcp on your machine to setup sqlcmd and bcp on your machine.
 

@@ -522,7 +522,7 @@ In this task, we'll create our hive scripts to process out data. This is used to
 	_Join Query output_
 
 
-1. Now that we've become familiar with the HiveQL language, let's make the most of it's power. Here, we'll be processing some data using HiveQL. In this scenario, we will process our log data and understand which products get bought together. This will help us understand our audience a little better and come up with better marketing strategies for our e-commerce store. This is used to highlight the ease and ability of a NoSQL ETL engine like Hadoop to work with Arrays within tabular formatted data.  The code can be found in **Setup\Assets\HDInsight\Scripts\5_relatedproducts.hql**. Before executing this query, do not forget to update your **<StorageAccountName>** in the query. 
+1. Now that we've become familiar with the HiveQL language, let's make the most of it's power. Here, we'll be processing some data using HiveQL. In this scenario, we will process our log data and understand which products get bought together. This will help us understand our audience a little better and come up with better marketing strategies for our e-commerce store. This is used to highlight the ease and ability of a NoSQL ETL engine like Hadoop to work with Arrays within tabular formatted data.  The code can be found in **Setup\Assets\HDInsight\Scripts\5_relatedproducts.hql**. Before executing this query, do not forget to update your **<****StorageAccountName****>** in the query. 
 
 	*Explanation*: Notice that the query below is made of multiple Select queries as opposed to 1 single query. You can either choose to run it all together or run it one after the other. Also, Notice the **Collect_list**, the **lateral view** and the **explode** functions. These functions are built-in hiveQL and do not have a parallel in the SQL world. They help you perform different actions on your array data, which makes the HiveQL language powerful out of the box. HiveQL also supports creating your own functions to perform any actions that might not be available out-of-the-box. You can read up more about [HiveQL's Built-in UDFs](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF).
 
@@ -575,7 +575,7 @@ In this task, we'll create our hive scripts to process out data. This is used to
 1. Now that we have the related purchases, we can use this information to power recommendations on our e-commerce website. We can move the output of this table to a transactional data store, where our web app can pick up the latest data to power the recommendations.
 
 
-1. (Optional) For the purposes of this lab series, we will be working through a lab on consuming data via Machine Learning and creating an API to power Recommendations on your e-commerce website. We'll create another query that would store the data in the format that is consumable by the [Machine Learning Recommendations API](https://azure.microsoft.com/en-us/documentation/articles/machine-learning-recommendation-api-documentation/). *Notice how we curate the data to fit the requirements of our end application.* This query can be found in **Setup\Assets\HDInsight\Scripts\6_recapi_helper.hql**. Before executing this query, do not forget to update your **<StorageAccountName>** in the query.
+1. (Optional) For the purposes of this lab series, we will be working through a lab on consuming data via Machine Learning and creating an API to power Recommendations on your e-commerce website. We'll create another query that would store the data in the format that is consumable by the [Machine Learning Recommendations API](https://azure.microsoft.com/en-us/documentation/articles/machine-learning-recommendation-api-documentation/). *Notice how we curate the data to fit the requirements of our end application.* This query can be found in **Setup\Assets\HDInsight\Scripts\6_recapi_helper.hql**. Before executing this query, do not forget to update your **<****StorageAccountName****>** in the query.
  
 >**Note:** Information on the format and the schema of the usage and product catalog data can be found by clicking on this [link](https://westus.dev.cognitive.microsoft.com/docs/services/Recommendations.V4.0/operations/56f316efeda5650db055a3e2) and looking up the methods **Upload a catalog file to a model** & **Upload usage file**.
 
@@ -935,7 +935,7 @@ In this task, you'll create the linked services.  Linked Services are essentiall
 
 1. Replace **<****accountname****>** and **<****accountkey****>** placeholders with the account name and key values of the Azure storage account where the Parts Unlimited logs are stored (created with Setup.cmd script or with manual steps).
 
-	````JavaScript
+	````
 	{
 		 "name": "AzureStorageLinkedService",
 		 "properties": {
@@ -966,7 +966,7 @@ In this task, you'll create the linked services.  Linked Services are essentiall
 
 1. Replace placeholders in the connectionString (**<****servername****>**, **<****databasename****>**, **<****username****>** and **<****password****>**) with the setting values used when creating the SQL Data Warehouse database in setup script.
 
-	````JavaScript
+	````
 	{
 		 "name": "AzureSqlDWLinkedService",
 		 "properties": {
@@ -1260,7 +1260,7 @@ In this task, you'll create the input and output tables corresponding to the lin
  
 	>**NOTE**: Using the 'Clone' option for the ADF JSON helps speed up the process.
  
-		````JavaScript
+		````
 		{
 			"name": "WebsiteActivitySQL",
 			"properties": {
@@ -1702,61 +1702,61 @@ Instead of invoking the Stored Procedure along with the copy activity, you can u
 
 1. Let's create a SQL DW dataset for the Product Catalog table since we will use this Product Catalog table in the Stored Procedure. Following are the steps from the previous datasets, the JSON should look as follows. You'll notice that we've marked this dataset as **external**. For the purposes of this lab, the data is already loaded into SQL DW in the previous exercise and hence this dataset needs to be marked as external.
  
-	````
-	{
-		"name": "StructuredProductCatalogSQL",
-		"properties": {
-			"type": "AzureSqlDWTable",
-			"linkedServiceName": "AzureSqlDWLinkedService",
-			"structure": [
-				{
-					"name": "skuNumber",
-					"type": "String"
+		````JavaScript
+		{
+			"name": "StructuredProductCatalogSQL",
+			"properties": {
+				"type": "AzureSqlDWTable",
+				"linkedServiceName": "AzureSqlDWLinkedService",
+				"structure": [
+					{
+						"name": "skuNumber",
+						"type": "String"
+					},
+					{
+						"name": "id",
+						"type": "Int32"
+					},
+					{
+						"name": "productId",
+						"type": "String"
+					},
+					{
+						"name": "categoryId",
+						"type": "String"
+					},
+					{
+						"name": "categoryName",
+						"type": "String"
+					},
+					{
+						"name": "title",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "Double"
+					},
+					{
+						"name": "salePrice",
+						"type": "Double"
+					},
+					{
+						"name": "costPrice",
+						"type": "Double"
+					}			
+				],
+				"typeProperties": {
+					"tableName": "adw.DimProductCatalog"
 				},
-				{
-					"name": "id",
-					"type": "Int32"
-				},
-				{
-					"name": "productId",
-					"type": "String"
-				},
-				{
-					"name": "categoryId",
-					"type": "String"
-				},
-				{
-					"name": "categoryName",
-					"type": "String"
-				},
-				{
-					"name": "title",
-					"type": "String"
-				},
-				{
-					"name": "price",
-					"type": "Double"
-				},
-				{
-					"name": "salePrice",
-					"type": "Double"
-				},
-				{
-					"name": "costPrice",
-					"type": "Double"
-				}			
-			],
-			"typeProperties": {
-				"tableName": "adw.DimProductCatalog"
-			},
-			"external":true,
-			"availability": {
-				"frequency": "Day",
-				"interval": 1
+				"external":true,
+				"availability": {
+					"frequency": "Day",
+					"interval": 1
+				}
 			}
 		}
-	}
-	```` 
+		```` 
 
  1. Click **Deploy** on the toolbar to deploy the dataset.
  
@@ -1983,6 +1983,12 @@ In this task, you'll create a report based on the SQL Data Warehouse dataset you
 
 	_Save report_
 
+
+1. You can even pin any of these visuals to your PowerBI dashboard (that you created in Module 1) by clicking on the *pin-looking* icon on top of each visual.
+	![PowerBI Pin Visual](Images/ex4-dashboard-pin.png?raw=true "PowerBI Pin Visual")
+
+	_PowerBI Pin Visual_
+
 ---
 
 <a name="Summary"></a>
@@ -1996,7 +2002,7 @@ By completing this module, you should have:
 
 - Create a **HDInsight Cluster** and issue a **Hive** query to do analytics on your data
 - Create an **Azure Data Warehouse** and load data from Azure storage
-- Create an **Azure Data Factory** and orchestrate an **Azure Data Factory** workflow
+- Create an **Azure Data Factory** and orchestrate an **Azure Data Factory** work-flow
 - Automate data movement from **HDInsight** to **SQL Data Warehouse**
 - Use the data in **SQL Data Warehouse** to generate **Power BI** visualizations
 
