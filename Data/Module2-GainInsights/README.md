@@ -447,7 +447,8 @@ In this task, we'll create our hive scripts to process out data. This is used to
 	````
 	
 	![Describe table output](Images/ex2task2-describe-table.png?raw=true "Describe table output")
-		_Describe table output_
+		
+	_Describe table output_
 
 
 
