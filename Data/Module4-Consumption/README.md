@@ -302,7 +302,7 @@ If you've completed Module 2 of this lab, you should have the product catalog an
 
 1. Replace the values for the **AccountKey** and **BaseUri** fields with your key and Endpoint from the previous task.
 
-1. You will need Product Catalog data and the Usage data. You can find that in the '..\Module4-Consumption\data' folder.
+1. You will need Product Catalog data and the Usage data. You can find that in the '..\Module4-Consumption\data' folder. Alternatively, if you've completed **Module 2** of this lab series, you would have written a hive query to output the data into hive tables named **RecUsageData** & **RecProductCatalog**. This data would be stored in the blob storage account you chose for your HDInsight cluster. You can navigate to the Storage account and HDInsight container and make your way to the **./hive/warehouse/<**table name folder**>** to find the data. You do not need your HDInsight cluster to be running in order to access this data.
 
 1. As mentioned earlier, in order to train the ML Recommendations model, we need to upload our Product Catalog and our website's usage data. This data was produced by output in Module 2. We will be consuming this output in order to train out model.
 

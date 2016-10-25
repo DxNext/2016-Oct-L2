@@ -164,7 +164,7 @@ The Docker Swarm clusters that are deployed by Azure Container Service expose RE
 The first thing that you do when you create an SSH tunnel on Linux or OS X is to locate the public DNS name of load-balanced masters. To do this, expand the resource group so that each resource is being displayed. Locate and select the public IP address of the master. This will open up a blade that contains information about the public IP address, which includes the DNS name. Save this name for later use. <br />
 
 
-![Public DNS name](../images/pubdns.png)
+![Public DNS name](../images/swarm-ip.png)
 
 Now open a shell and run the following command where:
 
@@ -179,7 +179,7 @@ ssh -L PORT:localhost:PORT -f -N [USERNAME]@[DNSPREFIX]mgmt.[REGION].cloudapp.az
 ```
 > The SSH connection port is 2200--not the standard port 22.
 
-## Swarm tunnel
+## Create an SSH Tunnel on the Linux VM you have created earlier
 
 To open a tunnel to the Swarm endpoint, execute a command that looks similar to the following:
 
@@ -193,7 +193,10 @@ Now you can set your DOCKER_HOST environment variable as follows. You can contin
 export DOCKER_HOST=:2375
 ```
 
-## Create an SSH tunnel on Windows
+## Optional - Create an SSH tunnel on Windows
+
+NOTE: If you created an SSH tunnel in your Linux VM in the previous step, you don't need to create a tunnel in Windows.
+Continue with the [next exercise](../chapters/votingapp.md).
 
 There are multiple options for creating SSH tunnels on Windows. This document will describe how to use PuTTY to do this.
 

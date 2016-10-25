@@ -39,7 +39,7 @@
                 <asp:Repeater ID="productdetails" runat="server" OnItemCommand="productdetails_ItemCommand" >
                     <ItemTemplate>
                         <li>
-                            <asp:ImageButton runat="server" ToolTip="<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).title%>" CommandName="Click" AlternateText="<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).title%>" ImageUrl="<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).productArtUrl%>" CommandArgument="<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).productID%>" Height="200" Width="200" CausesValidation="false" />
+                            <asp:ImageButton ID="productImages" runat="server" OnClick="productImages_Click" ToolTip="<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).title%>" CommandName="Click" AlternateText="<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).title%>" ImageUrl="<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).productArtUrl%>" CommandArgument="<%# ((RecViewerApp.ProductDetailsDisplay)Container.DataItem).productID%>" Height="200" Width="200" CausesValidation="false" />
                         </li>
                     </ItemTemplate>
                 </asp:Repeater>

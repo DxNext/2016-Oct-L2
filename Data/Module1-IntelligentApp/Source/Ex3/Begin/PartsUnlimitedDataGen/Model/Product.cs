@@ -12,22 +12,22 @@ namespace PartsUnlimited.Models
     {
         public string SkuNumber { get; set; }
 
-        [JsonProperty(PropertyName = "id")]
-        public string Id
+        [JsonProperty(PropertyName = "productId")]
+        public string ProductId
         {
             get
             {
-                return this.ProductId.ToString();
+                return this.Id.ToString();
             }
 
             set { }
         }
 
-        public int ProductId { get; set; }
+        public int Id { get; set; }
 
         public int RecommendationId { get; set; }
 
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
         public string CategoryName { get; set; }
 
         public string Title { get; set; }

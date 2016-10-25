@@ -30,16 +30,18 @@ In this module, you'll see how to:
 The following is required to complete this module:
 
 - [Microsoft Visual Studio Community 2015][1] or greater
-- [Microsoft Command Line Utilities 13.1 for SQL Server][2] or greater
-OR
-- [Node JS][3] & [MS SQL commandline utility for NodeJS][4] 
+- [Node JS][2]
+- [MS SQL commandline utility for NodeJS][3] 
+- Microsoft ODBC Driver for SQL Server - [Windows](4)
+- Microsoft Command Line Utilities for SQL Server - [Windows](6) or [Linux](5)
 
 
 [1]: https://www.visualstudio.com/products/visual-studio-community-vs
-[2]: https://www.microsoft.com/en-us/download/details.aspx?id=53591
-[3]: https://nodejs.org/en/download/
-[4]: https://www.npmjs.com/package/sql-cli
-
+[2]: https://nodejs.org/en/download/
+[3]: https://www.npmjs.com/package/sql-cli
+[4]: https://www.microsoft.com/en-us/download/details.aspx?id=53339
+[5]: https://blogs.msdn.microsoft.com/joseph_idzioreks_blog/2015/09/13/azure-sql-database-sqlcmd-and-bcp-on-ubuntu-linux/
+[6]: https://www.microsoft.com/en-us/download/details.aspx?id=52680
 
 
 <a name="Setup"></a>
@@ -89,7 +91,7 @@ Navigate to the Setup Folder under 'Module 3'. You will find a folder called Set
 
 1. Next, let's load up the data into our Data Warehouse. We will be using the 'bcp' tool to achieve this. You can find the data files under the folder 'Module3-Security\Setup\data'.
 
->**Note:** (For Mac Users) You will need to create a  blob storage account and a container within the account named 'processeddata'. Then, upload the data found in the data folder to the 'processeddata' container and follow the Exercise 2 - Tasks 1-4 in module 2 to load your data into SQL DW.
+>**Note:** (For Mac Users) You will need to create a  blob storage account and a container within the account named 'processeddata'. Then, upload the data found in the data folder to the 'processeddata' container and follow the Exercise 2 - Tasks 1-4 in Module 2 to load your data into SQL DW.
 
 >**Note:** (For Ubuntu Users) Please follow [this][1] blog to install bcp on your machine to setup sqlcmd and bcp on your machine.
 
@@ -249,12 +251,12 @@ When creating the he SQL DW, we whitelisted _almost_ all IP address. So, in this
 		
 			
 
-1. Make a note of the IP address.
+1. Make a note of the IP address. We will use it in the next step.
 
 1. Switch back to the Azure SQL Server on the Azure portal and add a new Firewall rule with the following details:
 	1. Rule Name: 'Readinnes IP'
-	2. Start IP: <The IP you just recorded>
-	3. End IP: <The IP you just recorded>
+	2. Start IP: <The IP you **just** recorded in the previous step>
+	3. End IP: <The IP you **just** recorded in the previous step>
 
 1. Save the changes. This should grant access to the Data Warehouse to only your IP Address.
 
@@ -381,7 +383,7 @@ Row-level security is an important feature for ISVs and SaaS application provide
 	````
 	CREATE USER lighting_user FOR LOGIN lighting_user WITH DEFAULT_SCHEMA = App
 	
-	CREATE USER wheels_user FOR LOGIN wheels_user WITH DEFAULT_SCHEMAR = App
+	CREATE USER wheels_user FOR LOGIN wheels_user WITH DEFAULT_SCHEMA = App
 	````
 
 1. Finally, we shall assign the role of **app_view** to our newly created users. This will restrict them to only those tables and views that are within the _app_ schema.
@@ -460,10 +462,10 @@ Row-level security is an important feature for ISVs and SaaS application provide
 	![Select top 200 rows](Images/ex3-select-query.png?raw=true "Select top 200 rows")
 	_Select top 200 rows_
 
-1. Let's run the steps again for the other user to ensure that we see a different dataset than what was just returned by the SELECT query.
+1. Let's run the steps again for the other user (**wheels_user**) to ensure that we see a different dataset than what was just returned by the SELECT query.
 
 	````
-	mssql -s <server name>.database.windows.net -u lighting_user@<server name> -p P@ssword1 -d readinessdw -e
+	mssql -s <server name>.database.windows.net -u wheels_user@<server name> -p P@ssword1 -d readinessdw -e
 	
 	.tables
 
@@ -471,6 +473,7 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 	SELECT TOP 200 * from App.FactWebsiteActivity
 	````
+	TODO: Add a screenshot for this user
 
 With that, we have successfully added Row Level security to our Data Warehouse.
 

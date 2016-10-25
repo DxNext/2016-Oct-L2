@@ -84,7 +84,7 @@
     },
     "storageAccountSubName":{
         "type":"string",
-        "defaultValue":"hdistr"
+        "defaultValue":"labstr"
     },
     "sqlServerSubName":{
         "type":"string",
@@ -263,7 +263,7 @@
             "name": "headnode",
             "targetInstanceCount": "2",
             "hardwareProfile": {
-                "vmSize": "Standard_D3"
+                "vmSize": "Standard_A3"
             },
             "osProfile": {
                 "linuxOperatingSystemProfile": {

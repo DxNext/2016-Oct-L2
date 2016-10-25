@@ -46,3 +46,7 @@ $> sha256sum ./omsagent-1.2.0-75.universal.x64.sh
 $> sudo sh ./omsagent-1.2.0-75.universal.x64.sh --upgrade -w <YOUR OMS WORKSPACE ID> -s <YOUR OMS WORKSPACE PRIMARY KEY>
 
 ```
+
+# 3. Configuring Docker to send logs to Log Analytics
+
+Please follow the steps in the official documentation [here](https://github.com/Microsoft/OMS-Agent-for-Linux/blob/master/docs/Docker-Instructions.md) for setting up the agent for sending Docker logs to Log Analytics.

@@ -129,10 +129,17 @@
             var eventTypes = new List<string>() { "add", "view", "checkout", "remove" };
             var eventWeight = new List<int>() {32, 54, 20, 10 };
 
+         /*   
             //Write Product Catalog data to files
-          /*  var messagestring = JsonConvert.SerializeObject(products, new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-            System.IO.File.WriteAllText(@".\productcatalog.json", messagestring);
-            */
+            var productData = "";
+            foreach(var prod in products)
+            {
+                var messagestring = JsonConvert.SerializeObject(prod, new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                productData += messagestring + "\n";
+            }
+            
+            System.IO.File.WriteAllText(@".\productcatalog.json", productData.Substring(0,productData.Length-1));
+           */ 
 
 
 
@@ -140,7 +147,7 @@
             {
                 var userId = random.Next(1, 250).ToString();
                 var eventNum = GetRandomEventNum(eventTypes.Count, eventWeight);
-                var randomProduct = products[eventNum];
+                var randomProduct = products[random.Next(0, products.Count)];
                 var randomEventType = eventTypes[eventNum];
                 var eventMessage = new EventMessage();
 
@@ -150,7 +157,7 @@
                     eventMessage = new EventMessage
                     {
                         EventDate = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"),
-                        UserId = userId,
+                        UserId = userId.ToString(),
                         Type = randomEventType,
                         ProductId = randomProduct.ProductId.ToString(),
                         quantity = qty,
@@ -162,7 +169,7 @@
                     eventMessage = new EventMessage
                     {
                         EventDate = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"),
-                        UserId = userId,
+                        UserId = userId.ToString(),
                         Type = randomEventType,
                         ProductId = randomProduct.ProductId.ToString()
                     };

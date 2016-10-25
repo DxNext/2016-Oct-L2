@@ -2,7 +2,6 @@
 - [Install Bash on Windows](https://msdn.microsoft.com/commandline/wsl/install_guide)
 - [Install CLI 2.0 (Preview) under Bash](https://github.com/Azure/azure-cli/blob/master/doc/preview_install_guide.md#ubuntu-1404-lts-and-bash-on-windows-build-14362)
 - [Git](http://www.git-scm.com/downloads).
-- [Azure CLI](../xplat-cli-install.md).
 - A Microsoft Azure account. If you don't have an account, you can 
 [sign up for a free trial](/pricing/free-trial/?WT.mc_id=A261C142F) or 
 [activate your Visual Studio subscriber benefits](/pricing/member-offers/msdn-benefits-details/?WT.mc_id=A261C142F).
@@ -36,4 +35,59 @@
 1. Change default output format to table by typing `az configure` and selecting the opion for table.
 1. List resources by typing `az resource list`.
 
-> Note: Additional demo commands are demonstrated in the [Ignite presentation](https://myignite.microsoft.com/secondscreen/2673) at 34:00.
+> Note: Additional CLI demo commands are demonstrated in the [Ignite presentation](https://myignite.microsoft.com/secondscreen/2673) at 34:00.
+
+## Visual Studio Publishing
+> Note: This is excerpted from the Managing Environments lab.
+
+1. Open **Visual Studio Community 2015** and select **File | New | Project...** to create a new solution.
+
+1. In the **New Project** dialog box, select **ASP.NET Core Web Application (.NET Core)** under the **Visual C# | Web** tab, and make sure **.NET Framework 4.6.1** is selected. Name the project _MyWebApp_, choose a **Location** and click **OK**.
+
+    ![New ASP.NET Web Application project](images/new-aspnet-web-application-project.png "New ASP.NET Web Application project")
+
+    _New ASP.NET Web Application project_
+
+1. In the **New ASP.NET Project** dialog box, select the **Web Application** template under **ASP.NET 5 Templates**. Also, make sure that the **Authentication** option is set to **No Authentication**. Make sure the "**Host in the cloud**" option is not checked (you will run this manually). Click **OK** to continue.
+
+    ![Creating a new project with the Web Application template](images/creating-a-new-aspnet-project.png "Creating a new project with the Web Application template")
+
+    _Creating a new project with the Web Application template_
+
+1. Right-click the **MyWebApp** project and select **Publish...**. In the **Publish Web** dialog, click **Microsoft Azure App Service**.
+
+    ![Selecting Microsoft Azure App Service](images/selecting-azure-app-service.png "Microsoft Azure App Service")
+
+    _Microsoft Azure App Service_
+
+1. Click **Add an account...**. to sign in to Visual Studio with your Azure account.
+
+    ![Adding an account](images/adding-an-account.png "Adding an account")
+
+    _Adding an account_
+
+1. Then, click **New...** to open the _Create App Service_ dialog box. The _Create App Service_ dialog box will appear. Fill the **Web App Name** and **Resource Group** fields. Then click the **New...** button next to **App Service Plan**.
+
+    ![Create App Service dialog box](images/01-CreateAppService.png "Create App Service dialog box")
+
+    _Create App Service dialog box_
+
+1. Click **OK** in the Configure App Service Plan dialog.
+
+    ![Creating the App Service](images/02-CreateAppServicePlan.png "Configure the App Service Plan")
+
+    _Configure the App Service Plan_
+
+1. Click the **Create** button in the Create App Service Plan and wait while Azure provisions your resources.
+
+1. Back in the **Publish Web** dialog, all the connection fields should be populated. Click **Next >** to view the **Settings** tab, which shows the Configuration and Target Framework. Click **Publish** to publish the site.
+
+    ![Publishing the site to the new Microsoft Azure Web App](images/publishing-the-site-to-azure.png "Publishing the site to the new Microsoft Azure Web App")
+
+    _Publishing the site to the new Microsoft Azure Web App_
+
+    Once publishing completes, the web app will be automatically launched in your browser (at **http://{yourwebappname}.azurewebsites.net**).
+
+    ![Web app published](images/webapp-published.png "Web app published to Azure")
+
+    _Web app published to Azure_

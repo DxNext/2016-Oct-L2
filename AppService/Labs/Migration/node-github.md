@@ -1,4 +1,4 @@
-## Continuous Deployment using GitHub
+# Continuous Deployment using GitHub
 
 Visual Studio offers built-in tooling for deploying applications to Microsoft Azure App Service. However, having someone manually deploy doesn't give you continuous deployment. In addition, you might be using a different tool, such as Visual Studio Code or Sublime, which doesn't offer such capabilities.
 
@@ -6,7 +6,7 @@ Fortunately,  App Services allows you to deploy code from most common repositori
 
 In addition, App Service, through Hybrid Connections, allows you to access local resources, such as MongoDB. This offers you the flexibility to deploy your application in stages, 
 
-### Overview
+## Overview
 
 In this lab, you will take a Node.JS application deployed to GitHub and configure continuous deployment.
 
@@ -138,4 +138,4 @@ For this task, you will first test the website, confirming that it fails to conn
 
 ### Summary
 
-Microsoft Azure App Service offers you tooling to support both continuous deployment and hybrid configurations. In this lab you saw how to create a connection from your App Service to a local instance of MongoDB. You also saw how to use GitHub as the repository for your application, and enable continuous deployment. 
+Microsoft Azure App Service offers you tooling to support both continuous deployment and hybrid configurations. In this lab you saw how to create a connection from your App Service to a local instance of MongoDB. You also saw how to use GitHub as the repository for your application, and enable continuous deployment.
