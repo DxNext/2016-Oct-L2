@@ -6,25 +6,17 @@ To create a Network Security Group and rules you need the Azure CLI in Resource 
 
 Create your Network Security Group, **entering your own names and location appropriately**:
 
+TIP: You can list the Network Security Groups (NSG) in a resource group using the following command:
 ```
-azure network nsg create --resource-group TestRG --name TestNSG --location westus
-```
-
-Add a rule to allow HTTP traffic to your webserver (or adjust for your own scenario, such as SSH access or database connectivity):
-
-```
-azure network nsg rule create --protocol tcp --direction inbound --priority 1000 \
-    --destination-port-range 80 --access allow --resource-group TestRG --nsg-name TestNSG --name AllowHTTP
+azure network nsg list --resource-group <your-resource-group>
 ```
 
-Associate the Network Security Group with your VM's network interface:
+## Opening port TCP 5000
+```
+azure network nsg rule create --protocol tcp --priority 1010 --direction inbound --destination-port-range 5000 --access allow --resource-group <your-resource-group> --nsg-name <your-nsg-name> --name TCP5000
+```
+## Opening port TCP 5001
+```
+azure network nsg rule create --protocol tcp --priority 1020 --direction inbound --destination-port-range 5001 --access allow --resource-group <your-resource-group> --nsg-name <your-nsg-name> --name TCP5001
+```
 
-```
-azure network nic set --resource-group TestRG --name TestNIC --network-security-group-name TestNSG
-```
-
-Alternatively, you can associate your Network Security Group with a virtual network subnet rather than just to the network interface on a single VM:
-
-```
-azure network vnet subnet set --resource-group TestRG --name TestSubnet --network-security-group-name TestNSG
-```
