@@ -26,6 +26,7 @@ code ~/.ssh/id_rsa.pub
 [This is an example of how and your pub key should look like:]
 ssh-rsa 123456789/dTc6wJT+YCOUiLLS6F7Ge4WlCgmH7fW7UIUJpFcXwDv1bWVMQ3chBFFELWEhEjCqX7HAVoSjEF8oAwM0Ik5p6y66J420eeOGBLHkyV+nBiV0F5WVRKFS5Az1rZy8x/1usbMms/skMnS5Int9QcGIIA9g7Ws9xg28/2XA5IUPUZ0kIKbuSv7bAIqrHaH7WXzUeLeOjUIeW34d9WO52kNqiITjyW1D7kThXKtgS9Y5TEie5MuP8plzz+mBID59EFmdEhBK7QquuT6axXXXXXXXXXXXXXZ1rvoysOHxhDvzVWRuc623pV8PPjiBHiu1Y1T mymail@brus.ml
 ```
+Note: Where "code" is, use your prefered text editor such as nano, vi, vim, emacs, etc. Also, copy the entire key to your keyboard for use in the vm creation process. This key should include "ssh-rsa" and the email address provided. It is strongly recommended that you DO NOT paste this to a notepad file.
 
 ## Following step
 
