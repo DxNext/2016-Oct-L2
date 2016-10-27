@@ -120,7 +120,7 @@ This tells Compose to start all the containers specified in the `docker-compose.
 
 NOTE: Since you will be running this example in Azure, you should make sure port 5000 and 5001 are publicly open and navigate to your DNS name instead of localhost.
 
-You can use the guides for opening the ports using [Azure Portal](https://github.com/DxNext/2016-Oct-L2/blob/master/Linux/Module3-ThingsToConsider/opening-ports-in-azure-portal.md) or using [Azure Resource Manager](https://github.com/DxNext/2016-Oct-L2/blob/master/Linux/Module3-ThingsToConsider/opening-ports-in-arm.md).
+You can use the guides for opening the ports using [Azure Resource Manager](https://github.com/DxNext/2016-Oct-L2/blob/master/Linux/Module3-ThingsToConsider/opening-ports-in-arm.md).
 
 <img src="../images/vote.png" title="vote">
 
