@@ -118,7 +118,12 @@ $ docker-compose up -d
 
 This tells Compose to start all the containers specified in the `docker-compose.yml` file. The `-d` tells it to run them in daemon mode, in the background. Navigate to `http://IP_ADDRESS_OF_YOUR_AZURE_VM:5000` in your browser, and you'll see the voting app, something like this:
 
-NOTE: Since you will be running this example in Azure, you should make sure port 5000 and 5001 are publicly open and navigate to your DNS name instead of localhost.
+**TIP:** You can use the following command to get the IP address of your VM
+```
+azure vm show <your-resource-group> <your-vm-name> |grep "Public IP address" | awk -F ":" '{print $3}'
+```
+
+**NOTE:** Since you will be running this example in Azure, you should make sure port 5000 and 5001 are publicly open and navigate to your DNS name instead of localhost.
 
 You can use the guides for opening the ports using [Azure Resource Manager](https://github.com/DxNext/2016-Oct-L2/blob/master/Linux/Module3-ThingsToConsider/opening-ports-in-arm.md).
 
