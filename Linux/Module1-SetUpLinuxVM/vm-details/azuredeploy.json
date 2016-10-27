@@ -11,7 +11,7 @@
     "dnsCustomName": {
       "type": "string",
       "metadata": {
-        "description": "dns custom name"
+        "description": "Two random lowercase chars"
       }
     },
     "sshKeyData": {

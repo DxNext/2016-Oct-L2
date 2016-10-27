@@ -21,7 +21,7 @@
     ```
 1. Profit!
 
-Note*: If you actually make changes to the code you need ot regenerate the webchat key credential.
+Note*: If you actually make changes to the code you need or regenerate the webchat key credential.
 
 
 [settings]: img/app-settings.jpg "This is what the filesystem in Linux looks like"

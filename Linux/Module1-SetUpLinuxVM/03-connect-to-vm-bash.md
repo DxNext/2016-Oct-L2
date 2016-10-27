@@ -31,7 +31,7 @@ Your life can be easier if you can create a `config` file on `.ssh` folder. Open
 
 ```Shell
 touch ~/.ssh/config
-code ~/.ssh/config
+nano ~/.ssh/config
 chmod 600 ~/.ssh/config
 ```
 

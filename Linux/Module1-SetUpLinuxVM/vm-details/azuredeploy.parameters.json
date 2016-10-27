@@ -9,7 +9,7 @@
       "value": "GEN-SSH-PUB-KEY"
     },
     "dnsCustomName": {
-      "value": ""
+      "value": "Write one lower case random letter and a number"
     },
     "vmName": {
       "value": ""
