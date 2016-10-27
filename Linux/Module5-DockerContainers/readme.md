@@ -10,5 +10,5 @@ These exercises are based on the [Docker self-paced trainings](https://training.
 7. [Build New Image](exercises/build-new-image.md)
 8. [Use New Image](exercises/use-new-image.md)
 9. [Check Container Logs](exercises/check-container-logs.md)
-10. [Deploy a Docker Swarm Cluster in Azure Container Services](exercises/container-service-deployment.md)
+10. [Install Docker Compose](exercises/install-docker-compose.md)
 11. [Run a Multi-Container App with Docker Compose](chapters/votingapp.md)
