@@ -94,7 +94,7 @@ We can also use `'vscode'` to edit our files in our computer.
     // Launch the server on start up.
     "remote.onstartup": true
     ```
-Note: To manually start the server in VS Code: In the command palette - Press F1 and type Remote: Start server, and press ENTER. This will start the server. You may see a "Starting server" message in the status bar in the botton.
+Note: To manually start the server in VS Code: In the command palette - Press F1 and type Remote: Start server, and press ENTER. This will start the server. You may see a "Starting server" message in the status bar in the bottom.
 
 1. And profit!
 
