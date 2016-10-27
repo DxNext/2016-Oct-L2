@@ -44,7 +44,7 @@ Lets take a moment to create and edit a file.
     ```bash
     cat file.txt > fileAux.txt
     cat file.txt
-    cat fileAux.
+    cat fileAux.txt
     diff file.txt fileAux.txt
     ```
 
