@@ -54,6 +54,8 @@
 
 1. Please provide the values for the an username, ssh public key and a name for the VM.
 
+Note: Your username CANNOT be 'admin' - it must be unique. Also, you will want to use the contents of the .pub key file you created in the previous step. Remember, this should include the prefix 'ssh-rsa' and the email address at the tail end of the file.
+
 1. After a few minutes we will have the following result:
 
     ```Shell
