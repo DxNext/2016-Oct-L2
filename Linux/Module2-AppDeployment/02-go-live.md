@@ -47,7 +47,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     sudo npm install -g express
     ```
 
-     Add the following lines to the `'index.js'` file:
+     Create `'index.js'` file an add the following lines to it:
 
      ```js
      var express = require('express'),
@@ -86,13 +86,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     git pull
     ```
 
-    We need to modify the `'package.json'` file to include the following line in the scripts section:
-
-    ```json
-    "start": "node index.js"
-    ```
-
-    It should look something like this:
+    Replace the contents of the `'package.json'` file with the following lines:
 
     ```json
     {
@@ -112,7 +106,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
     }
     ```
 
-    We start the service:
+    Start the service:
 
     ```bash
     npm update

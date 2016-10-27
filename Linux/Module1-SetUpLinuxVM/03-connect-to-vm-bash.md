@@ -27,7 +27,7 @@ In the worst case scenario, remember you can reset your SSH key and user name in
 
 ## Customize your connection using the `~/.ssh/config` file (For Mac, Linux and Windows 10 with Bash installed)
 
-Your life can be easier if you can create a `config` file on `.ssh` folder.
+Your life can be easier if you can create a `config` file on `.ssh` folder. Open a new terminal in you local machine
 
 ```Shell
 touch ~/.ssh/config
