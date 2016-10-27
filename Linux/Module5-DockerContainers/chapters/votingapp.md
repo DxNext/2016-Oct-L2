@@ -1,10 +1,7 @@
 ## Run a multi-container app with Docker Compose
 This portion of the tutorial will guide you through the creation and customization of a voting app. It's important that you follow the steps in order, and make sure to customize the portions that are customizable.
 
-**Important.**
-To complete this section, you will need to have Docker and Docker Compose installed on your machine as mentioned in the [Setup](./setup.md) section. You'll also need have git installed. There are many options for installing it. For instance, you can get it from [GitHub](https://help.github.com/articles/set-up-git/).
-
-You'll also need to have a [Docker Id](https://hub.docker.com/register/). Once you do run login from the commandline:
+You'll need to have a [Docker Id](https://hub.docker.com/register/). Once you do run login from the commandline:
 
 ```
 $ docker login
