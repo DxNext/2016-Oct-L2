@@ -6,7 +6,7 @@ To create a Network Security Group and rules you need the Azure CLI in Resource 
 
 Create your Network Security Group, **entering your own names and location appropriately**:
 
-TIP: You can list the Network Security Groups (NSG) in a resource group using the following command:
+**TIP:** You can list the Network Security Groups (NSG) in a resource group using the following command:
 ```
 azure network nsg list --resource-group <your-resource-group>
 ```
