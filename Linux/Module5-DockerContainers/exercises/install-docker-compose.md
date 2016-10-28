@@ -5,6 +5,9 @@ Note: If you get a “Permission denied” error, your /usr/local/bin directory 
 Run **sudo -i**, then the three commands below, then exit.
 
 ## 1. Install Docker Compose
+```
+sudo -i
+```
 
 ```
 curl -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)" > /usr/local/bin/docker-compose
