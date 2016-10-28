@@ -1,6 +1,8 @@
 Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a Compose file to configure your application’s services. Then, using a single command, you create and start all the services from your configuration.
 
-Note: If you get a “Permission denied” error, your /usr/local/bin directory probably isn’t writable and you’ll need to install Compose as the superuser. Run sudo -i, then the three commands below, then exit.
+Note: If you get a “Permission denied” error, your /usr/local/bin directory probably isn’t writable and you’ll need to install Compose as the superuser. 
+
+Run **sudo -i**, then the three commands below, then exit.
 
 ## 1. Install Docker Compose
 
@@ -12,10 +14,9 @@ curl -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compos
 ```
 chmod +x /usr/local/bin/docker-compose
 ```
-
-## 3. Install command completion for bash
+## 3. Exit sudo -i
 ```
-curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose
+exit
 ```
 
 ## 4. Test the installation
