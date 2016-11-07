@@ -23,7 +23,7 @@ namespace DBAccessBotDemo
     [Serializable]
     public class EchoDialog : IDialog<object>
     {
-        private string connectionString = "";   //<- Enter SQL Connection String here
+        private string connectionString = "Server=tcp:readinesssqlsvrromit.database.windows.net,1433;Initial Catalog=readinessdw;Persist Security Info=False;User ID=labuser;Password=labP@ssword1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";   //<- Enter SQL Connection String here
         public async Task StartAsync(IDialogContext context)
         {
             context.Wait(MessageReceivedAsync);
@@ -56,13 +56,13 @@ namespace DBAccessBotDemo
                     {
                         Command.Connection = connection;
                         Command.CommandType = System.Data.CommandType.Text; 
-                        Command.CommandText = @"";  //<- Insert Query 1 here
+                        Command.CommandText = @"SELECT b.title, a.profit from adw.ProfitableProducts a INNER JOIN adw.DimProductCatalog b ON a.productId=b.productId WHERE b.title='" + title + "'";  //<- Insert Query 1 here
 
                         SqlDataReader reader = Command.ExecuteReader();
 
                         while (reader.Read())
                         {
-                            await context.PostAsync(String.Format("Profit for {0}: ${1}", title, reader.GetDouble(0).ToString()));  //Call out
+                            await context.PostAsync(String.Format("Profit for {0}: ${1}", title, reader.GetDouble(1).ToString()));  //Call out
                             
                         }
                         if (reader.HasRows == false)
@@ -109,7 +109,7 @@ namespace DBAccessBotDemo
                     {
                         Command.Connection = connection;
                         Command.CommandType = System.Data.CommandType.Text; 
-                        Command.CommandText = @"";  //<- Insert Query 3 here
+                        Command.CommandText = @"select TOP 1 a.*, b.title from adw.ProfitableProducts a INNER JOIN adw.DimProductCatalog b ON a.productId=b.productID ORDER BY a.Profit DESC";  //<- Insert Query 3 here
 
                         SqlDataReader reader = Command.ExecuteReader();
 

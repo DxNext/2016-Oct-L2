@@ -48,7 +48,7 @@ In this exercise, you will use Azure IoT Hubs to track the user behavior in your
 
 There is a fantastic online resource already written that details exactly how to create your IoT hub and you can find it here [Getting Started](https://azure.microsoft.com/en-gb/documentation/articles/iot-hub-csharp-csharp-getstarted/).  The article then goes on to cover how you can register your device with the IoT Hub using C#.  We have already done this part for you.  From your IoT Hub though you will need to grab a few details and these are;
 
-- The hub connection string (Settings | Shared access policies | iothubowner
+- The hub connection string (Settings | Shared access policies | iothubowner)
 - The hub host name
 
 Now we have an IoT hub ready to receive events from our device/s
@@ -156,7 +156,7 @@ Settings for PartsUnlimitedDataGen
 - Connect to IoT hub and start sending messages
 
 
-You should now have events streaming to your IoT Hub.  We have always found it useful to actually look at the events as they land on the IoT hub because even though they may be getting there, they may not be in the format you think they are.  This is where you can use something like Device Explorer.
+You should now have events streaming to your IoT Hub.  We have always found it useful to actually look at the events as they land on the IoT hub because even though they may be getting there, they may not be in the format you think they are.  This is where you can use something like [Device Explorer](https://github.com/Azure/azure-iot-sdks/tree/master/tools/DeviceExplorer).
 
 Paste in your IoT Hub Connection String --> Hit **Update** --> Now move to the **Data** tab and push the **monitor** button
 
@@ -267,9 +267,9 @@ In this task you'll run the Stream Analytics job and view the output in Visual S
 
 
 
-### Exercise 3: Visualizing your data with Power BI (optional - requires Organizational account ###
+### Exercise 3: Visualizing your data with Power BI (optional - requires Organizational account) ###
 
-In this exercise, you'll use Azure Stream Analytics with Microsoft Power BI. You will learn how to build a live dashboard quickly. You will also learn how to perform a JOIN operation in Azure Steam Analytics.
+In this exercise, you'll use Azure Stream Analytics with Microsoft Power BI. You will learn how to build a live dashboard. You will also learn how to perform a JOIN operation in Azure Steam Analytics. We will be showing abandoned items in a Dashboard. Abandoned items are those that have been added to the cart but not bought within 5 minutes.
 
 
 #### Task 1 - Adding an input for Reference Data ####
@@ -365,9 +365,9 @@ In this task, you'll add a new output to your Stream Analytics job.
         a.userId, a.productId, a.EventDate 
     FROM 
         IoTHubInput as A TIMESTAMP BY EventDate
-    LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
-    ON a.userId=b.userId AND a.productId = b.productId and b.type='checkout'
-    AND DATEDIFF(minute, A, B) BETWEEN 0 AND 2
+    	LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
+    	ON a.userId=b.userId AND a.productId = b.productId and b.type='checkout'
+    	AND DATEDIFF(minute, A, B) BETWEEN 0 AND 2
     WHERE a.type = 'add'
     AND b.type IS NULL
 	)
@@ -402,9 +402,9 @@ In this task, you'll add a new output to your Stream Analytics job.
         a.userId, a.productId, a.EventDate 
     FROM 
         IoTHubInput as A TIMESTAMP BY EventDate
-    LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
-    ON a.userId=b.userId AND a.productId = b.productId and b.type='checkout'
-    AND DATEDIFF(minute, A, B) BETWEEN 0 AND 2
+    	LEFT OUTER JOIN IoTHubInput as B TimeStamp By EventDate
+    	ON a.userId=b.userId AND a.productId = b.productId and b.type='checkout'
+    	AND DATEDIFF(minute, A, B) BETWEEN 0 AND 2
     WHERE a.type = 'add'
     AND b.type IS NULL
 	)

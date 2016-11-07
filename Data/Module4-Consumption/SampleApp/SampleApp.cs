@@ -34,8 +34,8 @@ namespace Recommendations
 
     public class RecommendationsSampleApp
     {
-        private static string AccountKey = "ed026d0b8a7449d0b4350211ba84ccbd"; // <---  Set to your API key here.
-        private const string BaseUri = "https://westus.api.cognitive.microsoft.com/recommendations/v4.0"; 
+        private static string AccountKey = ""; // <---  Set to your API key here.
+        private const string BaseUri = "https://your_API_region.api.cognitive.microsoft.com/recommendations/v4.0"; //<-- Replace your Region Name here
         private static RecommendationsApiWrapper recommender = null;
         private static string ProductCatalogPath = @"C:\Work\Projects\oct16_upskilling\Data\Module4-Consumption\data\product_catalog\csv"; //<-- Enter the File Path to the Product Catalog
         private static string UsageFilesPath = @"C:\Work\Projects\oct16_upskilling\Data\Module4-Consumption\data\structuredlogs"; //<-- Enter the File Path to the Usage files
@@ -49,7 +49,7 @@ namespace Recommendations
         /// </summary>
         public static void Main(string[] args)
         {
-            string modelName = "MyThirdModel";
+            string modelName = "MyFirstModel";
             string modelId = null;
             long buildId =  -1;
 

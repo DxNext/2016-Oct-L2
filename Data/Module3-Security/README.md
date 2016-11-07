@@ -32,8 +32,8 @@ The following is required to complete this module:
 - [Microsoft Visual Studio Community 2015][1] or greater
 - [Node JS][2]
 - [MS SQL commandline utility for NodeJS][3] 
-- Microsoft ODBC Driver for SQL Server - [Windows](4)
-- Microsoft Command Line Utilities for SQL Server - [Windows](6) or [Linux](5)
+- Microsoft ODBC Driver for SQL Server - [Windows][4]
+- Microsoft Command Line Utilities for SQL Server - [Windows][6] or [Linux][5]
 
 
 [1]: https://www.visualstudio.com/products/visual-studio-community-vs
@@ -465,7 +465,7 @@ Row-level security is an important feature for ISVs and SaaS application provide
 1. Let's run the steps again for the other user (**wheels_user**) to ensure that we see a different dataset than what was just returned by the SELECT query.
 
 	````
-	mssql -s <server name>.database.windows.net -u wheels_user@<server name> -p P@ssword1 -d readinessdw -e
+	mssql -s <server name>.database.windows.net -u wheels_user@<server name> -p P@ssword2 -d readinessdw -e
 	
 	.tables
 
@@ -473,7 +473,10 @@ Row-level security is an important feature for ISVs and SaaS application provide
 
 	SELECT TOP 200 * from App.FactWebsiteActivity
 	````
-	TODO: Add a screenshot for this user
+	
+	![Select top 200 rows for wheels_user](Images/ex3-select-query-wheels.png?raw=true "Select top 200 rows for wheels_user")
+	_Select top 200 rows for wheels_user_
+	
 
 With that, we have successfully added Row Level security to our Data Warehouse.
 

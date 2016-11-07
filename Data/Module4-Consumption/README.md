@@ -278,13 +278,13 @@ In this task, you'll sign up for the Recommendations API service, and create a r
 Now you, as a developer can take advantage of this API and do not have to worry about the details of how to actually build a model. You can take advantage of one that is already created.
 
 In order to build a model, the engine will need two pieces of information, a catalog file, and a usage file. 
-If you've completed Module 2 of this lab, you should have the product catalog and the transaction file handy. You can also find these resource under the '..Module4-CognitiveIntelligence\data\' folder.
+If you've completed Module 2 of this lab, you should have the product catalog and the transaction file handy. You can also find these resource under the '..Module4-Consumption\data\' folder.
 
 >**Note:** _How much data do you need?_ 
 	<br>Well, it really depends on the usage data itself. The system learns when users buy different items. For some builds like FBT, it is important to know which items are purchased in the same transactions. (We call this co-occurrences). A good rule of thumb is to have most items be in 20 transactions or more, so if you had 10,000 items in your catalog, we would recommend that you have at least 20 times that number of transactions or about 200,000 transactions. Once again, this is a rule of thumb. You will need to experiment with your data. 
 
 
-1. Open in Visual Studio the **RecommendationsSample.sln** solution located at **Module4-CognitiveServices/SampleApp/RecommendationsSample.sln** folder.
+1. Open in Visual Studio the **RecommendationsSample.sln** solution located at **Module4-Consumption/SampleApp/RecommendationsSample.sln** folder.
 
 1. There are 4 main files that we're going to review
 	- SampleApp.cs - The main file that included the application code. 

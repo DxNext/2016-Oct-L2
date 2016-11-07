@@ -775,7 +775,7 @@ The easiest and most efficient way to load data from Azure blob storage is to us
 	CREATE TABLE adw.FactWebsiteActivity
 	WITH (
 		CLUSTERED COLUMNSTORE INDEX,
-		DISTRIBUTION = HASH(ProductID)
+		DISTRIBUTION = HASH(ProductId)
 		)
 	AS
 	SELECT
@@ -799,7 +799,7 @@ The easiest and most efficient way to load data from Azure blob storage is to us
 	CREATE TABLE adw.DimProductCatalog
 	WITH (
 		CLUSTERED COLUMNSTORE INDEX,
-		DISTRIBUTION = HASH(ProductID)
+		DISTRIBUTION = HASH(ProductId)
 		)
 	AS 
 	SELECT
@@ -822,7 +822,7 @@ The easiest and most efficient way to load data from Azure blob storage is to us
 	````SQL	
 	CREATE STATISTICS Stat_adw_FactWebsiteActivity_EventDate on adw.FactWebsiteActivity(EventDate);
 	CREATE STATISTICS Stat_adw_FactWebsiteActivity_Type on adw.FactWebsiteActivity([Type]);
-	CREATE STATISTICS Stat_adw_FactWebsiteActivity_ProductID on adw.FactWebsiteActivity(ProductID);
+	CREATE STATISTICS Stat_adw_FactWebsiteActivity_ProductID on adw.FactWebsiteActivity(ProductId);
 	CREATE STATISTICS Stat_adw_FactWebsiteActivity_Quantity on adw.FactWebsiteActivity(Quantity);
 	CREATE STATISTICS Stat_adw_FactWebsiteActivity_Price on adw.FactWebsiteActivity(Price);
 	````
@@ -1173,7 +1173,7 @@ In this task, you'll create the input and output tables corresponding to the lin
 				"structure": [
 					{
 						"name": "eventdate",
-						"type": "DateTime"
+						"type": "Datetime"
 					},
 					{
 						"name": "userid",
@@ -1230,7 +1230,7 @@ In this task, you'll create the input and output tables corresponding to the lin
 		"structure": [
 			{
 				"name": "EventDate",
-				"type": "DateTime"
+				"type": "Datetime"
 			},
 			{
 				"name": "UserId",
