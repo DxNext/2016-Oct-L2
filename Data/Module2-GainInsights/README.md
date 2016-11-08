@@ -836,8 +836,8 @@ Before we move to the next exercise, create a stored procedure to understand our
 
 	````SQL	
 
-	IF EXISTS(SELECT * FROM sys.procedures WHERE name = 'asp_populate_productlogsummary')
-		DROP PROCEDURE adw.asp_populate_productlogsummary
+	IF EXISTS(SELECT * FROM sys.procedures WHERE name = 'asp_populate_ProfitableProducts')
+		DROP PROCEDURE adw.asp_populate_ProfitableProducts
 	GO
 
 	CREATE PROCEDURE adw.asp_populate_ProfitableProducts AS
