@@ -431,23 +431,34 @@ In this task, you'll add a new output to your Stream Analytics job.
 1. For creating the dashboard, go to the **Dashboards** option and create a new Dashboard, e.g. **DataLab1Dashboard**.
 
 1. Scroll down to the **Datasets** section. You will notice the two datasets (“datamodulepbi” & "abdandonedcartspbi" in our current example) that we created in Stream Analytics.
-	TODO: Screenshot (ex3-task3-datasets.png)
+	![View PowerBI Dataset](Images/ex3-task3-datasets.png?raw=true "View PowerBI Dataset")
+
+	_View PowerBI Dataset_
 
 1. Now click on the **datamodulepbi** dataset created by your Stream Analytics job. You will be taken to a page to create a chart on top of this dataset.
 
 1. You should see our table (datamodulepbitable) show up, along with all the fields associated with it. Select the **Stacked Column Chart** icon from the **Visualizations** menu on the right. 
 
 1. Drag the **title** column in the **Axis** field and the **totalsold** column into the **Value** field
-	TODO: Screenshot (ex3-task3-chart1.png)
+	![PowerBI Chart - Sales By Product](Images/ex3-task3-chart1.png?raw=true "PowerBI Chart - Sales By Product")
+
+	_PowerBI Chart - Sales By Product_
 
 1. You should see your stacked column chart appear. Next, Click on the **...** in the top right corner of the visual and select **Sort by totalsold**.
-	TODO: Screenshot (ex3-task3-chart1_sort.png)
+	![PowerBI Chart - Sales By Product (Sorted)](Images/ex3-task3-chart1_sort.png?raw=true "PowerBI Chart - Sales By Product (Sorted)")
+
+	_PowerBI Chart - Sales By Product_
 
 1. You should now see your report sorted by Top Selling Products
-	TODO: Screnshot (ex3-task3-chart1_sort_final.png)
+	![PowerBI - Top Selling Report)](Images/ex3-task3-chart1_sort_final.png?raw=true "PowerBI - Top Selling Report")
+
+	_PowerBI Chart - Top Selling Report_
 
 1. Now click on the **Format** section under the **Visualization** tab and expand the **Title** menu. Change the Title Text to **Current Top-Selling Products**.
-	TODO: TODO: Screenshot (ex3-task3-chart1-title.png)
+	![PowerBI - Top Selling Report - Add Title)](Images/ex3-task3-chart1-title.png?raw=true "PowerBI - Top Selling Report - Add Title")
+
+	_PowerBI - Top Selling Report - Add Title_
+
 
 1. Click **Save** found in the top right of the canvas. You can name it "Top Selling report".
 
