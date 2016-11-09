@@ -10,15 +10,14 @@ azure config mode arm
 
 Create your Network Security Group, **entering your own names and location appropriately**:
 
-
-## 1. Get the Network Interface (NIC) of your VM
-```
-azure network nic list --resource-group <your-resource-group> | awk 'NR==5{print $2}'
-```
-
-## 2. Create a new Network Security Group (NSG)
+## 1. Create a new Network Security Group (NSG)
 ```
 azure network nsg create --resource-group <your-resource-group> --location <location-of-your-VM> --name <name-for-the-new-NSG>
+```
+
+## 2. Get the Network Interface (NIC) of your VM
+```
+azure network nic list --resource-group <your-resource-group> | awk 'NR==5{print $2}'
 ```
 
 ## 3. Associate the NSG with your NIC
