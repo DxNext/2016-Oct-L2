@@ -22,7 +22,7 @@ azure network nic list --resource-group <your-resource-group> | awk 'NR==5{print
 
 ## 3. Associate the NSG with your NIC
 ```
-azure network nic set --resource-group <your-resource-group> --name <your-NIC-from-the-first-step> --network-security-group-name <name-for-the-new-NSG>
+azure network nic set --resource-group <your-resource-group> --name <your-NIC-from-the-previous-step> --network-security-group-name <name-for-the-new-NSG>
 ```
 
 ## 4. Opening port TCP 80
