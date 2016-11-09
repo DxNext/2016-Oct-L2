@@ -10,27 +10,34 @@ azure config mode arm
 
 Create your Network Security Group, **entering your own names and location appropriately**:
 
-**TIP:** You can list the Network Security Groups (NSG) in a resource group using the following command:
+
+## 1. Get the Network Interface (NIC) of your VM
 ```
-azure network nsg list --resource-group <your-resource-group>
+azure network nic list --resource-group <your-resource-group> | awk 'NR==5{print $2}'
 ```
 
-**Example output:**
+## 2. Create a new Network Security Group (NSG)
 ```
-info:    Executing command network nsg list
-Getting the network security groups
-data:    Name                        Location  Resource group   Provisioning state  Rules number
-data:    --------------------------  --------  ---------------  ------------------  ------------
-data:    oguzp-centos-72-2-nsg       westus    field-readiness  Succeeded           7
-info:    network nsg list command OK
+azure network nsg create --resource-group <your-resource-group> --location <location-of-your-VM> --name <name-for-the-new-NSG>
 ```
 
-## Opening port TCP 5000
+## 3. Associate the NSG with your NIC
 ```
-azure network nsg rule create --protocol tcp --priority 1010 --direction inbound --destination-port-range 5000 --access allow --resource-group <your-resource-group> --nsg-name <your-nsg-name> --name TCP5000
+azure network nic set --resource-group <your-resource-group> --name <your-NIC-from-the-first-step> --network-security-group-name <name-for-the-new-NSG>
 ```
-## Opening port TCP 5001
+
+## 4. Opening port TCP 80
 ```
-azure network nsg rule create --protocol tcp --priority 1020 --direction inbound --destination-port-range 5001 --access allow --resource-group <your-resource-group> --nsg-name <your-nsg-name> --name TCP5001
+azure network nsg rule create --protocol tcp --priority 1010 --direction inbound --destination-port-range 80 --access allow --resource-group <your-resource-group> --nsg-name <name-for-the-new-NSG> --name TCP80
 ```
+
+## 5. Opening port TCP 5000
+```
+azure network nsg rule create --protocol tcp --priority 1020 --direction inbound --destination-port-range 5000 --access allow --resource-group <your-resource-group> --nsg-name <name-for-the-new-NSG> --name TCP5000
+```
+## 6. Opening port TCP 5001
+```
+azure network nsg rule create --protocol tcp --priority 1030 --direction inbound --destination-port-range 5001 --access allow --resource-group <your-resource-group> --nsg-name <name-for-the-new-NSG> --name TCP5001
+```
+
 
