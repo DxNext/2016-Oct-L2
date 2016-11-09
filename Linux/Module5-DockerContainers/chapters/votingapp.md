@@ -135,6 +135,8 @@ You can use the guides for opening the ports using [Azure Resource Manager](http
 
 Click on one to vote. You can check the results at `http://IP_ADDRESS_OF_YOUR_AZURE_VM:5001`
 
+NOTE: Sometimes the results does not correctly appear, Docker is in the process of updating the application to correct this issue.
+
 #### 3.2.3 Build and tag images
 
 You are all set now. Navigate to each of the directories where you have a Dockerfile to build and tag your images that you want to submit.
