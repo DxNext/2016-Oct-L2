@@ -98,13 +98,17 @@ networks:
   back-tier:
 ```
 
-This Compose file defines
 
-- A vote container based on a Python image
-- A result container based on a Node.js image
-- A redis container based on a redis image, to temporarily store the data.
-- A .NET based worker app based on a .NET image
-- A Postgres container based on a postgres image
+Architecture
+-----
+
+![Architecture diagram](../architecture.png)
+
+* A Python webapp which lets you vote between two options
+* A Redis queue which collects new votes
+* A .NET worker which consumes votes and stores them in…
+* A Postgres database backed by a Docker volume
+* A Node.js webapp which shows the results of the voting in real time
 
 Note that three of the containers are built from Dockerfiles, while the other two are images on Docker Hub. To learn more about how they're built, you can examine each of the Dockerfiles in the three directories: `vote`, `result`, `worker`. 
 
