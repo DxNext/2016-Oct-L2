@@ -29,8 +29,8 @@ docker-compose --version
 ```
 
 You should see something similar to the following after you run the command
-
+```
 docker-compose version: 1.8.1
-
+```
 
 Now you have Docker Compose installed, you may continue with the next exercise.
