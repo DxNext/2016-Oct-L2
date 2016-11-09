@@ -2,7 +2,11 @@
 You open a port, or create an endpoint, to a virtual machine (VM) in Azure by creating a network filter on a subnet or VM network interface. You place these filters, which control both inbound and outbound traffic, on a Network Security Group attached to the resource that receives the traffic.
 
 ## Quick commands
-To create a Network Security Group and rules you need the Azure CLI in Resource Manager mode (`azure config mode arm`).
+To create a Network Security Group and rules you need the Azure CLI in Resource Manager mode:
+
+```
+azure config mode arm
+```
 
 Create your Network Security Group, **entering your own names and location appropriately**:
 
@@ -13,7 +17,7 @@ azure network nsg list --resource-group <your-resource-group>
 
 **Example output:**
 info:    Executing command network nsg list
-+ Getting the network security groups
+Getting the network security groups
 data:    Name                        Location  Resource group   Provisioning state  Rules number
 data:    --------------------------  --------  ---------------  ------------------  ------------
 data:    oguzp-centos-72-2-nsg       westus    field-readiness  Succeeded           7
