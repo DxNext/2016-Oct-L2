@@ -96,6 +96,8 @@ $ sudo systemctl enable docker
 
 ### Install with yum (the long way)
 
+**NOTE:** If you already followed the previous steps and installed Docker, you don't need to follow the following steps. The remaining steps are just to provide information on installing Docker manually.
+
 1. Log into your machine as a user with `sudo` or `root` privileges.
 
 2.  Make sure your existing packages are up-to-date.
@@ -164,5 +166,3 @@ $ sudo systemctl enable docker
 
         For more examples and ideas, visit:
          https://docs.docker.com/engine/userguide/
-
-Next step: [1.0 Running your first container](./alpine.md)
