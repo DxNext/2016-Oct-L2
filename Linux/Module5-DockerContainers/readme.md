@@ -9,6 +9,6 @@ These exercises are based on the [Docker self-paced trainings](https://training.
 6. [Run a Web Application Container](exercises/run-a-web-application-container.md)
 7. [Build New Image](exercises/build-new-image.md)
 8. [Use New Image](exercises/use-new-image.md)
-9. [Check Container Logs](exercises/mount-a-host-volume-to-a-container.md)
+9. [Mount a Host Directory as a Data Volume](exercises/mount-a-host-volume-to-a-container.md)
 10. [Install Docker Compose](exercises/install-docker-compose.md)
 11. [Run a Multi-Container App with Docker Compose](chapters/votingapp.md)
