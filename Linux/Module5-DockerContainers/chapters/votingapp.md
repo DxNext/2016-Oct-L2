@@ -122,7 +122,7 @@ $ docker-compose up -d
 
 This tells Compose to start all the containers specified in the `docker-compose.yml` file. The `-d` tells it to run them in daemon mode, in the background. Navigate to `http://IP_ADDRESS_OF_YOUR_AZURE_VM:5000` in your browser, and you'll see the voting app running.
 
-**TIP:** You can use the following command to get the IP address of your VM:
+**TIP:** You can use the following Azure CLI command to get the IP address of your VM:
 ```
 azure vm show <your-resource-group> <your-vm-name> |grep "Public IP address" | awk -F ":" '{print $3}'
 ```
