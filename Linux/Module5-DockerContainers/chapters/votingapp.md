@@ -102,7 +102,7 @@ networks:
 Architecture
 -----
 
-![Architecture diagram](../architecture.png)
+![Architecture diagram](../images/architecture.png)
 
 * A Python webapp which lets you vote between two options
 * A Redis queue which collects new votes
