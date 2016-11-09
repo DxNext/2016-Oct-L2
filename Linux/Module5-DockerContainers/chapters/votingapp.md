@@ -21,26 +21,7 @@ Clone the voting-app repository already available at [Github Repo](https://githu
 git clone https://github.com/docker/example-voting-app.git
 ```
 
-### 3.2 Customize the app
-
-#### 3.2.1 Modify app.py
-
-In the folder ```example-voting-app/vote``` you need to edit the app.py and change the two options for the programming languages you chose.
-
-Edit the following lines:
-
-```
-option_a = os.getenv('OPTION_A', "Cats")
-option_b = os.getenv('OPTION_B', "Dogs")
-```
-
-substituting two options of your choice. For instance:
-
-```
-option_a = os.getenv('OPTION_A', "Java")
-option_b = os.getenv('OPTION_B', ".NET")
-```
-#### 3.2.2 Running your app
+#### 3.2 Running your app
 Now, run your application. To do that, we'll use [Docker Compose](https://docs.docker.com/compose). Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, you define a `.yml` file that describes all the containers and volumes that you want, and the networks between them. In the example-voting-app directory, you'll see a `docker-compose.yml file`:
 
 ```yml
