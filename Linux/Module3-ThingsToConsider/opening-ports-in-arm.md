@@ -16,13 +16,14 @@ azure network nsg list --resource-group <your-resource-group>
 ```
 
 **Example output:**
+```
 info:    Executing command network nsg list
 Getting the network security groups
 data:    Name                        Location  Resource group   Provisioning state  Rules number
 data:    --------------------------  --------  ---------------  ------------------  ------------
 data:    oguzp-centos-72-2-nsg       westus    field-readiness  Succeeded           7
 info:    network nsg list command OK
-
+```
 
 ## Opening port TCP 5000
 ```
