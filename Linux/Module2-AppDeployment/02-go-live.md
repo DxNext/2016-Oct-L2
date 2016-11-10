@@ -41,6 +41,7 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
 1. Lets create a git webhook in our server
 
     ```bash
+    cd northwind
     mkdir webhook
     cd webhook
     npm init
