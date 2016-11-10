@@ -30,7 +30,7 @@ azure network nic list --resource-group <your-resource-group>
 
 ## 3. Associate the Network Security Group (NSG) with your Network Interface (NIC) of your VM
 ```
-azure network nic set --resource-group <your-resource-group> --name <your-NIC-from-the-previous-step> --network-security-group-name <name-for-the-new-NSG>
+azure network nic set --resource-group <your-resource-group> --name <your-NIC-from-the-previous-step> --network-security-group-name <your-NSG-from-the-previous-step>
 ```
 
 ## 4. Opening port TCP 80
