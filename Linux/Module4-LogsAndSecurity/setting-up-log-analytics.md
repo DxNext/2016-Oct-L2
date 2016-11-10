@@ -40,4 +40,4 @@ Run the following command to download the omsagent, validate the checksum, and i
 ```
 wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w <YOUR OMS WORKSPACE ID> -s <YOUR OMS WORKSPACE PRIMARY KEY>
 ```
-**NOTE:** It would take about 15 minutes for the logs to appear in OMS. You may continue with the next labs and return back after 15 mins to check the logs.
+**NOTE:** It would take about 15 minutes for the logs to appear in OMS. You may continue with the next lab and return back after 15 mins to check the logs.
