@@ -3,7 +3,7 @@
 1. Use *'ssh-keygen'* to create an RSA SSH key of 4096 bits pointing to our e-mail address.
 
     ```bash
-    ssh-keygen -t rsa -b 4096 -C "your@email.com"
+    ssh-keygen -t rsa -b 4096 -C "your email address"
     ```
 
 1. After this command you will be asked for a location to save your powerful key, you can give it a custom location but it's not really necessary unless you actually handle multiple keys.
