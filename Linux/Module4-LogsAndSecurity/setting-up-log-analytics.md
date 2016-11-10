@@ -38,12 +38,6 @@ Run the following commands to download the omsagent, validate the checksum, and 
 ![connected-resources](./media/connected-resources.png)
 
 ```
-
-$> wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v1.2.0-75/omsagent-1.2.0-75.universal.x64.sh
-
-$> sha256sum ./omsagent-1.2.0-75.universal.x64.sh
-
-$> sudo sh ./omsagent-1.2.0-75.universal.x64.sh --upgrade -w <YOUR OMS WORKSPACE ID> -s <YOUR OMS WORKSPACE PRIMARY KEY>
-
+wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w <YOUR OMS WORKSPACE ID> -s <YOUR OMS WORKSPACE PRIMARY KEY>
 ```
 It would take about 15 minutes for the logs to appear in OMS. You may continue with the next labs and return back after 15 mins to check the logs.
