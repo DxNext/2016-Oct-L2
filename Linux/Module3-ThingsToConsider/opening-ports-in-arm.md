@@ -20,7 +20,7 @@ azure network nsg create --resource-group <your-resource-group> --location <loca
 azure network nic list --resource-group <your-resource-group> | awk 'NR==5{print $2}'
 ```
 
-## 3. Associate the NSG with your NIC
+## 3. Associate the Network Security Group (NSG) with your Network Interface (NIC) of your VM
 ```
 azure network nic set --resource-group <your-resource-group> --name <your-NIC-from-the-previous-step> --network-security-group-name <name-for-the-new-NSG>
 ```
