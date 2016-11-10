@@ -33,7 +33,7 @@ Please follow the below steps.
 
 Now that you have created your OMS workspace, you need to install the OMS agent to your Linux VM.
 
-Run the following commands to download the omsagent, validate the checksum, and install+onboard the agent. *Commands are for 64-bit*. The Workspace ID and Primary Key can be found inside the OMS Portal under Settings in the **connected sources** tab.
+Run the following command to download the omsagent, validate the checksum, and install+onboard the agent. *Commands are for 64-bit*. The Workspace ID and Primary Key can be found inside the OMS Portal under Settings in the **connected sources** tab (see below screenshot).
 
 ![connected-resources](./media/connected-resources.png)
 
