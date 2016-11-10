@@ -2,7 +2,7 @@ Microsoft Operations Management Suite (OMS) Log Analytics is the easy and preffe
 
 To install your agent, you need to complete 2 steps
 
-# 1. Creating an Operations Management Suite (OMS) workspace
+# 1. Creating an Operations Management Suite (OMS) Log Analytics workspace
 
 You can get up and running with Log Analytics in the Microsoft Operations Management Suite (OMS) in minutes. You have two options when choosing how to create an OMS workspace, which is similar to an account:
 
