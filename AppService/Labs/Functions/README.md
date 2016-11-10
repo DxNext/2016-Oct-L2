@@ -98,7 +98,7 @@ Let’s create the second function, called ImageOCR. This function will be trigg
 
 ![](images/Try_4-1024x555.jpg)
 
-Click on **New Function** and choose a **BlobTrigger - C#**.  Make sure the path name you use to trigger is the same as the Blob container name used to write the image from the first function. If you have not changed the default, the container name of the first function is _outcontainer_.
+Click on **New Function** and choose a **BlobTrigger - C#**.  Make sure the path name you use to trigger is the same as the Blob container name used to write the image from the first function. If you have not changed the default, the container name of the first function is _outcontainer_/{name}.
 
 ```csharp
 #r "System.IO"
@@ -260,7 +260,7 @@ The function input argument is of type _IQueryable&lt;ImageText&gt;_, which repr
   using Microsoft.WindowsAzure.Storage.Table;
   using Newtonsoft.Json;
 
-  public static  HttpResponseMessage Run(HttpRequestMessage req, IQueryable<ImageText> inputTable,  TraceWriter log)
+  public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, IQueryable<ImageText> inputTable,  TraceWriter log)
   {
       log.Info($"C# HTTP trigger function processed a request. RequestUri={req.RequestUri}");
 
