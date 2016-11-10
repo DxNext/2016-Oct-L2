@@ -7,16 +7,52 @@
 [activate your Visual Studio subscriber benefits](/pricing/member-offers/msdn-benefits-details/?WT.mc_id=A261C142F).
 
 ## Creating a Web app in the Portal with GitHub Continuous Deployment
-1. Create site in portal.
-1. Connect to the [Node.js (Express) sample application repo](https://github.com/Azure-Samples/app-service-web-nodejs-get-started.git) on GitHub.
-1. Show the initial deployment is triggered in the Azure portal.
-1. Browse to the site to show the site is live.
-1. Fork the repo in GitHub and clone your fork to your local machine.
-1. Connect the site to the GitHub repo in your org.
-1. Show site has been redeployed from GitHub project.
-1. Change the title in `\views\index.jade` locally (or on GitHub) and push the change.
-1. Switch to the portal and show that a redeployment has been triggered.
+1. Create a new web app in the portal.
+
+    ![Create App Service web app in portal](images/create-web-app-in-portal.png "Create App Service web app in portal")
+
+1. Fill in a name for the site, create a resource group, and create the site.
+
+    ![](images/webapp-portal-create-settings.png)
+
+1. Fork the [https://github.com/Azure-Samples/app-service-web-nodejs-get-started](https://github.com/Azure-Samples/app-service-web-nodejs-get-started) repo.
+1. Open the **Deployment Options** settings group in the portal, select **GitHub**, and click **Authorize**.
+
+    ![](images/portal-deployment-options.png)
+
+1. Fill in the required settings to point to your personal account and the master branch of your new fork of the *app-service-web-nodejs-get-started* project. Click **OK**. This will automatically begin deploying the content in your GitHub repository to your Web App.
+
+    ![](images/deployment-source.png)
+
+1. Select the **Overview** tab for your new Web App and click on the site **URL**.
+
+    ![](images/continuous-deployment-browse-site.png)
+
+    ![](images/continuous-deployment-view-site.png)
+
+1. Browse to the **/views/index.jade** file for your fork in GitHub and click the **Edit** (pencil) icon.
+
+    ![](images/continuous-deployment-edit-file.png)
+
+1. Update the view code to add a new message that says *Updated via continuous deployment* as shown below, then click the **Commit Changes** button at the bottom:
+
+    ```jade
+    extends layout
+
+    block content
+        h1= title
+        p Welcome to #{title}
+        h2 Updated via continuous deployment
+    ```
+
+    > **Note**: If you prefer, you can make this change by cloning the fork to your local machine, modifying the code locally, and pushing the change back to GitHub.
+
+1. Switch to the portal and re-open the **Deployent Options** tab to show that a redeployment has been triggered.
 1. Refresh the site to show the change is live.
+
+    ![](images/continuous-deployment-site-updated.png)
+
+    > **Note**: If desired, you can click on a previous deployment in the portal and click the **Redeploy** button to show site rollback.
 
 ## Azure CLI 2.0 Preview
 1. Open command prompt and enter bash mode by typing `bash`
