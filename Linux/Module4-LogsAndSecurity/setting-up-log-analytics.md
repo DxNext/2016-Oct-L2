@@ -33,22 +33,11 @@ Please follow the below steps.
 
 Now that you have created your OMS workspace, you need to install the OMS agent to your Linux VM.
 
-Run the following commands to download the omsagent, validate the checksum, and install+onboard the agent. *Commands are for 64-bit*. The Workspace ID and Primary Key can be found inside the OMS Portal under Settings in the **connected sources** tab.
+Run the following command to download the omsagent, validate the checksum, and install+onboard the agent. *Commands are for 64-bit*. The Workspace ID and Primary Key can be found inside the OMS Portal under Settings in the **connected sources** tab (see below screenshot).
 
 ![connected-resources](./media/connected-resources.png)
 
 ```
-
-$> wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v1.2.0-75/omsagent-1.2.0-75.universal.x64.sh
-
-$> sha256sum ./omsagent-1.2.0-75.universal.x64.sh
-
-$> sudo sh ./omsagent-1.2.0-75.universal.x64.sh --upgrade -w <YOUR OMS WORKSPACE ID> -s <YOUR OMS WORKSPACE PRIMARY KEY>
-
+wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w <YOUR OMS WORKSPACE ID> -s <YOUR OMS WORKSPACE PRIMARY KEY>
 ```
 It would take about 15 minutes for the logs to appear in OMS. You may continue with the next labs and return back after 15 mins to check the logs.
-
-
-# 3. (Optional) Configuring Docker to send logs to Log Analytics
-
-Please follow the steps in the official documentation [here](https://github.com/Microsoft/OMS-Agent-for-Linux/blob/master/docs/Docker-Instructions.md) for setting up the agent for sending Docker logs to Log Analytics.
