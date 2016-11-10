@@ -7,8 +7,10 @@ To create a Network Security Group and rules you need the Azure CLI in Resource 
 ```
 azure config mode arm
 ```
-
-Create your Network Security Group, **entering your own names and location appropriately**:
+You will need the name of the Resource Group you used when you created your CentOS VM. If you don't remember it, you can run the following command to list all the resource groups in your subscription:
+```
+azure group list
+```
 
 ## 1. Create a new Network Security Group (NSG)
 ```
