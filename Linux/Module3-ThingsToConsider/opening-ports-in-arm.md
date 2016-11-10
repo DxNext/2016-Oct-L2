@@ -33,16 +33,21 @@ azure network nic list --resource-group <your-resource-group>
 azure network nic set --resource-group <your-resource-group> --name <your-NIC-from-the-previous-step> --network-security-group-name <name-for-the-new-NSG>
 ```
 
-## 4. Opening port TCP 80
+## 4. Opening port TCP 22
+```
+azure network nsg rule create --protocol tcp --priority 1060 --direction inbound --destination-port-range 22 --access allow --resource-group <your-resource-group> --nsg-name <name-for-the-new-NSG> --name TCP22
+```
+
+## 5. Opening port TCP 80
 ```
 azure network nsg rule create --protocol tcp --priority 1010 --direction inbound --destination-port-range 80 --access allow --resource-group <your-resource-group> --nsg-name <name-for-the-new-NSG> --name TCP80
 ```
 
-## 5. Opening port TCP 5000
+## 6. Opening port TCP 5000
 ```
 azure network nsg rule create --protocol tcp --priority 1020 --direction inbound --destination-port-range 5000 --access allow --resource-group <your-resource-group> --nsg-name <name-for-the-new-NSG> --name TCP5000
 ```
-## 6. Opening port TCP 5001
+## 7. Opening port TCP 5001
 ```
 azure network nsg rule create --protocol tcp --priority 1030 --direction inbound --destination-port-range 5001 --access allow --resource-group <your-resource-group> --nsg-name <name-for-the-new-NSG> --name TCP5001
 ```
