@@ -12,8 +12,6 @@ You will need the name of the Resource Group you used when you created your Cent
 azure group list
 ```
 
-Create your Network Security Group, **entering your own names and location appropriately**:
-
 ## 1. Create a new Network Security Group (NSG)
 ```
 azure network nsg create --resource-group <your-resource-group> --location <location-of-your-VM> --name <name-for-the-new-NSG>
