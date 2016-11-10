@@ -18,8 +18,14 @@ azure network nsg create --resource-group <your-resource-group> --location <loca
 ```
 
 ## 2. Get the Network Interface (NIC) of your VM
+Assuming you have only 1 VM in the resource group, you can use the following command the get the name of the NIC:
 ```
 azure network nic list --resource-group <your-resource-group> | awk 'NR==5{print $2}'
+```
+
+If you have more than 1 VM in the resource group you created, you can type the following command and find the respective NIC:
+```
+azure network nic list --resource-group <your-resource-group>
 ```
 
 ## 3. Associate the Network Security Group (NSG) with your Network Interface (NIC) of your VM
