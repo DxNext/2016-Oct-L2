@@ -94,6 +94,8 @@ It is worth noing that by default Marathon will deploy to the private cluster, t
 
 ### Deploy using the DC/OS CLI
 
+Installation instructions for DC/OS CLI can be found at [install CLI](https://dcos.io/docs/1.8/usage/cli/install/#linux)
+
 To deploy this application with the DC/OS CLI simply copy the above JSON into a file called `hello-web.json`, and run:
 
 ```bash
