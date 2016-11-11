@@ -12,3 +12,6 @@ These exercises are based on the [Docker self-paced trainings](https://training.
 9. [Mount a Host Directory as a Data Volume](exercises/mount-a-host-volume-to-a-container.md)
 10. [Install Docker Compose](exercises/install-docker-compose.md)
 11. [Run a Multi-Container App with Docker Compose](chapters/votingapp.md)
+12. Optional - [Fully automated CI/CD of a Dockerized Node.js app to Microsoft Azure with VSTS, Docker Hub and Docker Cloud](https://github.com/OguzPastirmaci/vsts-dockerhub-dockercloud-azure)
+
+
