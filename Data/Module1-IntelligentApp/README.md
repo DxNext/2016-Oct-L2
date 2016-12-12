@@ -246,7 +246,7 @@ In this task, you'll create an output that will store the query results in Blob 
 	- **Path pattern**: Type in a file prefix to use when writing blob output. E.g. logs/{date}
 	- **Event Serialization Format**: JSON.
 	- **Encoding**: UTF8.
-	- **Format**: Line Separated
+	- **Format**: Array
 
 >**Note:** We will be using Line Separated JSON files since it can easily be parsed by the Hadoop engine.
 
