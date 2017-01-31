@@ -1578,7 +1578,7 @@ In this task, you'll create a new pipeline to move the Hive activity output (sto
                 "timeout": "1.00:00:00",
                 "concurrency": 1,
                 "retry": 3
-            }
+            },
 			"scheduler": {
 				"frequency": "Day",
 				"interval": 1
@@ -1622,7 +1622,7 @@ In this task, you'll create a new pipeline to move the Hive activity output (sto
 	                "timeout": "1.00:00:00",
 	                "concurrency": 1,
 	                "retry": 3
-	            }
+	            },
 				"scheduler": {
 					"frequency": "Day",
 					"interval": 1

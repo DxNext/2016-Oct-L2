@@ -7,4 +7,4 @@ INSERT OVERWRITE TABLE websiteActivity Partition (year, month, day)
          CAST(get_json_object(jsonentry, "$.price") as DOUBLE) as price,
 		 year, month, day
 	FROM LogsRaw
-	WHERE year=${hiveconf:Year} and month=${hiveconf:Month} and day=${hiveconf:Day};
+	WHERE year="${hiveconf:Year}" and month="${hiveconf:Month}" and day="${hiveconf:Day}";
