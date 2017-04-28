@@ -71,22 +71,15 @@ Navigate to the Setup Folder under 'Module 2'. You will find a folder called **S
 
 	````
 
-1. Execute the following command to create a resource group.  Use the same unique prefix from the parameters file. 
+1. Execute the following command to start the automated setup. Use the same unique prefix from the parameters file.
 
 	````
-	azure group create <ResourceGroupName> <Location>
+	bash ./setup.sh -g <ResourceGroupName> -l <Location>
 
 	````
+The automated setup will create a resource group and deploy an ARM template with a storage account, an HDInsight cluster and an Azure SQL DB and a Azure SQL DW. HDInsight cluster typically takes 20 minutes to spin up, whereas Azure SQL Data Warehouse typically takes around 10 minutes to spin up.
 
-1. Execute the following statement to execute the ARM template that will deploy the storage account, the HDInsight Cluster and the Azure DW.  Set <DeploymentName> with the same prefix used for the Resource Group Name.
-
-	````
-	azure group deployment create -f <path to azuredeploy.json> -e <path to parameters.json> -g <ResourceGroupName> -n <DeploymentName>
-
-	````
-
-1. This will start deploying the resources in your Resource Group. HDInsight cluster typically takes 20 minutes to spin up, whereas Azure SQL Data Warehouse typically takes around 10 minutes to spin up.
-
+The setup will also upload the files from Assets\HDInsight and Assets\logs to the storage account. You will later use those files while interacting with HDInsight.
 
 <a name="ManualSetupUploadFiles"></a>
 #### Manual Setup 1: Manually uploading the sample files ####
