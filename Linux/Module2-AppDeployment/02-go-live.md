@@ -51,8 +51,8 @@ We will be using the Northwind sample app created by [Bradley Braithwaite](https
      Create `'index.js'` file an add the following lines to it:
 
      ```js
-     var express = require('express'),
-    http = require('http'),
+    var express = require('express');
+    http = require('http');
     app = express();
 
     app.set('port', process.env.PORT || 3030);
