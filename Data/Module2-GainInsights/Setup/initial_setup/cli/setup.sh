@@ -3,17 +3,29 @@ clear
 
 startTime=$(date)
 
-#TODO: update variables below
-subscriptionId="<SubscriptionId>"
-resourceGroupName="<ResourceGroupName>"
-location="westus"
-pathToTemplate="./azuredeploy.json"
-pathToParameterFile="./parameters.json"
+declare resourceGroupName=""
+declare location=""
+pathToTemplate="./parameters.json"
+pathToParameterFile="./azuredeploy.json"
 deploymentName="deploy$resourceGroupName"
+
+while getopts ":g:l:" arg; do
+	case "${arg}" in
+        g)
+            resourceGroupName=${OPTARG}
+            ;;
+		l)
+			location=${OPTARG}
+            ;;
+		esac
+done
+shift $((OPTIND-1))
+
+echo "ResourceGroupName: $resourceGroupName"
+echo "SubscriptionId: $location"
 
 #Basic environment configuration
 azure config mode arm
-azure account set $subscriptionId
 
 #Template deployment
 azure group create $resourceGroupName $location
