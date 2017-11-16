@@ -3,7 +3,8 @@ CREATE TABLE RecUsageData ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TE
 		WHEN type='checkout' THEN 'Purchase'
 		WHEN type='view' THEN 'Click'
 		WHEN type='add' THEN 'AddShopCart'
-		WHEN type='remove' THEN 'RemoveShopCart'
+		WHEN type='remove' THEN 'RemoveShopCart' 
+		END as eventtype
 	FROM WebsiteActivity
 
 
